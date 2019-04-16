@@ -1,134 +1,129 @@
 package fr.eni.encheres.bo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Utilisateur {
 
-	private int noUtilisateur;
-	private String pseudo,nom,prenom,email,telephone,rue,codePostal,ville,motDePasse;
+	private int id;
+	private String pseudo,
+				   password,
+				   nom,
+				   prenom,
+				   email,
+				   telephone,
+				   rue,
+				   codePostal,
+				   ville;
 	private int credit;
-	private boolean administrateur;
-
-	private List<Vente> ventes;//liste des ventes de cet utilisateur
-	private List<Enchere> encheres;//liste des encheres de cet utilisateur
+	private boolean isAdmin;
 
 	public Utilisateur() {
-		
-		noUtilisateur = -1;
-		ventes = new ArrayList<Vente>();
-		encheres = new ArrayList<Enchere>();
-
+		id = -1;
 	}
 
 	public Utilisateur(String nomUser, String mdp) {
 		setPseudo(nomUser);
-		setMotDePasse(mdp);
+		setPassword(mdp);
 	}
-	public int getNoUtilisateur() {
-		return noUtilisateur;
+	
+	public int getId() {
+		return id;
 	}
-	public void setNoUtilisateur(int noUtilisateur) {
-		this.noUtilisateur = noUtilisateur;
+	public Utilisateur setId(int noUtilisateur) {
+		this.id = noUtilisateur;
+		return this;
 	}
 
 	public String getPseudo() {
 		return pseudo;
 	}
-	public void setPseudo(String pseudo) {
+	public Utilisateur setPseudo(String pseudo) {
 		this.pseudo = pseudo;
+		return this;
+	}
+	
+	public String getMotDePasse() {
+		return password;
+	}
+	public Utilisateur setPassword(String password) {
+		this.password = password;
+		return this;
 	}
 
 	public String getNom() {
 		return nom;
 	}
-	public void setNom(String nom) {
+	public Utilisateur setNom(String nom) {
 		this.nom = nom;
+		return this;
 	}
 
 	public String getPrenom() {
 		return prenom;
 	}
-	public void setPrenom(String prenom) {
+	public Utilisateur setPrenom(String prenom) {
 		this.prenom = prenom;
+		return this;
 	}
 
 	public String getEmail() {
 		return email;
 	}
-	public void setEmail(String email) {
+	public Utilisateur setEmail(String email) {
 		this.email = email;
+		return this;
 	}
 
 	public String getTelephone() {
 		return telephone;
 	}
-	public void setTelephone(String telephone) {
+	public Utilisateur setTelephone(String telephone) {
 		this.telephone = telephone;
+		return this;
 	}
 
 	public String getRue() {
 		return rue;
 	}
-	public void setRue(String rue) {
+	public Utilisateur setRue(String rue) {
 		this.rue = rue;
+		return this;
 	}
 
 	public String getCodePostal() {
 		return codePostal;
 	}
-	public void setCodePostal(String codePostal) {
+	public Utilisateur setCodePostal(String codePostal) {
 		this.codePostal = codePostal;
+		return this;
 	}
 
 	public String getVille() {
 		return ville;
 	}
-	public void setVille(String ville) {
+	public Utilisateur setVille(String ville) {
 		this.ville = ville;
-	}
-
-	public String getMotDePasse() {
-		return motDePasse;
-	}
-	public void setMotDePasse(String motDePasse) {
-		this.motDePasse = motDePasse;
+		return this;
 	}
 
 	public int getCredit() {
 		return credit;
 	}
-	public void setCredit(int credit) {
+	public Utilisateur setCredit(int credit) {
 		this.credit = credit;
+		return this;
 	}
 
-	public List<Vente> getVentes() {
-		return ventes;
+	public boolean isAdmin() {
+		return isAdmin;
 	}
-	public void setVentes(List<Vente> ventes) {
-		this.ventes = ventes;
-	}
-
-	public void addVentes(Vente vente) {
-		this.ventes.add(vente);
-	}
-	public List<Enchere> getEncheres() {
-		return encheres;
+	public Utilisateur setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+		return this;
 	}
 
-	public void setEncheres(List<Enchere> encheres) {
-		this.encheres = encheres;
+	@Override
+	public String toString() {
+		return "Utilisateur [id=" + id + ", pseudo=" + pseudo + ", password=" + password + ", nom=" + nom + ", prenom="
+				+ prenom + ", email=" + email + ", telephone=" + telephone + ", rue=" + rue + ", codePostal="
+				+ codePostal + ", ville=" + ville + ", credit=" + credit + ", isAdmin=" + isAdmin + "]";
 	}
-	public void addEncheres(Enchere enchere) {
-		this.encheres.add(enchere);
-	}
-
-	public boolean isAdministrateur() {
-		return administrateur;
-	}
-	public void setAdministrateur(boolean administrateur) {
-		this.administrateur = administrateur;
-	}
-
-
 }
