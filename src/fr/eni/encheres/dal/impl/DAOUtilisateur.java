@@ -125,7 +125,7 @@ public class DAOUtilisateur implements InterfaceDAO<Utilisateur> {
 			stmt.setString(6, user.getRue());
 			stmt.setString(7, user.getCodePostal());
 			stmt.setString(8, user.getVille());
-			stmt.setString(9, user.getMotDePasse());
+			stmt.setString(9, user.getPassword());
 			stmt.setInt(10, user.getCredit());
 			stmt.setBoolean(11, user.isAdmin());
 
@@ -153,7 +153,7 @@ public class DAOUtilisateur implements InterfaceDAO<Utilisateur> {
 			stmt.setString(6, user.getRue());
 			stmt.setString(7, user.getCodePostal());
 			stmt.setString(8, user.getVille());
-			stmt.setString(9, user.getMotDePasse());
+			stmt.setString(9, user.getPassword());
 			stmt.setInt(10, user.getCredit());
 			stmt.setBoolean(11, user.isAdmin());
 			stmt.setInt(12, user.getId());
