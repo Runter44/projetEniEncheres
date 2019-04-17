@@ -2,6 +2,8 @@ package fr.eni.encheres.bll;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.impl.DAOUtilisateur;
@@ -39,7 +41,13 @@ public class UserManager {
 		return daoUtilisateur.remove(user);
 	}
 	
-	public boolean connectUser(Utilisateur utilisateur, String mdp) {
+	public boolean connectUser(Utilisateur utilisateur, String mdp, HttpServletRequest request) {
+		if (daoUtilisateur.findByPseudo(utilisateur.getPseudo()) != null) {
+			if (utilisateur.getPassword().equals(mdp)) {
+				request.getSession().setAttribute("currentUser", utilisateur);
+				return true;
+			}
+		}
 		return false;
 	}
 	

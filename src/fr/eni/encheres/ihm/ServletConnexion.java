@@ -23,7 +23,11 @@ public class ServletConnexion extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/pages/connexion.jsp").forward(request, response);
+		if (request.getSession().getAttribute("currentUser") != null) {
+			response.sendRedirect("/projetEniEncheres");
+		} else {
+			request.getRequestDispatcher("/WEB-INF/pages/connexion.jsp").forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,8 +36,8 @@ public class ServletConnexion extends HttpServlet {
 		
 		Utilisateur user = userManager.getUserByPseudo(login);
 		
-		if (user != null && userManager.connectUser(user, password)) {
-			response.sendRedirect("/");
+		if (user != null && userManager.connectUser(user, password, request)) {
+			response.sendRedirect("/projetEniEncheres");
 		} else {
 			request.setAttribute("errorConnexion", true);
 			request.getRequestDispatcher("/WEB-INF/pages/connexion.jsp").forward(request, response);
