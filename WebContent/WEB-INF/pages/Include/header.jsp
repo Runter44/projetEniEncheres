@@ -9,7 +9,8 @@
 
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="css/monCss.css">
+<link rel="stylesheet" type="text/css" href="style/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="style/main.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <title>${requestScope.pageTitle}</title>

@@ -1,0 +1,29 @@
+.container-fluid{
+	background-color:#121c25;
+	height:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+.divConnexion{	
+	background-color:#ffffff;
+	box-shadow: 1px 1px 1px 1px rgba(255, 255, 255, .2);	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	width:35%;
+	height:45%;
+	border-radius:5px;
+}
+.content{
+	vertical-align: middle;	
+}
+.btn{
+	text-align:center;
+}
+.btn-link{
+	color:#121c25;	
+}
+.btn-link:hover{
+	color: black;
+}
