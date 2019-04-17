@@ -40,7 +40,7 @@ public class Utilisateur {
 		return this;
 	}
 	
-	public String getMotDePasse() {
+	public String getPassword() {
 		return password;
 	}
 	public Utilisateur setPassword(String password) {
