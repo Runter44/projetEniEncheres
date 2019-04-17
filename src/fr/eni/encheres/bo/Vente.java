@@ -1,6 +1,6 @@
 package fr.eni.encheres.bo;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,7 +12,8 @@ public class Vente {
 	private int noVente; //id
 	private String nomArticle;//nom de l'objet vendu & de la vente
 	private String description;//description de l'objet
-	private LocalDateTime datesFinEncheres;
+	private Timestamp datesDebutEncheres;
+	private Timestamp datesFinEncheres;
 	private int miseAPrix;	//prix de départ
 	private int prixVente;	//prix de la dernière enchère effectuée
 	
@@ -50,13 +51,34 @@ public class Vente {
 		this.description = description;
 	}
 	
-	public LocalDateTime getDatesFinEncheres() {
+	/**
+	 * @return the datesDebutEncheres
+	 */
+	public Timestamp getDatesDebutEncheres() {
+		return datesDebutEncheres;
+	}
+
+	/**
+	 * @param datesDebutEncheres the datesDebutEncheres to set
+	 */
+	public void setDatesDebutEncheres(Timestamp datesDebutEncheres) {
+		this.datesDebutEncheres = datesDebutEncheres;
+	}
+
+	/**
+	 * @return the datesFinEncheres
+	 */
+	public Timestamp getDatesFinEncheres() {
 		return datesFinEncheres;
 	}
-	public void setDatesFinEncheres(LocalDateTime datesFinEncheres) {
+
+	/**
+	 * @param datesFinEncheres the datesFinEncheres to set
+	 */
+	public void setDatesFinEncheres(Timestamp datesFinEncheres) {
 		this.datesFinEncheres = datesFinEncheres;
 	}
-	
+
 	public int getMiseAPrix() {
 		return miseAPrix;
 	}
