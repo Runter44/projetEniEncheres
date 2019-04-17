@@ -39,6 +39,10 @@ public class UserManager {
 		return daoUtilisateur.remove(user);
 	}
 	
+	public boolean connectUser(Utilisateur utilisateur, String mdp) {
+		return false;
+	}
+	
 	private String hashPassword(String plainPassword) {
 		return plainPassword;
 	}
