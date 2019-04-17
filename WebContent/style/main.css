@@ -1,25 +1,10 @@
-.container-fluid{
+/*///// GENERAL ///////*/
+body{
 	background-color:#121c25;
-	height:100%;
 	display:flex;
 	justify-content:center;
 	align-items:center;
-}
-.divConnexion{	
-	background-color:#ffffff;
-	box-shadow: 1px 1px 1px 1px rgba(255, 255, 255, .2);	
-	display:flex;
-	justify-content:center;
-	align-items:center;
-	width:50%;
-	height:55%;
-	border-radius:5px;
-}
-.content{
-	width:70%;
-}
-.btn{
-	text-align:center;
+	padding : 0;
 }
 .btn-link{
 	color:#121c25;	
@@ -28,14 +13,40 @@
 .btn-link:hover{
 	color: black;
 }
-.input{
-	width:100%;
+/*///// PAGE CONNEXION ///////*/
+.content{
+	width:70%;
 }
-.formConnexion{
-	width:100%;
+#divConnexion{	
+	background-color:#ffffff;
+	box-shadow: 1px 1px 1px 1px rgba(255, 255, 255, .2);	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	width:50%;
+	height:55%;
+	border-radius:5px;
+	margin:0 auto;
 }
+/*///// PAGE CREATION CONNEXION	 ///////*/
+
+#divCreationCompte{
+	background-color:#ffffff;
+	box-shadow: 1px 1px 1px 1px rgba(255, 255, 255, .2);	
+	width:100%;
+	border-radius:5px;
+	padding: 30px;;
+	margin:auto;
+	
+}
+
+/*///// MEDIA ///////*/
 @media (max-width: 600px) {
-	.divConnexion{
+	#divConnexion{
+	width:100%;
+	border-radius:0px;
+	}
+	#divCreationCompte{
 	width:100%;
 	border-radius:0px;
 	}
