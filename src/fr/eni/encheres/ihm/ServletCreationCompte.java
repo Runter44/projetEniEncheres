@@ -108,7 +108,7 @@ public class ServletCreationCompte extends HttpServlet {
 			user = userManager.addNewUser(user);
 			
 			if (userManager.connectUser(user, mdp, request)) {
-				response.sendRedirect("/");
+				response.sendRedirect("/projetEniEncheres");
 			} else {
 				response.sendRedirect("connexion");
 			}
