@@ -11,19 +11,36 @@
 	display:flex;
 	justify-content:center;
 	align-items:center;
-	width:35%;
-	height:45%;
+	width:50%;
+	height:55%;
 	border-radius:5px;
 }
 .content{
-	vertical-align: middle;	
+	width:70%;
 }
 .btn{
 	text-align:center;
 }
 .btn-link{
 	color:#121c25;	
+	margin-top:10px;
 }
 .btn-link:hover{
 	color: black;
+}
+.input{
+	width:100%;
+}
+.formConnexion{
+	width:100%;
+}
+@media (max-width: 600px) {
+	.divConnexion{
+	width:100%;
+	border-radius:0px;
+	}
+	.container-fluid{
+	padding:0;
+	}
+	
 }

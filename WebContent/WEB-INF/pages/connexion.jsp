@@ -6,13 +6,12 @@
 		<div class="container divConnexion">
 			<div class="content">
 				<form method="post" action="connexion" class="formConnexion">
-
 					<label for="login" class="lblTitre">Identifiant :</label> <input
-						id="login" type="text" name="login" class="form-control"
+						id="login" type="text" name="login" class="form-control input"
 						placeholder="Nom de compte"><br> <label
 						for="password" class="lblTitre">Mot de passe :</label> <input
 						id="password" type="password" name="motDePasse"
-						class="form-control" placeholder="Mot de passe"><br>
+						class="form-control input" placeholder="Mot de passe"><br>
 
 
 					<!--  <label style="font-size: 15px">Se souvenir de moi<input 
@@ -25,7 +24,7 @@
 						<input type="submit" value="Connexion"
 							class=" btn btn-outline-secondary">
 							<br>
-						<a href ="creationCompte.jsp" class="btn btn-link">Créer un
+						<a href ="/creation-compte" class="btn btn-link">Créer un
 						compte</a>
 					</div>
 
