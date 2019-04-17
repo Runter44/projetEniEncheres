@@ -68,7 +68,7 @@ public class DAOVente implements InterfaceDAO<Vente>{
 
 	@Override
 	public List<Vente> findAll() {
-		List<Vente> articlesVendus = new ArrayList<Vente>();
+		List<Vente> LesArticlesVendus = new ArrayList<Vente>();
 		Vente unArticleVendu = null;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = connexion.prepareStatement(SELECT_ALL_SELL);
@@ -95,12 +95,12 @@ public class DAOVente implements InterfaceDAO<Vente>{
 				unArticleVendu.setCat(cat);
 				
 				//Ajout d'un article à la liste
-				articlesVendus.add(unArticleVendu);
+				LesArticlesVendus.add(unArticleVendu);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return articlesVendus;
+		return LesArticlesVendus;
 	}
 
 	@Override
@@ -157,17 +157,17 @@ public class DAOVente implements InterfaceDAO<Vente>{
 
 	@Override
 	public boolean remove(Vente articleVendu) {
-		boolean updateRealiser = false;
+		boolean deletRealiser = false;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = connexion.prepareStatement(DELETE_SELL);
 			stmt.setInt(1, articleVendu.getNoVente());
 			stmt.executeUpdate();
-			updateRealiser = true;
+			deletRealiser = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			updateRealiser = false;
+			deletRealiser = false;
 		}
-		return updateRealiser;
+		return deletRealiser;
 	}
 
 }
