@@ -1,7 +1,6 @@
 package fr.eni.encheres.ihm;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,17 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.UserManager;
-import fr.eni.encheres.bo.Utilisateur;
 
-@WebServlet("/connexion")
-public class ServletConnexion extends HttpServlet {
+@WebServlet("/creation-compte")
+public class ServletCreationCompte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private UserManager userManager;
-       
-    public ServletConnexion() {
+
+    public ServletCreationCompte() {
         super();
-        this.userManager = new UserManager();
+        userManager = new UserManager();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,16 +25,6 @@ public class ServletConnexion extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String login = request.getParameter("login");
-		String password = request.getParameter("motDePasse");
-		
-		Utilisateur user = userManager.getUserByPseudo(login);
-		
-		if (user != null && userManager.connectUser(user, password)) {
-			response.sendRedirect("/");
-		} else {
-			request.setAttribute("errorConnexion", true);
-			request.getRequestDispatcher("/WEB-INF/pages/connexion.jsp").forward(request, response);
-		}
+		doGet(request, response);
 	}
 }

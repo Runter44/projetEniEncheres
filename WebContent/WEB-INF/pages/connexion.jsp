@@ -1,26 +1,53 @@
-<%@include file="/WEB-INF/pages/Include/header.jsp" %>
+<%@include file="/WEB-INF/pages/Include/header.jsp"%>
 <!-- <link rel="stylesheet" type="text/css" href="/css/monCss.css"/> -->
 <!-- jumbotron text-center -->
-<body class="body" style="text-align: center;">
-	<div class="aa">
-		<form method="post" action="Connexion" class="formConnexion">
-			<p>Identifiant:</p>
-			<input type="text" name="paramLoginUtilisateur"
-				class="monHref" placeholder="nom de compte"><br>
-			<p>Mot de passe:</p>
-			<input type="password" name="paramMotDePasseUtilisateur" class="monHref"
-				placeholder="mot de passe"><br> 
-				<label style="font-size: 15px">Se souvenir de moi<input
+<body class="body">
+	<div class="container-fluid">
+		<div class="container divConnexion">
+			<div class="content">
+				<form method="post" action="connexion" class="formConnexion">
+					<label for="login" class="lblTitre">Identifiant :</label> <input
+						id="login" type="text" name="login" class="form-control input"
+						placeholder="Nom de compte"><br> <label
+						for="password" class="lblTitre">Mot de passe :</label> <input
+						id="password" type="password" name="motDePasse"
+						class="form-control input" placeholder="Mot de passe"><br>
+
+
+					<!--  <label style="font-size: 15px">Se souvenir de moi<input 
 				type="checkbox" value="Se souvenir de moi" name="paramRememberMe"
-				class="" style="font-size: 1px"></label><br> 
-				<input type="submit"
-				value="Connexion" class="btn"><br>
-		</form>
+				class="" style="font-size: 1px"></label><br> -->
+
+
+
+					<div class="text-center">
+						<input type="submit" value="Connexion"
+							class=" btn btn-outline-secondary">
+							<br>
+						<a href ="creation-compte" class="btn btn-link">Créer un
+						compte</a>
+					</div>
+
+				</form>
+
+				<%
+					if (request.getAttribute("errorConnexion") != null
+							&& (boolean) request.getAttribute("errorConnexion") == true) {
+				%>
+				<div class="alert alert-danger alert-dismissible fade show"
+					role="alert">
+					<strong>Erreur</strong> Identifiant ou mot de passe incorrect
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<%
+					}
+				%>
+
+			</div>
+		</div>
 	</div>
-	<!-- lien mot de passe oublié-->
-	<form method="get" action="CreationCompte" class="connexion">
-		<input type="submit" value="Creer un compte" style="text-align: center" class="btn">
-	</form>
-	<!-- <input type="label" > -->
 </body>
 </html>
