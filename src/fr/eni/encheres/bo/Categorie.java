@@ -6,9 +6,6 @@ public class Categorie {
 	private String libelle;
 	
 	public Categorie() {
-		
-		noCategorie = -1;
-		
 	}
 	
 	public int getNoCategorie() {

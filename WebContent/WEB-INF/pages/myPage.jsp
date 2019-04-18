@@ -48,7 +48,7 @@
 		<div class="row">
 			<c:forEach var="v" items="${requestScope.ventesRecherche}">
 				<div class="elementListe">
-					<%@include file="/WEB-INF/pages/Include/VenteBloc.jsp"%>
+					
 				</div>
 			</c:forEach>
 		</div>
