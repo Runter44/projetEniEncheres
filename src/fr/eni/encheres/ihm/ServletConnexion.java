@@ -26,6 +26,7 @@ public class ServletConnexion extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getSession().getAttribute("currentUser") != null) {
 			response.sendRedirect("/projetEniEncheres");
+			return;
 		} else {
 			Cookie cookieLogin = null, cookieMdp = null;
 			Cookie[] allCookies = request.getCookies();
@@ -43,6 +44,7 @@ public class ServletConnexion extends HttpServlet {
 					if (user != null) {
 						if (userManager.connectUser(user, cookieMdp.getValue(), request)) {
 							response.sendRedirect("/projetEniEncheres");
+							return;
 						}
 					}
 				}
