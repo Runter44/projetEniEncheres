@@ -26,6 +26,9 @@ public class ServletAfficherProfil extends HttpServlet {
 			int idUser = Integer.parseInt(request.getPathInfo().substring(1));
 			request.setAttribute("requestedUser", userManager.getUserById(idUser));
 		} catch (NumberFormatException e) {}
+		if (request.getSession().getAttribute("currentUser") == null) {
+			userManager.connectWithCookies(request.getCookies(), request);
+		}
 		request.getRequestDispatcher("/WEB-INF/pages/profil.jsp").forward(request, response);
 	}
 
