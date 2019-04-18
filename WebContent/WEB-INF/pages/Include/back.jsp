@@ -1,1 +1,0 @@
-<input type="button" value="Retour" onclick="window.history.back()" class="btn">
