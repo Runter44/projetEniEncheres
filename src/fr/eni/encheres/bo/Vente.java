@@ -7,25 +7,24 @@ import java.util.List;
 
 
 
-public class Vente {
+public class Vente<T> {
 	
-	private int noVente; //id
-	private String nomArticle;//nom de l'objet vendu & de la vente
-	private String description;//description de l'objet
+	private int noVente;
+	private String nomArticle;
+	private String description;
 	private Timestamp datesDebutEncheres;
 	private Timestamp datesFinEncheres;
-	private int miseAPrix;	//prix de départ
-	private int prixVente;	//prix de la dernière enchère effectuée
+	private int miseAPrix;
+	private int prixVente;
 	
-	private Categorie cat;	//categorie de l'article
+	private Categorie cat;
 	private List<Enchere> encheres;
-	private Utilisateur vendeur;	//le vendeur
+	private Utilisateur vendeur;
 	private Retrait retrait;
 	
 	
 	public Vente() {
 		
-		noVente = -1;
 		encheres = new ArrayList<Enchere>();
 		
 	}
@@ -111,11 +110,9 @@ public class Vente {
 	}
 	public List<Enchere> getEncheresParValeur() {
 		List<Enchere> listeHaute = new ArrayList<>();
-		//pour chaque encheres
+		
 		for (Enchere enchere:encheres) {
-			
 			listeHaute.add(enchere);
-			
 		}
 		
 		Collections.sort(listeHaute);
