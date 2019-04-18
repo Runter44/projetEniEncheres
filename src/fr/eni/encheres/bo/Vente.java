@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
-
-public class Vente<T> {
+public class Vente {
 	
 	private int noVente;
 	private String nomArticle;

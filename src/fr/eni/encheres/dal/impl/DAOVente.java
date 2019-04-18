@@ -65,6 +65,38 @@ public class DAOVente implements InterfaceDAO<Vente>{
 		}
 		return articleVendu;
 	}
+	
+	public Vente findByName(String name) {
+		Vente articleVendu = null;
+		try (Connection connexion = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = connexion.prepareStatement(SELECT_ONE_SELL_NAME);
+			stmt.setString(1, name);
+
+			ResultSet result = stmt.executeQuery();
+			if (result != null && result.next()) {
+				articleVendu = new Vente();
+
+				articleVendu.setNoVente(result.getInt("no_utilisateur"));
+				articleVendu.setNomArticle(result.getString("nom_article"));
+				articleVendu.setDescription(result.getString("description"));
+				articleVendu.setDatesDebutEncheres(Timestamp.valueOf(result.getString("date_debut_encheres")));
+				articleVendu.setDatesFinEncheres(Timestamp.valueOf(result.getString("date_fin_encheres")));
+				articleVendu.setMiseAPrix(Integer.parseInt(result.getString("prix_initial")));
+				articleVendu.setPrixVente(Integer.parseInt(result.getString("prix_vente")));
+				
+				DAOUtilisateur daoUser = new DAOUtilisateur();
+				Utilisateur user = daoUser.find(Integer.parseInt(result.getString("no_utilisateur")));
+				articleVendu.setVendeur(user);
+				
+				DAOCategorie daoCat = new DAOCategorie();
+				Categorie cat = daoCat.find(Integer.parseInt(result.getString("no_catgories")));
+				articleVendu.setCat(cat);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return articleVendu;
+	}
 
 	@Override
 	public List<Vente> findAll() {
