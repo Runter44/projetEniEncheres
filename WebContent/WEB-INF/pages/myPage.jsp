@@ -45,13 +45,13 @@
 	</form>
 	<div>
 		<%-- 		${requestScope.ventes} --%>
-		<div class="row">
+		<!--<div class="row">
 			<c:forEach var="v" items="${requestScope.ventesRecherche}">
 				<div class="elementListe">
-					<%@include file="/WEB-INF/pages/Include/VenteBloc.jsp"%>
+					  <%@include file="/WEB-INF/pages/Include/VenteBloc.jsp"%>
 				</div>
 			</c:forEach>
-		</div>
+		</div>-->
 
 
 	</div>
