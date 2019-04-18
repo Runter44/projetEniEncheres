@@ -15,10 +15,7 @@ import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.dal.ConnectionProvider;
 import fr.eni.encheres.dal.InterfaceDAO;
 
-/**
- * @author amartin2018
- *
- */
+
 public class DAOCategorie implements InterfaceDAO<Categorie> {
 	
 	private static final String SELECT_ONE_CAT_ID = "SELECT * FROM categories WHERE no_article = ?;";
