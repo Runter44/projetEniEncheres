@@ -3,20 +3,20 @@ package fr.eni.encheres.bo;
 public class Utilisateur {
 
 	private int id;
-	private String pseudo,
-				   password,
-				   nom,
-				   prenom,
-				   email,
-				   telephone,
-				   rue,
-				   codePostal,
-				   ville;
+	private String pseudo;
+	private String password;
+	private String nom;
+	private String prenom;
+	private String email;
+	private String telephone;
+	private String rue;
+	private String codePostal;
+	private String ville;
 	private int credit;
 	private boolean isAdmin;
 
 	public Utilisateur() {
-		id = -1;
+		
 	}
 
 	public Utilisateur(String nomUser, String mdp) {
