@@ -14,6 +14,5 @@
 	<form method="post" action="">
 		<input type="submit" value="Modifier" name="modif" class="btn"> 
 		<input type="submit" value="Supprimer compte" class="btn">
-		<%@include file="/WEB-INF/pages/Include/back.jsp" %>
 	</form>
 	
