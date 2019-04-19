@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bo.Categorie;
 
-@WebServlet("/listeEncheres")
+@WebServlet("/liste-encheres")
 public class ServletListeEncheres extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     

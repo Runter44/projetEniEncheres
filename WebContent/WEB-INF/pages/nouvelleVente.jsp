@@ -1,6 +1,38 @@
+<%@page import="fr.eni.encheres.bll.CategorieManager"%>
+<%@page import="fr.eni.encheres.dal.DAOFactory"%>
 <%@include file="/WEB-INF/pages/Include/header.jsp"%>
-<body>
-
+<body class="bg-light">
+	<div class="container-fluid p-0 h-100">
+		<nav class="navbarColor navbar navbar-expand-lg navbar-dark w-100">
+			<a class="navbar-brand text-light navbarColorTitre">ENI-Enchères</a>
+			<%@include file="/WEB-INF/pages/Include/navbarButtons.jsp"%>
+		</nav>
+		<div class="padding5X15">
+			<h1>Nouvelle vente</h1>
+			<form>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="articleName">Nom de l'article</label>
+						<input type="text" class="form-control" id="articleName" placeholder="Nom de l'article">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="articleCategorie">Catégorie de l'article</label>
+						<select type="text" class="form-control" id="articleCategorie">
+						<c:forEach items="<%= (new CategorieManager()).getAllCat() %>" var="categorie">
+							<option value="${ categorie.getNoCategorie() }">${ categorie.getLibelle() }</option>
+						</c:forEach>
+						</select>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="articleDescription">Description de l'article</label>
+						<textarea class="form-control" id="articleDescription" placeholder="Description de l'article">
+						</textarea>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- 
 	<h1>Nouvelle vente</h1>
 	<p style="font-style: ">${requestScope["Probleme"]}</p>
 	<form method="post" action="">
@@ -30,10 +62,9 @@
 		
 		<div>
 			<input type="submit" name="bouton" value="Publier" class="btn">
-			<!-- <input type="submit" name="bouton" value="Enregistrer">-->
 			<input type="submit" name="bouton" value="Annuler" class="btn">	
 		</div>
 	</form>	
-	
+	-->
 </body>
 </html>

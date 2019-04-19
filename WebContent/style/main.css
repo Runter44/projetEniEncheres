@@ -36,8 +36,23 @@
 	width:100%;
 	height:100%;	
 }
+.divContent{
+	background-color:#ffffff;
+	box-shadow: 1px 1px 1px 1px rgba(255, 255, 255, .2);	
+	width:100%;
+	height:100%;
+	padding: 10% 15%;;
+	margin:auto;
+	top:10%;
+}
 .paddingX15 {
 	padding: 10% 15%;
+}
+.paddingX10{
+	padding:5% 15%;
+}
+.padding5X15 {
+	padding: 0% 15%;
 }
 .w-50 {
 	width: 50% !important;
@@ -60,20 +75,16 @@
 .formConnexion{
 	width:100%;
 }
-/*///// PAGE CREATION COMPTE	 ///////*/
-#divCreationCompte{
-	background-color:#ffffff;
-	box-shadow: 1px 1px 1px 1px rgba(255, 255, 255, .2);	
-	width:100%;
-	height:100%;
-	padding: 10% 15%;;
-	margin:auto;
-	top:10%;
-
-}
 /*///// MEDIA ///////*/
 @media (max-width: 600px) {
-	#connexionContent{
+	
+	/*/////// GENERAL ////////*/
+	.divContent{
+	width:100%;
+	padding:20% 5%;	
+	}
+	/*/////// PAGE CONNEXION ////////*/
+	.divContent{
 	width:100%;
 	height:100%;
 	border-radius:0px;
@@ -83,12 +94,13 @@
 	top:0;
 	position:static;
 	}
-	#divCreationCompte{
-	width:100%;
-	padding:20% 5%;
-	}
 	.container-fluid{
 	padding:0;
 	}
 	
+	/*//////// PAGE MODDIFICATION COMPTE //////////*/
+	#btnSupprimerCompte{
+	margin-bottom:10px;
+	}
+
 }

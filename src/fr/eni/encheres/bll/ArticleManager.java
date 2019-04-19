@@ -21,9 +21,13 @@ public class ArticleManager {
 	public Article getArticleByName(String name) {
 		return daoArticle.findByName(name);
 	}
-	
-	public List<Article> getAllArticle() {
+
+	public List<Article> getAllArticles() {
 		return daoArticle.findAll();
+	}
+	
+	public Article addArticle(Article article) {
+		return daoArticle.insert(article);
 	}
 	
 	public boolean updateArticle(Article article) {

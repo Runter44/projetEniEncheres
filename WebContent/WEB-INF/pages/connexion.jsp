@@ -25,7 +25,7 @@
 			<div id="connexionContent">
 				<form method="post" action="connexion" class="formConnexion">
 					<div class="form-group">
-						<label for="login" class="lblTitre">Identifiant :</label> <input
+						<label for="login"  class="lblTitre">Pseudonyme :</label> <input
 							id="login" type="text" name="login" class="form-control"
 							placeholder="Nom de compte"><br> <label
 							for="password" class="lblTitre">Mot de passe :</label> <input
@@ -39,7 +39,7 @@
 						</div>
 						<div class="text-center">
 							<input type="submit" value="Connexion"
-								class=" btn btn-outline-secondary"> <br> <a
+								class="btn btn-outline-secondary"> <br> <a
 								href="creation-compte" class="btn btn-link">Créer un compte</a>
 						</div>
 					</div>
@@ -49,7 +49,7 @@
 					%>
 					<div class="alert alert-danger alert-dismissible fade show"
 						role="alert">
-						<strong>Erreur</strong> Identifiant ou mot de passe incorrect
+						<strong>Erreur</strong> Pseudonyme ou mot de passe incorrect
 						<button type="button" class="close" data-dismiss="alert"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>

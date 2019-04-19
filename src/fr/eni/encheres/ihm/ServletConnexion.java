@@ -33,10 +33,7 @@ public class ServletConnexion extends HttpServlet {
 				response.sendRedirect("/projetEniEncheres");
 			} else {				
 				request.getRequestDispatcher("/WEB-INF/pages/connexion.jsp").forward(request, response);
-			}		
-			request.setAttribute("LesUsers", userManager.getAllUsers());
-			request.getRequestDispatcher("/WEB-INF/pages/connexion.jsp").forward(request, response);
-
+			}
 		}
 	}
 

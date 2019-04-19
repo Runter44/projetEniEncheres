@@ -25,7 +25,7 @@ public class ServletDeconnexion extends HttpServlet {
 				response.addCookie(cookie);
 			}
 		}
-		response.sendRedirect("connexion");
+		response.sendRedirect("/projetEniEncheres");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
