@@ -21,7 +21,7 @@ public class ArticleManager {
 	public Article getArticleByName(String name) {
 		return daoArticle.findByName(name);
 	}
-	
+
 	public List<Article> getAllArticles() {
 		return daoArticle.findAll();
 	}
