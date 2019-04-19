@@ -16,14 +16,31 @@ public class Utilisateur {
 	private boolean isAdmin;
 
 	public Utilisateur() {
-		
+
+	}
+
+	public Utilisateur(int id, String pseudo, String password, String nom, String prenom, String email,
+			String telephone, String rue, String codePostal, String ville, int credit, boolean isAdmin) {
+		super();
+		this.id = id;
+		this.pseudo = pseudo;
+		this.password = password;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.credit = credit;
+		this.isAdmin = isAdmin;
 	}
 
 	public Utilisateur(String nomUser, String mdp) {
 		setPseudo(nomUser);
 		setPassword(mdp);
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -39,7 +56,7 @@ public class Utilisateur {
 		this.pseudo = pseudo;
 		return this;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
@@ -125,5 +142,24 @@ public class Utilisateur {
 		return "Utilisateur [id=" + id + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom="
 				+ prenom + ", email=" + email + ", telephone=" + telephone + ", rue=" + rue + ", codePostal="
 				+ codePostal + ", ville=" + ville + ", credit=" + credit + ", isAdmin=" + isAdmin + "]";
+	}
+	public boolean equalsUser(Utilisateur monUtilisateur){
+
+		boolean bool;
+		bool = true;
+
+		if (this.getId() != monUtilisateur.getId()){bool = false;}
+		if (!this.getPseudo().equals(monUtilisateur.getPseudo())){bool = false;}
+		if (!this.getNom().equals(monUtilisateur.getNom())){bool = false;}
+		if (!this.getPrenom().equals(monUtilisateur.getPrenom())){bool = false;}
+		if (!this.getEmail().equals(monUtilisateur.getEmail())){bool = false;}
+		if (!this.getTelephone().equals(monUtilisateur.getTelephone())){bool = false;}
+		if (!this.getRue().equals(monUtilisateur.getRue())){bool = false;}
+		if (!this.getCodePostal().equals(monUtilisateur.getCodePostal())){bool = false;}
+		if (!this.getVille().equals(monUtilisateur.getVille())){bool = false;}
+		if (this.getCredit() != monUtilisateur.getCredit()){bool = false;}
+		if (this.isAdmin() != monUtilisateur.isAdmin()){bool = false;}
+		
+		return bool;		
 	}
 }

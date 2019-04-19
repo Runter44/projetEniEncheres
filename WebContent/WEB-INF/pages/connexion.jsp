@@ -39,7 +39,7 @@
 						</div>
 						<div class="text-center">
 							<input type="submit" value="Connexion"
-								class=" btn btn-outline-secondary"> <br> <a
+								class="btn btn-outline-secondary"> <br> <a
 								href="creation-compte" class="btn btn-link">Créer un compte</a>
 						</div>
 					</div>
