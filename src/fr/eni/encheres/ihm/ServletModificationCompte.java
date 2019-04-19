@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.UserManager;
+import fr.eni.encheres.bo.Utilisateur;
 
 
 @WebServlet("/modification-compte")
