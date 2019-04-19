@@ -8,8 +8,8 @@
     </ul>
 	<form class="my-2 my-lg-0">
 		<% if (connectedUser == null) { %>
-			<a href="/projetEniEncheres/liste-encheres" class="btn btn-outline-success mx-2 mb-2 mb-md-0 d-block d-md-inline-block">Connexion</a>
-			<a href="/projetEniEncheres/liste-encheres" class="btn btn-outline-warning mx-2 mb-2 mb-md-0 d-block d-md-inline-block">Inscription</a>
+			<a href="/projetEniEncheres/connexion" class="btn btn-outline-success mx-2 mb-2 mb-md-0 d-block d-md-inline-block">Connexion</a>
+			<a href="/projetEniEncheres/creation-compte" class="btn btn-outline-warning mx-2 mb-2 mb-md-0 d-block d-md-inline-block">Inscription</a>
 		<% } else { %>
 			<a href="/projetEniEncheres/liste-encheres" class="btn btn-outline-info mx-2 mb-2 mb-md-0 d-block d-md-inline-block">Enchères</a>
 			<a href="/projetEniEncheres/vente-article" class="btn btn-outline-warning mx-2 mb-2 mb-md-0 d-block d-md-inline-block">Vendre un article</a>
