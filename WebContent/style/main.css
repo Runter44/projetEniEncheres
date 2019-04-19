@@ -36,6 +36,16 @@
 	width:100%;
 	height:100%;	
 }
+.divContent{
+	background-color:#ffffff;
+	box-shadow: 1px 1px 1px 1px rgba(255, 255, 255, .2);	
+	width:100%;
+	height:100%;
+	padding: 10% 15%;;
+	margin:auto;
+	top:10%;
+
+}
 /*///// PAGE CONNEXION ///////*/
 #connexionContent{
 	background-color:#ffffff;
@@ -54,19 +64,15 @@
 .formConnexion{
 	width:100%;
 }
-/*///// PAGE CREATION COMPTE	 ///////*/
-#divCreationCompte{
-	background-color:#ffffff;
-	box-shadow: 1px 1px 1px 1px rgba(255, 255, 255, .2);	
-	width:100%;
-	height:100%;
-	padding: 10% 15%;;
-	margin:auto;
-	top:10%;
-
-}
 /*///// MEDIA ///////*/
 @media (max-width: 600px) {
+	
+	/*/////// GENERAL ////////*/
+	.divContent{
+	width:100%;
+	padding:20% 5%;	
+	}
+	/*/////// PAGE CONNEXION ////////*/
 	#connexionContent{
 	width:100%;
 	height:100%;
@@ -77,12 +83,13 @@
 	top:0;
 	position:static;
 	}
-	#divCreationCompte{
-	width:100%;
-	padding:20% 5%;
-	}
 	.container-fluid{
 	padding:0;
 	}
 	
+	/*//////// PAGE MODDIFICATION COMPTE //////////*/
+	#btnSupprimerCompte{
+	margin-bottom:10px;
+	}
+
 }
