@@ -4,7 +4,7 @@
 	<div class="container-fluid fill-height">
 		<nav
 			class="navbarBasic navbarColor navbar navbar-expand-lg navbar-light">
-			<a class="navbar-brand navbarColorTitre" style="color: white;">ENI-Enchères</a>
+			<a class="navbar-brand navbarColorTitre" href="/projetEniEncheres" style="color: white;">ENI-Enchères</a>
 		</nav>
 		<div class="divMainContent">
 			<div class="divContent">

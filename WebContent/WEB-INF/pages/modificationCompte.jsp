@@ -2,7 +2,7 @@
 <body class="bg-light">
 	<div class="container-fluid p-0 h-100">
 		<nav class="navbarColor navbar navbar-expand-lg navbar-dark w-100">
-			<a class="navbar-brand text-light navbarColorTitre">ENI-Enchères</a>
+			<a class="navbar-brand text-light navbarColorTitre" href="/projetEniEncheres">ENI-Enchères</a>
 			<%@include file="/WEB-INF/pages/Include/navbarButtons.jsp"%>
 		</nav>
 		<div class="paddingX10 text-left">
