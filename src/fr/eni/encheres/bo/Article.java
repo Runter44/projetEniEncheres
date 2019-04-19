@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Article {
 	
-	private int noVente;
+	private Integer noVente;
 	private String nomArticle;
 	private String description;
 	private Date datesDebutEncheres;
@@ -27,10 +27,10 @@ public class Article {
 		
 	}
 	
-	public int getNoVente() {
+	public Integer getNoVente() {
 		return noVente;
 	}
-	public void setNoVente(int noVente) {
+	public void setNoVente(Integer noVente) {
 		this.noVente = noVente;
 	}
 	

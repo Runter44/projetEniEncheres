@@ -34,7 +34,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 	private static final String INSERT_ARTICLE = "INSERT INTO articles_vendus (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_catgories) VALUES (?,?,?,?,?,?,?,?);";
 	private static final String UPDATE_ARTICLE = "UPDATE articles_vendus SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_catgories = ? WHERE no_article = ?;";
 	private static final String DELETE_ARTICLE = "DELETE FROM articles_vendus WHERE no_article = ?;";
-	private static final String SELECT_LIST_ARTICLE_CRIT = "SELECT * FROM articles_vendus WHERE 1=1 ";
+	private static final String SELECT_LIST_ARTICLE_CRIT = "SELECT * FROM articles_vendus WHERE 1=1";
 
 	
 	@Override
@@ -219,23 +219,21 @@ public class DAOArticle implements InterfaceDAO<Article>{
 		Article articleVendu = null;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			
-			StringBuffer rqt = new StringBuffer(SELECT_ONE_ARTICLE_NAME);
+			StringBuffer rqt = new StringBuffer(SELECT_LIST_ARTICLE_CRIT);
 			
 			if(critArticle != null) {
 				if(StringUtils.isNotBlank(critArticle.getNomArticle())) {
-					
+					rqt.append(" and nom_article like %"+critArticle.getNomArticle()+"%");
+				}
+				if(critArticle.getCat().getNoCategorie() != null) {
+					rqt.append(" and no_catgories = "+critArticle.getCat().getNoCategorie());
 				}
 			
-			
-			
 				PreparedStatement stmt = connexion.prepareStatement(rqt.toString());
-				
-				
-				
-				//stmt.setString(1, name);
-	
+			
 				ResultSet result = stmt.executeQuery();
-				if (result != null && result.next()) {
+				
+				while(result != null && result.next()) {
 					articleVendu = new Article();
 					
 					articleVendu.setNoVente(result.getInt("no_utilisateur"));

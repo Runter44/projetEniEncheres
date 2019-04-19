@@ -26,12 +26,16 @@ public class ArticleManager {
 		return daoArticle.findAll();
 	}
 	
-	public boolean updateArticle(Article user) {
-		return daoArticle.update(user);
+	public boolean updateArticle(Article article) {
+		return daoArticle.update(article);
 	}
 	
-	public boolean deleteArticle(Article user) {
-		return daoArticle.remove(user);
+	public boolean deleteArticle(Article article) {
+		return daoArticle.remove(article);
+	}
+	
+	public List<Article> getListArticleByCrit(Article article){
+		return daoArticle.findListCrit(article);
 	}
 	
 }

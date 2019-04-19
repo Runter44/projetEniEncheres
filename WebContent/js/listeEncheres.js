@@ -31,35 +31,36 @@ $(function() {
       }
     });
     
-    function gestionCheckBox(){
-    	var rad = document.getElementsByName("grpBtnRad");
-    	for (var i = 0; i < rad.length; i++) {
-    	    rad[i].addEventListener('change', function() {
-    	    	if(this.value == "achats"){
-    	    		$('#checkOuvertes').prop('disabled', false);
-    	    		$('#checkMesEncheres').prop('disabled', false);
-    	    		$('#checkRemporter').prop('disabled', false);
-    	    		
-    	    		$('#checkEnCours').prop('disabled', true);
-    	    		$('#checkEnCours').prop('checked', false);
-    	    		$('#checkNonDebuter').prop('disabled', true);
-    	    		$('#checkNonDebuter').prop('checked', false);
-    	    		$('#checkTerminer').prop('disabled', true);
-    	    		$('#checkTerminer').prop('checked', false);
-    	    	}else{
-    	    		$('#checkOuvertes').prop('disabled', true);
-    	    		$('#checkOuvertes').prop('checked', false);
-    	    		$('#checkMesEncheres').prop('disabled', true);
-    	    		$('#checkMesEncheres').prop('checked', false);
-    	    		$('#checkRemporter').prop('disabled', true);
-    	    		$('#checkRemporter').prop('checked', false);
-    	    		
-    	    		$('#checkEnCours').prop('disabled', false);
-    	    		$('#checkNonDebuter').prop('disabled', false);
-    	    		$('#checkTerminer').prop('disabled', false);
-    	    	}
-    	    });
-    	 }
-    }
+    
  });
-	
+
+function gestionCheckBox(){
+	var rad = document.getElementsByName("grpBtnRad");
+	for (var i = 0; i < rad.length; i++) {
+	    rad[i].addEventListener('change', function() {
+	    	if(this.value == "achats"){
+	    		$('#checkOuvertes').prop('disabled', false);
+	    		$('#checkMesEncheres').prop('disabled', false);
+	    		$('#checkRemporter').prop('disabled', false);
+	    		
+	    		$('#checkEnCours').prop('disabled', true);
+	    		$('#checkEnCours').prop('checked', false);
+	    		$('#checkNonDebuter').prop('disabled', true);
+	    		$('#checkNonDebuter').prop('checked', false);
+	    		$('#checkTerminer').prop('disabled', true);
+	    		$('#checkTerminer').prop('checked', false);
+	    	}else{
+	    		$('#checkOuvertes').prop('disabled', true);
+	    		$('#checkOuvertes').prop('checked', false);
+	    		$('#checkMesEncheres').prop('disabled', true);
+	    		$('#checkMesEncheres').prop('checked', false);
+	    		$('#checkRemporter').prop('disabled', true);
+	    		$('#checkRemporter').prop('checked', false);
+	    		
+	    		$('#checkEnCours').prop('disabled', false);
+	    		$('#checkNonDebuter').prop('disabled', false);
+	    		$('#checkTerminer').prop('disabled', false);
+	    	}
+	    });
+	 }
+}

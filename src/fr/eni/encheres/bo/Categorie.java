@@ -2,16 +2,16 @@ package fr.eni.encheres.bo;
 
 public class Categorie {
 	
-	private int noCategorie;
+	private Integer noCategorie;
 	private String libelle;
 	
 	public Categorie() {
 	}
 	
-	public int getNoCategorie() {
+	public Integer getNoCategorie() {
 		return noCategorie;
 	}
-	public void setNoCategorie(int noCategorie) {
+	public void setNoCategorie(Integer noCategorie) {
 		this.noCategorie = noCategorie;
 	}
 	public String getLibelle() {

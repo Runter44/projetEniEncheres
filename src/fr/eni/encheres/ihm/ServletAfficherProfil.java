@@ -18,9 +18,10 @@ public class ServletAfficherProfil extends HttpServlet {
 
     public ServletAfficherProfil() {
         super();
-        this.userManager = new UserManager();
+        userManager = new UserManager();
     }
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			int idUser = Integer.parseInt(request.getPathInfo().substring(1));
@@ -32,6 +33,7 @@ public class ServletAfficherProfil extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/pages/profil.jsp").forward(request, response);
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
