@@ -23,36 +23,24 @@ public class ServletConnexion extends HttpServlet {
         this.userManager = new UserManager();
     }
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getSession().getAttribute("currentUser") != null) {
 			response.sendRedirect("/projetEniEncheres");
 			return;
 		} else {
-			Cookie cookieLogin = null, cookieMdp = null;
-			Cookie[] allCookies = request.getCookies();
-			if (allCookies != null) {
-				for (Cookie cookie : request.getCookies()) {
-					if ("login".equals(cookie.getName())) {
-						cookieLogin = cookie;
-					}
-					if ("mdp".equals(cookie.getName())) {
-						cookieMdp = cookie;
-					}
-				}
-				if (cookieLogin != null && cookieMdp != null) {
-					Utilisateur user = userManager.getUserByPseudo(cookieLogin.getValue());
-					if (user != null) {
-						if (userManager.connectUser(user, cookieMdp.getValue(), request)) {
-							response.sendRedirect("/projetEniEncheres");
-							return;
-						}
-					}
-				}
-			}
+			if (userManager.connectWithCookies(request.getCookies(), request)) {
+				response.sendRedirect("/projetEniEncheres");
+			} else {				
+				request.getRequestDispatcher("/WEB-INF/pages/connexion.jsp").forward(request, response);
+			}		
+			request.setAttribute("LesUsers", userManager.getAllUsers());
 			request.getRequestDispatcher("/WEB-INF/pages/connexion.jsp").forward(request, response);
+
 		}
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String login = request.getParameter("login");
 		String password = request.getParameter("motDePasse");

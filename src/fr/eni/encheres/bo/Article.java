@@ -1,17 +1,17 @@
 package fr.eni.encheres.bo;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
-public class Vente {
+public class Article {
 	
 	private int noVente;
 	private String nomArticle;
 	private String description;
-	private Timestamp datesDebutEncheres;
-	private Timestamp datesFinEncheres;
+	private Date datesDebutEncheres;
+	private Date datesFinEncheres;
 	private int miseAPrix;
 	private int prixVente;
 	
@@ -21,7 +21,7 @@ public class Vente {
 	private Retrait retrait;
 	
 	
-	public Vente() {
+	public Article() {
 		
 		encheres = new ArrayList<Enchere>();
 		
@@ -51,28 +51,28 @@ public class Vente {
 	/**
 	 * @return the datesDebutEncheres
 	 */
-	public Timestamp getDatesDebutEncheres() {
+	public Date getDatesDebutEncheres() {
 		return datesDebutEncheres;
 	}
 
 	/**
 	 * @param datesDebutEncheres the datesDebutEncheres to set
 	 */
-	public void setDatesDebutEncheres(Timestamp datesDebutEncheres) {
+	public void setDatesDebutEncheres(Date datesDebutEncheres) {
 		this.datesDebutEncheres = datesDebutEncheres;
 	}
 
 	/**
 	 * @return the datesFinEncheres
 	 */
-	public Timestamp getDatesFinEncheres() {
+	public Date getDatesFinEncheres() {
 		return datesFinEncheres;
 	}
 
 	/**
 	 * @param datesFinEncheres the datesFinEncheres to set
 	 */
-	public void setDatesFinEncheres(Timestamp datesFinEncheres) {
+	public void setDatesFinEncheres(Date datesFinEncheres) {
 		this.datesFinEncheres = datesFinEncheres;
 	}
 
