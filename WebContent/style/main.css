@@ -54,8 +54,11 @@ body {
 .paddingX15 {
 	padding: 10% 15%;
 }
+.paddingX10{
+	padding:5% 15%;
+}
 .padding5X15 {
-	padding: 5% 15%;
+	padding: 0% 15%;
 }
 .w-50 {
 	width: 50% !important;

@@ -38,4 +38,8 @@ public class ArticleManager {
 		return daoArticle.remove(article);
 	}
 	
+	public List<Article> getListArticleByCrit(Article article){
+		return daoArticle.findListCrit(article);
+	}
+	
 }

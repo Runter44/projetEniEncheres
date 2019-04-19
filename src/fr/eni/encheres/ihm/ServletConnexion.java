@@ -20,7 +20,7 @@ public class ServletConnexion extends HttpServlet {
        
     public ServletConnexion() {
         super();
-        this.userManager = new UserManager();
+        userManager = new UserManager();
     }
 
 	@Override

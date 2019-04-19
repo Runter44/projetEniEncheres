@@ -3,8 +3,8 @@ package fr.eni.encheres.bo;
 import java.util.Date;
 
 public class Article {
-
-	private int noVente;
+	
+	private Integer noVente;
 	private String nomArticle;
 	private String description;
 	private Date datesDebutEncheres;
@@ -15,12 +15,15 @@ public class Article {
 	private Categorie cat;
 	private Utilisateur vendeur;
 	private Retrait retrait;
-
-	public int getId() {
+	
+	
+	public Article() {
+	}
+	
+	public Integer getNoVente() {
 		return noVente;
 	}
-
-	public void setId(int noVente) {
+	public void setNoVente(Integer noVente) {
 		this.noVente = noVente;
 	}
 
