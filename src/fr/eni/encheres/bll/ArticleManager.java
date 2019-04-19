@@ -2,32 +2,40 @@ package fr.eni.encheres.bll;
 
 import java.util.List;
 
-import fr.eni.encheres.bo.Categorie;
+import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.dal.DAOFactory;
-import fr.eni.encheres.dal.impl.DAOCategorie;
+import fr.eni.encheres.dal.impl.DAOArticle;
 
 public class ArticleManager {
 	
-	private static DAOCategorie daoCategorie;
+	private static DAOArticle daoArticle;
 	
 	public ArticleManager() {
-		daoCategorie = DAOFactory.getDAOCategorie();
+		daoArticle = DAOFactory.getDAOArticle();
 	}
 	
-	public Categorie getCatById(int id) {
-		return daoCategorie.find(id);
+	public Article getArticleById(int id) {
+		return daoArticle.find(id);
 	}
 	
-	public List<Categorie> getAllCat() {
-		return daoCategorie.findAll();
+	public Article getArticleByName(String name) {
+		return daoArticle.findByName(name);
 	}
 	
-	public boolean updateCat(Categorie user) {
-		return daoCategorie.update(user);
+	public List<Article> getAllArticles() {
+		return daoArticle.findAll();
 	}
 	
-	public boolean deleteCat(Categorie user) {
-		return daoCategorie.remove(user);
+	public Article addArticle(Article article) {
+		return daoArticle.insert(article);
+	}
+	
+	public boolean updateArticle(Article article) {
+		return daoArticle.update(article);
+	}
+	
+	public boolean deleteArticle(Article article) {
+		return daoArticle.remove(article);
 	}
 	
 }

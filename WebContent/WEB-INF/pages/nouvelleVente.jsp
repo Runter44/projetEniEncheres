@@ -1,6 +1,15 @@
 <%@include file="/WEB-INF/pages/Include/header.jsp"%>
-<body>
-
+<body class="bg-light">
+	<div class="container-fluid p-0 h-100">
+		<nav class="navbarColor navbar navbar-expand-lg navbar-dark w-100">
+			<a class="navbar-brand text-light navbarColorTitre">ENI-Enchères</a>
+			<%@include file="/WEB-INF/pages/Include/navbarButtons.jsp"%>
+		</nav>
+		<div class="padding5X15 text-center">
+			<h1>Nouvelle vente</h1>
+		</div>
+	</div>
+	<!-- 
 	<h1>Nouvelle vente</h1>
 	<p style="font-style: ">${requestScope["Probleme"]}</p>
 	<form method="post" action="">
@@ -30,10 +39,9 @@
 		
 		<div>
 			<input type="submit" name="bouton" value="Publier" class="btn">
-			<!-- <input type="submit" name="bouton" value="Enregistrer">-->
 			<input type="submit" name="bouton" value="Annuler" class="btn">	
 		</div>
 	</form>	
-	
+	-->
 </body>
 </html>

@@ -34,12 +34,8 @@ public class ServletConnexion extends HttpServlet {
 			} else {				
 				request.getRequestDispatcher("/WEB-INF/pages/connexion.jsp").forward(request, response);
 			}
-<<<<<<< HEAD
-			
 			request.setAttribute("LesUsers", userManager.getAllUsers());
 			request.getRequestDispatcher("/WEB-INF/pages/connexion.jsp").forward(request, response);
-=======
->>>>>>> 6278d4d1fcae6aa0d10b5e5de51d2379252d74b1
 		}
 	}
 
