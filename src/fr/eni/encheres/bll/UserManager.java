@@ -2,6 +2,7 @@ package fr.eni.encheres.bll;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import fr.eni.encheres.bo.Utilisateur;
@@ -53,5 +54,28 @@ public class UserManager {
 	
 	private String hashPassword(String plainPassword) {
 		return plainPassword;
+	}
+
+	public boolean connectWithCookies(Cookie[] allCookies, HttpServletRequest request) {
+		Cookie cookieLogin = null, cookieMdp = null;
+		if (allCookies != null) {
+			for (Cookie cookie : allCookies) {
+				if ("login".equals(cookie.getName())) {
+					cookieLogin = cookie;
+				}
+				if ("mdp".equals(cookie.getName())) {
+					cookieMdp = cookie;
+				}
+			}
+			if (cookieLogin != null && cookieMdp != null) {
+				Utilisateur user = this.getUserByPseudo(cookieLogin.getValue());
+				if (user != null) {
+					if (this.connectUser(user, cookieMdp.getValue(), request)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }
