@@ -1,3 +1,6 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="fr.eni.encheres.bll.CategorieManager"%>
 <%@page import="fr.eni.encheres.dal.DAOFactory"%>
 <%@include file="/WEB-INF/pages/Include/header.jsp"%>
@@ -9,62 +12,71 @@
 		</nav>
 		<div class="padding5X15">
 			<h1>Nouvelle vente</h1>
-			<form>
+			<form method="post">
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="articleName">Nom de l'article</label>
-						<input type="text" class="form-control" id="articleName" placeholder="Nom de l'article">
+						<input type="text" class="form-control" id="articleName" placeholder="Nom de l'article" name="articleName" maxlength="30" required="required">
 					</div>
 					<div class="form-group col-md-6">
 						<label for="articleCategorie">Catégorie de l'article</label>
-						<select type="text" class="form-control" id="articleCategorie">
+						<select class="form-control" id="articleCategorie">
 						<c:forEach items="<%= (new CategorieManager()).getAllCat() %>" var="categorie">
 							<option value="${ categorie.getNoCategorie() }">${ categorie.getLibelle() }</option>
 						</c:forEach>
 						</select>
 					</div>
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-6 ">
 						<label for="articleDescription">Description de l'article</label>
-						<textarea class="form-control" id="articleDescription" placeholder="Description de l'article">
-						</textarea>
+						<textarea maxlength="300" class="form-control" id="articleDescription" name="articleDescription" placeholder="Description de l'article" rows="5" required="required"></textarea>
+					</div>
+					<div class="form-group col-md-6">
+						<div class="form-row mb-4">
+						<c:set var="now" value="<%= new Date()%>" />
+							<div class="col-md-6">
+								<label for="articleDebutEnchere">Début de l'enchère</label>
+								<input type="date" class="form-control" id="articleDebutEnchere" name="articleDebutEnchere" placeholder="AAAA-MM-JJ" required="required" min="<fmt:formatDate value="${now}" type="date" pattern="yyyy-MM-dd"/>" value="<fmt:formatDate value="${now}" type="date" pattern="yyyy-MM-dd"/>">
+							</div>
+							<div class="col-md-6">
+								<label for="articleFinEnchere">Fin de l'enchère</label>
+								<input type="date" class="form-control" id="articleFinEnchere" name="articleFinEnchere" placeholder="AAAA-MM-JJ" required="required" min="<fmt:formatDate value="${now}" type="date" pattern="yyyy-MM-dd"/>" value="<fmt:formatDate value="${now}" type="date" pattern="yyyy-MM-dd"/>">
+							</div>
+						</div>
+						<div>
+							<label for="articlePrix">Prix de départ</label>
+							<input type="number" class="form-control" id="articlePrix" name="articlePrix" required="required" min="0" placeholder="Prix de départ">
+						</div>
+					</div>
+					<div class="form-group col-md-12">
+						<label>Photo de l'article</label>
+						<div class="custom-file">
+						  <input type="file" class="custom-file-input" id="articlePhoto" name="articlePhoto" required="required" accept="image/png, image/jpeg">
+						  <label class="custom-file-label" for="articlePhoto" data-browse="Parcourir">Choisissez une photo</label>
+						</div>
+					</div>
+					<fieldset class="col-md-12">
+						<legend>Lieu de retrait</legend>
+						<div class="form-group">
+							<label for="articleRetraitRue">Adresse</label>
+							<input type="text" class="form-control" id="articleRetraitRue" name="articleRetraitRue" required="required" placeholder="Adresse du lieu de retrait" maxlength="150" value="${ sessionScope.currentUser.getRue() }">
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-3">
+								<label for="articleRetraitRue">Code postal</label>
+								<input type="text" class="form-control" id="articleRetraitCodePostal" name="articleRetraitCodePostal" placeholder="Code postal" value="${ sessionScope.currentUser.getCodePostal() }">
+							</div>
+							<div class="form-group col-md-9">
+								<label for="articleRetraitRue">Ville</label>
+								<input type="text" class="form-control" id="articleRetraitVille" name="articleRetraitVille" placeholder="Nom de la ville" maxlength="150" value="${ sessionScope.currentUser.getVille() }">
+							</div>
+						</div>
+					</fieldset>
+					<div class="col-md-12 text-center">
+						<input type="submit" value="Enregistrer" class="btn btn-success">
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
-	<!-- 
-	<h1>Nouvelle vente</h1>
-	<p style="font-style: ">${requestScope["Probleme"]}</p>
-	<form method="post" action="">
-		<div>
-			<label for="article" class="labelAlign"> Article:</label><input id="article" type="text" name="paramNouvelleVenteNom" class="champsFormulaire"><br>
-			<label for="description" class="labelAlign">Description:</label><input id="description" type="text" name="paramNouvelleVenteDescription"><br>
-			<label for="photo" class="labelAlign">Photo de l'article:</label><input id="photo" type="submit" name="bouton" value="UPLOADER" class="btn" ><input type="file" name="pic" accept="image/*" ><br>
-			<label for="misePrix" class="labelAlign">Mise à prix:</label><input id="misePrix" type="number" name="paramNouvelleVentePrixInitial" min="1" value="100"><br>
-			
-       <label for="categorie" class="labelAlign">Categorie:</label>
-       <select id="categorie" name="paramNouvelleVenteCategorie" style="margin-bottom: 5px;margin-left: 4px ">
-      		<c:forEach var="cat" items="${requestScope.listeCat}">
-				<option value="${cat.getNoCategorie()}">${cat.getLibelle()}</option>
-			</c:forEach>
-		</select><br>
-		
-		<label for="finEnchere" class="labelAlign" style="float: left;">Fin de l'enchère:</label>
-		<input id="finEnchere" type="date" name="paramNouvelleVenteDate">
-		
-		</div>		
-		<h2>Retrait (Optionnel)</h2>
-		<div style="border-style:solid; border-color: black; width:310px">
-			<label for="rue" class="labelAlign">Rue:</label><input id="rue" type="text" name="paramNouvelleVenteRue" value="${sessionScope.user.getRue()}"><br>
-			<label for="cp" class="labelAlign">Code postal:</label><input id="cp" type="text" name="paramNouvelleVenteCodePostal" value="${sessionScope.user.getCodePostal()}"><br>	
-			<label for="ville" class="labelAlign">Ville:</label><input id="ville" type="text" name="paramNouvelleVenteVille" value="${sessionScope.user.getVille()}"><br>
-		</div>
-		
-		<div>
-			<input type="submit" name="bouton" value="Publier" class="btn">
-			<input type="submit" name="bouton" value="Annuler" class="btn">	
-		</div>
-	</form>	
-	-->
 </body>
 </html>

@@ -2,7 +2,7 @@ package fr.eni.encheres.bo;
 
 public class Utilisateur {
 
-	private int id;
+	private Integer id;
 	private String pseudo;
 	private String password;
 	private String nom;
@@ -40,11 +40,11 @@ public class Utilisateur {
 		setPseudo(nomUser);
 		setPassword(mdp);
 	}
-
-	public int getId() {
+	
+	public Integer getId() {
 		return id;
 	}
-	public Utilisateur setId(int noUtilisateur) {
+	public Utilisateur setId(Integer noUtilisateur) {
 		this.id = noUtilisateur;
 		return this;
 	}

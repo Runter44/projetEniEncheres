@@ -1,6 +1,6 @@
 package fr.eni.encheres.bo;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Enchere implements Comparable{
 	
@@ -8,7 +8,7 @@ public class Enchere implements Comparable{
 	
 	private Article vente;
 	
-	private LocalDateTime dateEnchere;
+	private Date dateEnchere;
 	
 	private int valeur;
 
@@ -34,11 +34,11 @@ public class Enchere implements Comparable{
 		this.vente = vente;
 	}
 
-	public LocalDateTime getDateEnchere() {
+	public Date getDateEnchere() {
 		return dateEnchere;
 	}
 
-	public void setDateEnchere(LocalDateTime dateEnchere) {
+	public void setDateEnchere(Date dateEnchere) {
 		this.dateEnchere = dateEnchere;
 	}
 
