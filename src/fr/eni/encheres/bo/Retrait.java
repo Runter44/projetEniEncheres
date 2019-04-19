@@ -4,7 +4,7 @@ public class Retrait {
 	
 	private String rue,codePostal,ville;
 	
-	private Vente vente;
+	private Article vente;
 
 	public Retrait() {
 		
@@ -36,11 +36,11 @@ public class Retrait {
 		this.ville = ville;
 	}
 
-	public Vente getVente() {
+	public Article getVente() {
 		return vente;
 	}
 
-	public void setVente(Vente vente) {
+	public void setVente(Article vente) {
 		this.vente = vente;
 	}
 	

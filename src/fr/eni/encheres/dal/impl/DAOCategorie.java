@@ -18,11 +18,11 @@ import fr.eni.encheres.dal.InterfaceDAO;
 
 public class DAOCategorie implements InterfaceDAO<Categorie> {
 	
-	private static final String SELECT_ONE_CAT_ID = "SELECT * FROM categories WHERE no_article = ?;";
+	private static final String SELECT_ONE_CAT_ID = "SELECT * FROM categories WHERE no_categorie = ?;";
 	private static final String SELECT_ALL_CAT = "SELECT * FROM categories;";
-	private static final String INSERT_CAT = "INSERT INTO categories (nom_article) VALUES (?);";
-	private static final String UPDATE_CAT = "UPDATE categories SET nom_article = ?;";
-	private static final String DELETE_CAT = "DELETE FROM categories WHERE no_article = ?;";
+	private static final String INSERT_CAT = "INSERT INTO categories (libelle) VALUES (?);";
+	private static final String UPDATE_CAT = "UPDATE categories SET libelle = ?;";
+	private static final String DELETE_CAT = "DELETE FROM categories WHERE no_categorie = ?;";
 
 	
 	@Override
@@ -35,8 +35,8 @@ public class DAOCategorie implements InterfaceDAO<Categorie> {
 			ResultSet result = stmt.executeQuery();
 			if (result != null && result.next()) {
 				categorie = new Categorie();
-				categorie.setNoCategorie(result.getInt("no_utilisateur"));
-				categorie.setLibelle(result.getString("nom_article"));
+				categorie.setNoCategorie(result.getInt("no_categorie"));
+				categorie.setLibelle(result.getString("libelle"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -55,9 +55,10 @@ public class DAOCategorie implements InterfaceDAO<Categorie> {
 			ResultSet result = stmt.executeQuery();
 			while(result != null && result.next()) {
 				uneCategorie = new Categorie();
-				uneCategorie.setNoCategorie(result.getInt("no_utilisateur"));
-				uneCategorie.setLibelle(result.getString("nom_article"));
-
+				uneCategorie.setNoCategorie(result.getInt("no_categorie"));
+				uneCategorie.setLibelle(result.getString("libelle"));
+				
+				lesCategorie.add(uneCategorie);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

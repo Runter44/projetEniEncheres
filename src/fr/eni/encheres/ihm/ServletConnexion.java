@@ -23,6 +23,7 @@ public class ServletConnexion extends HttpServlet {
         this.userManager = new UserManager();
     }
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getSession().getAttribute("currentUser") != null) {
 			response.sendRedirect("/projetEniEncheres");
@@ -49,10 +50,13 @@ public class ServletConnexion extends HttpServlet {
 					}
 				}
 			}
+			
+			request.setAttribute("LesUsers", userManager.getAllUsers());
 			request.getRequestDispatcher("/WEB-INF/pages/connexion.jsp").forward(request, response);
 		}
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String login = request.getParameter("login");
 		String password = request.getParameter("motDePasse");

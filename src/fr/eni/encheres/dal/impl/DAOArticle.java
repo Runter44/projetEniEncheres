@@ -9,13 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Utilisateur;
-import fr.eni.encheres.bo.Vente;
+import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.dal.ConnectionProvider;
 import fr.eni.encheres.dal.InterfaceDAO;
 
@@ -23,7 +24,7 @@ import fr.eni.encheres.dal.InterfaceDAO;
  * @author amartin2018
  *
  */
-public class DAOVente implements InterfaceDAO<Vente>{
+public class DAOArticle implements InterfaceDAO<Article>{
 	
 	private static final String SELECT_ONE_SELL_ID = "SELECT * FROM articles_vendus WHERE no_article = ?;";
 	private static final String SELECT_ONE_SELL_NAME = "SELECT * FROM articles_vendus WHERE nom_article = ?;";
@@ -34,21 +35,21 @@ public class DAOVente implements InterfaceDAO<Vente>{
 
 	
 	@Override
-	public Vente find(int id) {
-		Vente articleVendu = null;
+	public Article find(int id) {
+		Article articleVendu = null;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = connexion.prepareStatement(SELECT_ONE_SELL_ID);
 			stmt.setInt(1, id);
 
 			ResultSet result = stmt.executeQuery();
 			if (result != null && result.next()) {
-				articleVendu = new Vente();
-
+				articleVendu = new Article();
+			
 				articleVendu.setNoVente(result.getInt("no_utilisateur"));
 				articleVendu.setNomArticle(result.getString("nom_article"));
 				articleVendu.setDescription(result.getString("description"));
-				articleVendu.setDatesDebutEncheres(Timestamp.valueOf(result.getString("date_debut_encheres")));
-				articleVendu.setDatesFinEncheres(Timestamp.valueOf(result.getString("date_fin_encheres")));
+				articleVendu.setDatesDebutEncheres(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(result.getString("date_debut_encheres")));
+				articleVendu.setDatesFinEncheres(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(result.getString("date_fin_encheres")));
 				articleVendu.setMiseAPrix(Integer.parseInt(result.getString("prix_initial")));
 				articleVendu.setPrixVente(Integer.parseInt(result.getString("prix_vente")));
 				
@@ -62,25 +63,27 @@ public class DAOVente implements InterfaceDAO<Vente>{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
 		return articleVendu;
 	}
 	
-	public Vente findByName(String name) {
-		Vente articleVendu = null;
+	public Article findByName(String name) {
+		Article articleVendu = null;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = connexion.prepareStatement(SELECT_ONE_SELL_NAME);
 			stmt.setString(1, name);
 
 			ResultSet result = stmt.executeQuery();
 			if (result != null && result.next()) {
-				articleVendu = new Vente();
-
+				articleVendu = new Article();
+				
 				articleVendu.setNoVente(result.getInt("no_utilisateur"));
 				articleVendu.setNomArticle(result.getString("nom_article"));
 				articleVendu.setDescription(result.getString("description"));
-				articleVendu.setDatesDebutEncheres(Timestamp.valueOf(result.getString("date_debut_encheres")));
-				articleVendu.setDatesFinEncheres(Timestamp.valueOf(result.getString("date_fin_encheres")));
+				articleVendu.setDatesDebutEncheres(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(result.getString("date_debut_encheres")));
+				articleVendu.setDatesFinEncheres(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(result.getString("date_fin_encheres")));
 				articleVendu.setMiseAPrix(Integer.parseInt(result.getString("prix_initial")));
 				articleVendu.setPrixVente(Integer.parseInt(result.getString("prix_vente")));
 				
@@ -91,30 +94,33 @@ public class DAOVente implements InterfaceDAO<Vente>{
 				DAOCategorie daoCat = new DAOCategorie();
 				Categorie cat = daoCat.find(Integer.parseInt(result.getString("no_catgories")));
 				articleVendu.setCat(cat);
+				
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return articleVendu;
 	}
 
 	@Override
-	public List<Vente> findAll() {
-		List<Vente> LesArticlesVendus = new ArrayList<Vente>();
-		Vente unArticleVendu = null;
+	public List<Article> findAll() {
+		List<Article> LesArticlesVendus = new ArrayList<Article>();
+		Article unArticleVendu = null;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = connexion.prepareStatement(SELECT_ALL_SELL);
 			
 
 			ResultSet result = stmt.executeQuery();
 			while(result != null && result.next()) {
-				unArticleVendu = new Vente();
-
+				unArticleVendu = new Article();
+				
 				unArticleVendu.setNoVente(result.getInt("no_utilisateur"));
 				unArticleVendu.setNomArticle(result.getString("nom_article"));
 				unArticleVendu.setDescription(result.getString("description"));
-				unArticleVendu.setDatesDebutEncheres(Timestamp.valueOf(result.getString("date_debut_encheres")));
-				unArticleVendu.setDatesFinEncheres(Timestamp.valueOf(result.getString("date_fin_encheres")));
+				unArticleVendu.setDatesDebutEncheres(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(result.getString("date_debut_encheres")));
+				unArticleVendu.setDatesFinEncheres(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(result.getString("date_fin_encheres")));
 				unArticleVendu.setMiseAPrix(Integer.parseInt(result.getString("prix_initial")));
 				unArticleVendu.setPrixVente(Integer.parseInt(result.getString("prix_vente")));
 				
@@ -125,18 +131,20 @@ public class DAOVente implements InterfaceDAO<Vente>{
 				DAOCategorie daoCat = new DAOCategorie();
 				Categorie cat = daoCat.find(Integer.parseInt(result.getString("no_catgories")));
 				unArticleVendu.setCat(cat);
-				
+			
 				//Ajout d'un article à la liste
 				LesArticlesVendus.add(unArticleVendu);
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return LesArticlesVendus;
 	}
 
 	@Override
-	public Vente insert(Vente articleVendu) {
+	public Article insert(Article articleVendu) {
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = connexion.prepareStatement(INSERT_SELL, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, articleVendu.getNomArticle());
@@ -163,7 +171,7 @@ public class DAOVente implements InterfaceDAO<Vente>{
 	}
 
 	@Override
-	public boolean update(Vente articleVendu) {
+	public boolean update(Article articleVendu) {
 		boolean updateRealiser = false;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = connexion.prepareStatement(UPDATE_SELL);
@@ -188,7 +196,7 @@ public class DAOVente implements InterfaceDAO<Vente>{
 	}
 
 	@Override
-	public boolean remove(Vente articleVendu) {
+	public boolean remove(Article articleVendu) {
 		boolean deletRealiser = false;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = connexion.prepareStatement(DELETE_SELL);
