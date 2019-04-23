@@ -22,8 +22,7 @@
 					<c:forEach var="cat" items="${listeCat}">
 						<option value="${cat.getNoCategorie()}">${cat.getLibelle()}</option>
 					</c:forEach>
-				</select> <br>
-				<br>
+				</select> <br> <br>
 				<c:if test="${currentUser != null}">
 					<div class="row">
 						<div class="col-md-6">
@@ -76,13 +75,18 @@
 					</c:forEach>-->
 					<c:forEach var="i" begin="0" end="10" step="2">
 						<div class="col-md-5 h-20 m-3 cardEnchere">
+
 							<div class="row">
 								<div class="col-md-6 col-sm-6">
-									<img class="imgEnchere img-fluid" alt="img de l'objet" src="http://experia-agency.com/wp-content/uploads/2016/06/ench-pict-2.jpg">
+									<img class="img-fluid" alt="img de l'objet"
+										src="http://experia-agency.com/wp-content/uploads/2016/06/ench-pict-2.jpg">
 								</div>
 								<div class="col-md-6 col-sm-6">
-									<a>Lien vers l'objet</a> <label>Prix :</label> <label>Fin
-										de l'enchères :</label> <label>Vendeur :</label>
+									<a
+										href="/projetEniEncheres/detail-vente/1">Lien
+										vers l'objet<label>Prix :</label> <label>Fin de
+											l'enchères :</label> <label>Vendeur :</label>
+									</a>
 								</div>
 							</div>
 						</div>
