@@ -228,6 +228,10 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				if(critArticle.getCat().getNoCategorie() != null) {
 					rqt.append(" and no_catgories = "+critArticle.getCat().getNoCategorie());
 				}
+				if(critArticle.getCat() != null) {
+					rqt.append(" and no_catgories = "+critArticle.getCat().getNoCategorie());
+				}
+				
 			
 				PreparedStatement stmt = connexion.prepareStatement(rqt.toString());
 			
@@ -249,7 +253,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 					articleVendu.setVendeur(user);
 					
 					DAOCategorie daoCat = new DAOCategorie();
-					Categorie cat = daoCat.find(Integer.parseInt(result.getString("no_catgories")));
+					Categorie cat = daoCat.find(Integer.parseInt(result.getString("no_catgorie")));
 					articleVendu.setCat(cat);
 					
 					LesArticlesVendus.add(articleVendu);
