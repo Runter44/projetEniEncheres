@@ -16,7 +16,6 @@
 	<script src="/projetEniEncheres/js/jquery.min.js" type="text/javascript"></script>
 	<script src="/projetEniEncheres/js/bootstrap.bundle.min.js"
 	type="text/javascript"></script>
-	<script src="/projetEniEncheres/js/main.js" type="text/javascript"></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <title>${requestScope.pageTitle}</title>
