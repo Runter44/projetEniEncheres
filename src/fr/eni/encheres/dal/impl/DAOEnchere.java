@@ -3,57 +3,71 @@
  */
 package fr.eni.encheres.dal.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
+import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Enchere;
+import fr.eni.encheres.bo.Utilisateur;
+import fr.eni.encheres.criteres.CritEnchere;
+import fr.eni.encheres.dal.ConnectionProvider;
 import fr.eni.encheres.dal.InterfaceDAO;
 
 
 public class DAOEnchere implements InterfaceDAO<Enchere> {
 	
-	private static final String SELECT_ALL_CAT = "SELECT * FROM categories;";
-	private static final String INSERT_CAT = "INSERT INTO categories (libelle) VALUES (?);";
-	private static final String UPDATE_CAT = "UPDATE categories SET libelle = ?;";
-	private static final String DELETE_CAT = "DELETE FROM categories WHERE no_categorie = ?;";
-	@Override
-	public Enchere find(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public List<Enchere> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Enchere insert(Enchere t) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public boolean update(Enchere t) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean remove(Enchere t) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	private static final String SELECT_ALL_ENCHERES = "SELECT * FROM encheres;";
+	private static final String SELECT_ONE_ENCHERE_ARTICLE_ID = "SELECT * FROM encheres where no_article = ?;";
 	
-	/*@Override
+	private static final String INSERT_ENCHERE = "INSERT INTO encheres (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?, ?, ?, ?);";
+	private static final String UPDATE_ENCHERE = "UPDATE categories SET no_utilisateur=?, no_article=?, date_enchere=?, montant_enchere=?;";
+	private static final String DELETE_ENCHERE = "DELETE FROM categories WHERE no_article = ? AND no_utilisateur = ?;";
+	
+	private static final String SELECT_LIST_ARTICLE_CRIT = "SELECT *"
+														+ " FROM encheres E"
+														+ " JOIN articles_vendus A ON E.no_article=A.no_article"
+														+ " JOIN utilisateurs U ON E.no_utilisateur=U.no_utilisateur"
+														+ " WHERE 1=1";
+	
+	private DAOArticle daoArticle;
+	private DAOUtilisateur daoUtilisateur;
+	
+	
+	public DAOEnchere() {
+		DAOArticle daoArticle = new DAOArticle();
+		DAOUtilisateur daoUtilisateur = new DAOUtilisateur();
+	}
+	
+	@Override
 	public Enchere find(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public Enchere findByNoArticle(int id) {
 		Enchere enchere = null;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(SELECT_ONE_ENCHERE_ID);
+			PreparedStatement stmt = connexion.prepareStatement(SELECT_ONE_ENCHERE_ARTICLE_ID);
 			stmt.setInt(1, id);
 
 			ResultSet result = stmt.executeQuery();
-			if (result != null && result.next()) {
+			while(result != null && result.next()) {
+				Article article = daoArticle.find(id);
+				Utilisateur utilisateur = daoUtilisateur.find(result.getInt("no_utilisateur"));
 				enchere = new Enchere();
-				enchere.s(result.getInt("no_categorie"));
-				enchere.setLibelle(result.getString("libelle"));
+				enchere.setVente(article);
+				enchere.setUser(utilisateur);
+				enchere.setValeur(result.getInt("montant_enchere"));
+				enchere.setDateEnchere(new Date(result.getString("date_enchere")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -66,16 +80,18 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 		List<Enchere> lesEncheres = new ArrayList<Enchere>();
 		Enchere uneEnchere = null;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(SELECT_ALL_CAT);
+			PreparedStatement stmt = connexion.prepareStatement(SELECT_ALL_ENCHERES);
 			
 
 			ResultSet result = stmt.executeQuery();
 			while(result != null && result.next()) {
-				uneEnchere = new Categorie();
-				uneEnchere.setNoCategorie(result.getInt("no_categorie"));
-				uneEnchere.setLibelle(result.getString("libelle"));
-				
-				lesEncheres.add(uneEnchere);
+				Article article = daoArticle.find(result.getInt("no_article"));
+				Utilisateur utilisateur = daoUtilisateur.find(result.getInt("no_utilisateur"));
+				uneEnchere = new Enchere();
+				uneEnchere.setVente(article);
+				uneEnchere.setUser(utilisateur);
+				uneEnchere.setValeur(result.getInt("montant_enchere"));
+				uneEnchere.setDateEnchere(new Date(result.getString("date_enchere")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -86,15 +102,15 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 	@Override
 	public Enchere insert(Enchere enchere) {
 		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(INSERT_CAT, Statement.RETURN_GENERATED_KEYS);
-			stmt.setString(1, enchere.getLibelle());
-			
+			PreparedStatement stmt = connexion.prepareStatement(INSERT_ENCHERE);
+			stmt.setInt(1, enchere.getUser().getId());
+			stmt.setInt(1, enchere.getVente().getNoVente());
+			java.sql.Date sqlDate = new java.sql.Date(enchere.getDateEnchere().getTime());
+			stmt.setDate(1, sqlDate);
+			stmt.setInt(1, enchere.getValeur());
 
 			stmt.executeUpdate();
-			ResultSet res = stmt.getGeneratedKeys();
-			if (res.next()) {
-				enchere.setNoCategorie(res.getInt(1));
-			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -106,8 +122,12 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 	public boolean update(Enchere enchere) {
 		boolean updateRealiser = false;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(UPDATE_CAT);
-			stmt.setString(1, enchere.getLibelle());
+			PreparedStatement stmt = connexion.prepareStatement(UPDATE_ENCHERE);
+			stmt.setInt(1, enchere.getUser().getId());
+			stmt.setInt(1, enchere.getVente().getNoVente());
+			java.sql.Date sqlDate = new java.sql.Date(enchere.getDateEnchere().getTime());
+			stmt.setDate(1, sqlDate);
+			stmt.setInt(1, enchere.getValeur());
 			stmt.executeUpdate();
 			updateRealiser = true;
 		} catch (SQLException e) {
@@ -121,8 +141,10 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 	public boolean remove(Enchere enchere) {
 		boolean deletRealiser = false;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(DELETE_CAT);
-			stmt.setInt(1, categorie.getNoCategorie());
+			PreparedStatement stmt = connexion.prepareStatement(DELETE_ENCHERE);
+			stmt.setInt(1, enchere.getVente().getNoVente());
+			stmt.setInt(2, enchere.getUser().getId());
+			
 			stmt.executeUpdate();
 			deletRealiser = true;
 		} catch (SQLException e) {
@@ -130,6 +152,75 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 			deletRealiser = false;
 		}
 		return deletRealiser;
-	}*/
+	}
+	
+	public List<Enchere> findListCrit(CritEnchere critEnchere) {
+		List<Enchere> LesEncheres = new ArrayList<Enchere>();
+		Enchere enchere = null;
+		try (Connection connexion = ConnectionProvider.getConnection()) {
+			
+			StringBuffer rqt = new StringBuffer(SELECT_LIST_ARTICLE_CRIT);
+			
+			if(critEnchere != null) {
+				if(critEnchere.getVente() != null) {
+					if(critEnchere.getVente().getNoVente() != null) {
+						rqt.append(" and A.no_article = "+critEnchere.getVente().getNoVente());
+					}
+					if(StringUtils.isNotBlank(critEnchere.getVente().getNomArticle())) {
+						rqt.append(" and A.nom_article like %"+critEnchere.getVente().getNomArticle()+"%");
+					}
+					if(critEnchere.getVente().getCat() != null) {
+						rqt.append(" and A.no_catgories = "+critEnchere.getVente().getNomArticle());
+					}
+					if(critEnchere.getVente().getDatesDebutEncheres() != null) {
+						if(critEnchere.isNonDebute()) {
+							rqt.append(" and A.date_debut_encheres < "+critEnchere.getVente().getDatesDebutEncheres());
+						}else {
+							rqt.append(" and A.date_debut_encheres >= "+critEnchere.getVente().getDatesDebutEncheres());
+						}
+					}
+					if(critEnchere.getVente().getDatesFinEncheres() != null) {
+						rqt.append(" and A.date_fin_encheres < "+critEnchere.getVente().getDatesFinEncheres());
+					}
+				}
+				if(critEnchere.getUser() != null) {
+					if(critEnchere.getUser().getId() != null) {
+						rqt.append(" and U.no_utilisateur = "+critEnchere.getUser().getId());
+					}
+				}
+				if(critEnchere.isEnCours()) {
+					if(critEnchere.getDateEnchere() != null) {	
+						rqt.append(" and A.date_fin_encheres > "+critEnchere.getDateEnchere());
+					}
+				}else {
+					if(critEnchere.getDateEnchere() != null) {
+						SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+						String today =  df.format(new Date());
+						rqt.append(" and A.date_fin_encheres <= "+today);
+					}
+				}
+			
+				PreparedStatement stmt = connexion.prepareStatement(rqt.toString());
+			
+				ResultSet result = stmt.executeQuery();
+				
+				while(result != null && result.next()) {
+					Article article = daoArticle.find(result.getInt("no_article"));
+					Utilisateur utilisateur = daoUtilisateur.find(result.getInt("no_utilisateur"));
+					enchere = new Enchere();
+					enchere.setVente(article);
+					enchere.setUser(utilisateur);
+					enchere.setValeur(result.getInt("montant_enchere"));
+					enchere.setDateEnchere(new Date(result.getString("date_enchere")));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return LesEncheres;
+	}
+
+	
+
 
 }

@@ -10,9 +10,9 @@
 			<a class="navbar-brand text-light navbarColorTitre" href="/projetEniEncheres">ENI-Enchères</a>
 			<%@include file="/WEB-INF/pages/Include/navbarButtons.jsp"%>
 		</nav>
-		<div class="padding5X15">
+		<div class="paddingX10">
 			<h1>Nouvelle vente</h1>
-			<form method="post">
+			<form method="post" enctype="multipart/form-data">
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="articleName">Nom de l'article</label>
@@ -20,7 +20,7 @@
 					</div>
 					<div class="form-group col-md-6">
 						<label for="articleCategorie">Catégorie de l'article</label>
-						<select class="form-control" id="articleCategorie">
+						<select class="form-control" id="articleCategorie" name="articleCategorie">
 						<c:forEach items="<%= (new CategorieManager()).getAllCat() %>" var="categorie">
 							<option value="${ categorie.getNoCategorie() }">${ categorie.getLibelle() }</option>
 						</c:forEach>
@@ -32,14 +32,14 @@
 					</div>
 					<div class="form-group col-md-6">
 						<div class="form-row mb-4">
-						<c:set var="now" value="<%= new Date()%>" />
+						<c:set var="now" value="<%= new Date() %>" />
 							<div class="col-md-6">
 								<label for="articleDebutEnchere">Début de l'enchère</label>
 								<input type="date" class="form-control" id="articleDebutEnchere" name="articleDebutEnchere" placeholder="AAAA-MM-JJ" required="required" min="<fmt:formatDate value="${now}" type="date" pattern="yyyy-MM-dd"/>" value="<fmt:formatDate value="${now}" type="date" pattern="yyyy-MM-dd"/>">
 							</div>
 							<div class="col-md-6">
 								<label for="articleFinEnchere">Fin de l'enchère</label>
-								<input type="date" class="form-control" id="articleFinEnchere" name="articleFinEnchere" placeholder="AAAA-MM-JJ" required="required" min="<fmt:formatDate value="${now}" type="date" pattern="yyyy-MM-dd"/>" value="<fmt:formatDate value="${now}" type="date" pattern="yyyy-MM-dd"/>">
+								<input type="date" class="form-control" id="articleFinEnchere" name="articleFinEnchere" placeholder="AAAA-MM-JJ" required="required" min="<fmt:formatDate value="${now}" type="date" pattern="yyyy-MM-dd"/>">
 							</div>
 						</div>
 						<div>
@@ -51,7 +51,7 @@
 						<label>Photo de l'article</label>
 						<div class="custom-file">
 						  <input type="file" class="custom-file-input" id="articlePhoto" name="articlePhoto" required="required" accept="image/png, image/jpeg">
-						  <label class="custom-file-label" for="articlePhoto" data-browse="Parcourir">Choisissez une photo</label>
+						  <label class="custom-file-label" for="articlePhoto" id="articlePhotoLabel" data-browse="Parcourir">Choisissez une photo</label>
 						</div>
 					</div>
 					<fieldset class="col-md-12">
@@ -78,5 +78,6 @@
 			</form>
 		</div>
 	</div>
+<%@include file="/WEB-INF/pages/Include/footer.jsp"%>
 </body>
 </html>
