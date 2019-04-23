@@ -6,7 +6,7 @@ public class Enchere implements Comparable{
 	
 	private Utilisateur user;
 	
-	private Article vente;
+	private Article article;
 	
 	private Date dateEnchere;
 	
@@ -27,11 +27,11 @@ public class Enchere implements Comparable{
 	}
 
 	public Article getVente() {
-		return vente;
+		return article;
 	}
 
 	public void setVente(Article vente) {
-		this.vente = vente;
+		this.article = vente;
 	}
 
 	public Date getDateEnchere() {

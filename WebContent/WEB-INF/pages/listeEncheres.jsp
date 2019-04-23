@@ -59,7 +59,7 @@
 				</div>
 				<hr>
 				<div class="row d-flex justify-content-center">
-					<!--<c:forEach items="${ listeEncheres }" var="enchere"
+					<c:forEach items="${ lesEncheres }" var="enchere"
 						varStatus="status">
 						<div class="col-md-6">
 							<div class="row">
@@ -67,13 +67,13 @@
 									<img alt="img de l'objet" src="">
 								</div>
 								<div class="col-md-6">
-									<a>Lien vers l'objet</a> <label>Prix :</label> <label>Fin
+									<a href="/projetEniEncheres/detail-vente/${enchere.article.noVente}">Lien vers l'objet</a> <label>Prix :</label> <label>Fin
 										de l'enchères :</label> <label>Vendeur :</label>
 								</div>
 							</div>
 						</div>
-					</c:forEach>-->
-					<c:forEach var="i" begin="0" end="10" step="2">
+					</c:forEach>
+					<!--<c:forEach var="i" begin="0" end="10" step="2">
 						<div class="col-md-5 h-20 m-3 cardEnchere">
 
 							<div class="row">
@@ -90,7 +90,7 @@
 								</div>
 							</div>
 						</div>
-					</c:forEach>
+					</c:forEach>-->
 				</div>
 			</form>
 		</div>
