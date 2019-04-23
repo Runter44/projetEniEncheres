@@ -7,11 +7,19 @@ public class Retrait {
 	private Article vente;
 
 	public Retrait() {
-		
-		
-		
 	}
 	
+	public Retrait(String rue, String codePostal, String ville) {
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+	}
+	
+	public Retrait(String rue, String codePostal, String ville, Article vente) {
+		this(rue, codePostal, ville);
+		this.vente = vente;
+	}
+
 	public String getRue() {
 		return rue;
 	}
