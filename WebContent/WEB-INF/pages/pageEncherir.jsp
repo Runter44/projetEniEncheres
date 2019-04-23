@@ -19,7 +19,7 @@
 					<img class="img-fluid" alt="img de l'objet" src="http://experia-agency.com/wp-content/uploads/2016/06/ench-pict-2.jpg">
 				</div>
 				<div class="col-md-6">
-				<h2>article.nomArticle</h2>
+				<h3><%=article.getNomArticle()%></h3>
 				</div>				
 			</div>
 			

@@ -170,7 +170,7 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 						rqt.append(" and A.nom_article like %"+critEnchere.getVente().getNomArticle()+"%");
 					}
 					if(critEnchere.getVente().getCat() != null) {
-						rqt.append(" and A.no_catgories = "+critEnchere.getVente().getNomArticle());
+						rqt.append(" and A.no_categorie = "+critEnchere.getVente().getNomArticle());
 					}
 					if(critEnchere.getVente().getDatesDebutEncheres() != null) {
 						if(critEnchere.isNonDebute()) {

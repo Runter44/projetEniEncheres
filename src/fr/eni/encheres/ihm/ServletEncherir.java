@@ -25,9 +25,9 @@ public class ServletEncherir extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			int idArticle = Integer.parseInt(request.getPathInfo().substring(1));
-			request.setAttribute("requestedVente", articleManager.getArticleById(idArticle));
+			request.setAttribute("requestedArticle", articleManager.getArticleById(idArticle));
 		} catch (NumberFormatException e) {}
-		request.getRequestDispatcher("/WEB-INF/pages/pageEncherir.jps").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/pages/pageEncherir.jsp").forward(request, response);
 	}
 
     @Override
