@@ -31,7 +31,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 	private static final String SELECT_ONE_ARTICLE_ID = "SELECT * FROM articles_vendus WHERE no_article = ?;";
 	private static final String SELECT_ONE_ARTICLE_NAME = "SELECT * FROM articles_vendus WHERE nom_article = ?;";
 	private static final String SELECT_ALL_ARTICLE = "SELECT * FROM articles_vendus;";
-	private static final String INSERT_ARTICLE = "INSERT INTO articles_vendus (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_catgories) VALUES (?,?,?,?,?,?,?,?);";
+	private static final String INSERT_ARTICLE = "INSERT INTO articles_vendus (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES (?,?,?,?,?,?,?,?);";
 	private static final String UPDATE_ARTICLE = "UPDATE articles_vendus SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_catgories = ? WHERE no_article = ?;";
 	private static final String DELETE_ARTICLE = "DELETE FROM articles_vendus WHERE no_article = ?;";
 	private static final String SELECT_LIST_ARTICLE_CRIT = "SELECT * FROM articles_vendus WHERE 1=1";

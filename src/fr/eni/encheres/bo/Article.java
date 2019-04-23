@@ -23,79 +23,89 @@ public class Article {
 	public Integer getNoVente() {
 		return noVente;
 	}
-	public void setNoVente(Integer noVente) {
+	public Article setNoVente(Integer noVente) {
 		this.noVente = noVente;
+		return this;
 	}
 
 	public String getNomArticle() {
 		return nomArticle;
 	}
 
-	public void setNomArticle(String nomArticle) {
+	public Article setNomArticle(String nomArticle) {
 		this.nomArticle = nomArticle;
+		return this;
 	}
 
 	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public Article setDescription(String description) {
 		this.description = description;
+		return this;
 	}
 
 	public Date getDatesDebutEncheres() {
 		return datesDebutEncheres;
 	}
 
-	public void setDatesDebutEncheres(Date datesDebutEncheres) {
+	public Article setDatesDebutEncheres(Date datesDebutEncheres) {
 		this.datesDebutEncheres = datesDebutEncheres;
+		return this;
 	}
 
 	public Date getDatesFinEncheres() {
 		return datesFinEncheres;
 	}
 
-	public void setDatesFinEncheres(Date datesFinEncheres) {
+	public Article setDatesFinEncheres(Date datesFinEncheres) {
 		this.datesFinEncheres = datesFinEncheres;
+		return this;
 	}
 
 	public int getMiseAPrix() {
 		return miseAPrix;
 	}
 
-	public void setMiseAPrix(int miseAPrix) {
+	public Article setMiseAPrix(int miseAPrix) {
 		this.miseAPrix = miseAPrix;
+		return this;
 	}
 
 	public int getPrixVente() {
 		return prixVente;
 	}
 
-	public void setPrixVente(int prixVente) {
+	public Article setPrixVente(int prixVente) {
 		this.prixVente = prixVente;
+		return this;
 	}
 
 	public Categorie getCat() {
 		return cat;
 	}
 
-	public void setCat(Categorie cat) {
+	public Article setCat(Categorie cat) {
 		this.cat = cat;
+		return this;
 	}
 
 	public Utilisateur getVendeur() {
 		return vendeur;
 	}
 
-	public void setVendeur(Utilisateur vendeur) {
+	public Article setVendeur(Utilisateur vendeur) {
 		this.vendeur = vendeur;
+		return this;
 	}
 
 	public Retrait getRetrait() {
 		return retrait;
 	}
 
-	public void setRetrait(Retrait retrait) {
+	public Article setRetrait(Retrait retrait) {
 		this.retrait = retrait;
+		return this;
 	}
 }

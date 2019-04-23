@@ -12,7 +12,18 @@
 		</nav>
 		<div class="paddingX10">
 			<h1>Nouvelle vente</h1>
-			<form method="post" enctype="multipart/form-data">
+			<c:if test="${error != null}">
+				<div class="alert alert-danger alert-dismissible fade show"
+					role="alert">
+					<strong>Des erreurs ont été détectées :</strong><br>
+					<%=request.getAttribute("error")%>
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			</c:if>
+			<form method="post" action="">
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="articleName">Nom de l'article</label>
@@ -63,7 +74,7 @@
 						<div class="form-row">
 							<div class="form-group col-md-3">
 								<label for="articleRetraitRue">Code postal</label>
-								<input type="text" class="form-control" id="articleRetraitCodePostal" name="articleRetraitCodePostal" placeholder="Code postal" value="${ sessionScope.currentUser.getCodePostal() }">
+								<input type="text" class="form-control" id="articleRetraitCodePostal" name="articleRetraitCodePostal" placeholder="Code postal" maxlength="10" value="${ sessionScope.currentUser.getCodePostal() }">
 							</div>
 							<div class="form-group col-md-9">
 								<label for="articleRetraitRue">Ville</label>
