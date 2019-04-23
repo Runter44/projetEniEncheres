@@ -2,9 +2,6 @@
 textarea {
 	resize: none;
 }
-body {
-	transform: rotate(180deg); /*Oui c'est complètement pour troll*/
-}
 .fill-height{
 	background-color:#121c25;
 	padding : 0;
