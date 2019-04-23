@@ -40,8 +40,5 @@ public class ServletCreerVente extends HttpServlet {
 				rueRetrait = request.getParameter("articleRetraitRue"),
 				cpRetrait = request.getParameter("articleRetraitCodePostal"),
 				villeRetrait = request.getParameter("articleRetraitVille");
-		
-		
 	}
-
 }
