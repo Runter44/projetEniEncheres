@@ -83,7 +83,7 @@
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<a
-										href="/projetEniEncheres/detail-vente/1">Lien
+										href="/projetEniEncheres/detail-vente/3">Lien
 										vers l'objet<label>Prix :</label> <label>Fin de
 											l'enchères :</label> <label>Vendeur :</label>
 									</a>

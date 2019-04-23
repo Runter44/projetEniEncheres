@@ -31,8 +31,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 	private static final String SELECT_ONE_ARTICLE_ID = "SELECT * FROM articles_vendus WHERE no_article = ?;";
 	private static final String SELECT_ONE_ARTICLE_NAME = "SELECT * FROM articles_vendus WHERE nom_article = ?;";
 	private static final String SELECT_ALL_ARTICLE = "SELECT * FROM articles_vendus;";
-	private static final String INSERT_ARTICLE = "INSERT INTO articles_vendus (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_catgories) VALUES (?,?,?,?,?,?,?,?);";
-	private static final String UPDATE_ARTICLE = "UPDATE articles_vendus SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_catgories = ? WHERE no_article = ?;";
+	private static final String INSERT_ARTICLE = "INSERT INTO articles_vendus (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES (?,?,?,?,?,?,?,?);";
+	private static final String UPDATE_ARTICLE = "UPDATE articles_vendus SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_categorie = ? WHERE no_article = ?;";
 	private static final String DELETE_ARTICLE = "DELETE FROM articles_vendus WHERE no_article = ?;";
 	private static final String SELECT_LIST_ARTICLE_CRIT = "SELECT * FROM articles_vendus WHERE 1=1";
 
@@ -51,8 +51,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				articleVendu.setNoVente(result.getInt("no_utilisateur"));
 				articleVendu.setNomArticle(result.getString("nom_article"));
 				articleVendu.setDescription(result.getString("description"));
-				articleVendu.setDatesDebutEncheres(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(result.getString("date_debut_encheres")));
-				articleVendu.setDatesFinEncheres(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(result.getString("date_fin_encheres")));
+				articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_debut_encheres")));
+				articleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_fin_encheres")));
 				articleVendu.setMiseAPrix(Integer.parseInt(result.getString("prix_initial")));
 				articleVendu.setPrixVente(Integer.parseInt(result.getString("prix_vente")));
 				
@@ -61,7 +61,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				articleVendu.setVendeur(user);
 				
 				DAOCategorie daoCat = new DAOCategorie();
-				Categorie cat = daoCat.find(Integer.parseInt(result.getString("no_catgories")));
+				Categorie cat = daoCat.find(Integer.parseInt(result.getString("no_categorie")));
 				articleVendu.setCat(cat);
 			}
 		} catch (SQLException e) {
@@ -85,8 +85,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				articleVendu.setNoVente(result.getInt("no_utilisateur"));
 				articleVendu.setNomArticle(result.getString("nom_article"));
 				articleVendu.setDescription(result.getString("description"));
-				articleVendu.setDatesDebutEncheres(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(result.getString("date_debut_encheres")));
-				articleVendu.setDatesFinEncheres(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(result.getString("date_fin_encheres")));
+				articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_debut_encheres")));
+				articleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_fin_encheres")));
 				articleVendu.setMiseAPrix(Integer.parseInt(result.getString("prix_initial")));
 				articleVendu.setPrixVente(Integer.parseInt(result.getString("prix_vente")));
 				
@@ -95,7 +95,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				articleVendu.setVendeur(user);
 				
 				DAOCategorie daoCat = new DAOCategorie();
-				Categorie cat = daoCat.find(Integer.parseInt(result.getString("no_catgories")));
+				Categorie cat = daoCat.find(Integer.parseInt(result.getString("no_categorie")));
 				articleVendu.setCat(cat);
 				
 			}
@@ -122,8 +122,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				unArticleVendu.setNoVente(result.getInt("no_utilisateur"));
 				unArticleVendu.setNomArticle(result.getString("nom_article"));
 				unArticleVendu.setDescription(result.getString("description"));
-				unArticleVendu.setDatesDebutEncheres(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(result.getString("date_debut_encheres")));
-				unArticleVendu.setDatesFinEncheres(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(result.getString("date_fin_encheres")));
+				unArticleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_debut_encheres")));
+				unArticleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_fin_encheres")));
 				unArticleVendu.setMiseAPrix(Integer.parseInt(result.getString("prix_initial")));
 				unArticleVendu.setPrixVente(Integer.parseInt(result.getString("prix_vente")));
 				
@@ -132,7 +132,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				unArticleVendu.setVendeur(user);
 				
 				DAOCategorie daoCat = new DAOCategorie();
-				Categorie cat = daoCat.find(Integer.parseInt(result.getString("no_catgories")));
+				Categorie cat = daoCat.find(Integer.parseInt(result.getString("no_categorie")));
 				unArticleVendu.setCat(cat);
 			
 				//Ajout d'un article à la liste
@@ -226,10 +226,10 @@ public class DAOArticle implements InterfaceDAO<Article>{
 					rqt.append(" and nom_article like %"+critArticle.getNomArticle()+"%");
 				}
 				if(critArticle.getCat().getNoCategorie() != null) {
-					rqt.append(" and no_catgories = "+critArticle.getCat().getNoCategorie());
+					rqt.append(" and no_categorie = "+critArticle.getCat().getNoCategorie());
 				}
 				if(critArticle.getCat() != null) {
-					rqt.append(" and no_catgories = "+critArticle.getCat().getNoCategorie());
+					rqt.append(" and no_categorie = "+critArticle.getCat().getNoCategorie());
 				}
 				
 			
@@ -243,8 +243,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 					articleVendu.setNoVente(result.getInt("no_utilisateur"));
 					articleVendu.setNomArticle(result.getString("nom_article"));
 					articleVendu.setDescription(result.getString("description"));
-					articleVendu.setDatesDebutEncheres(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(result.getString("date_debut_encheres")));
-					articleVendu.setDatesFinEncheres(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(result.getString("date_fin_encheres")));
+					articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_debut_encheres")));
+					articleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_fin_encheres")));
 					articleVendu.setMiseAPrix(Integer.parseInt(result.getString("prix_initial")));
 					articleVendu.setPrixVente(Integer.parseInt(result.getString("prix_vente")));
 					
