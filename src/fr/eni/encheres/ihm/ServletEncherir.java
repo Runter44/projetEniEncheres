@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.EnchereManager;
+import fr.eni.encheres.bll.UserManager;
 import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.criteres.CritEnchere;
@@ -20,6 +21,7 @@ public class ServletEncherir extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private EnchereManager enchereManager; 
+	private UserManager userManager;
 
 	public ServletEncherir() {
 		super();
@@ -28,8 +30,10 @@ public class ServletEncherir extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (request.getSession().getAttribute("currentUser") == null) {
+			userManager.connectWithCookies(request.getCookies(), request);
+		}
 		try {
-
 			CritEnchere critEnchere = new CritEnchere();
 			Article critArticle = new Article();
 

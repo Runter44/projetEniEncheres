@@ -25,7 +25,7 @@
 					</button>
 				</div>
 			</c:if>
-			<form method="post" action="">
+			<form method="post" action="" enctype="multipart/form-data">
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="articleName">Nom de l'article</label>

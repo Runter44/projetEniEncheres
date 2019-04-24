@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bll.EnchereManager;
+import fr.eni.encheres.bll.UserManager;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Enchere;
@@ -23,6 +24,7 @@ public class ServletListeEncheres extends HttpServlet {
     
 	private CategorieManager categorieManager;
 	private EnchereManager enchereManager;
+	private UserManager userManager;
 	
     public ServletListeEncheres() {
         super();
@@ -32,6 +34,10 @@ public class ServletListeEncheres extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		if (request.getSession().getAttribute("currentUser") == null) {
+			userManager.connectWithCookies(request.getCookies(), request);
+		}
 		
 		List<Categorie> LesCats = categorieManager.getAllCat();
 		Categorie toutes = new Categorie();
@@ -52,6 +58,10 @@ public class ServletListeEncheres extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		if (request.getSession().getAttribute("currentUser") == null) {
+			userManager.connectWithCookies(request.getCookies(), request);
+		}
 		
 		CritEnchere critEnchere = new CritEnchere();
 		Article critArticle = new Article();
