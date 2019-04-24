@@ -203,6 +203,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 			stmt.setString(9, articleVendu.getRue());
 			stmt.setString(10, articleVendu.getCodePostal());
 			stmt.setString(11, articleVendu.getVille());
+			stmt.setInt(12, articleVendu.getNoArticle());
 
 			stmt.executeUpdate();
 			updateRealiser = true;

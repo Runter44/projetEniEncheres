@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -126,14 +125,5 @@ public class ServletCreerVente extends HttpServlet {
 			request.setAttribute("error", e.getMessage());
 			request.getRequestDispatcher("/WEB-INF/pages/nouvelleVente.jsp").forward(request, response);
 		}
-	}
-
-	private static String getNomFichier(Part part) {
-		for ( String contentDisposition : part.getHeader( "content-disposition" ).split( ";" ) ) {
-			if ( contentDisposition.trim().startsWith("filename") ) {
-				return contentDisposition.substring( contentDisposition.indexOf( '=' ) + 1 );
-			}
-		}
-		return null;
 	}
 }

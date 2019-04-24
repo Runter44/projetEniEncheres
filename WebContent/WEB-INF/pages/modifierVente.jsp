@@ -106,7 +106,7 @@
 						</fieldset>
 						<div class="col-md-12 text-center">
 							<input type="submit" value="Sauvegarder" class="btn btn-success">
-							<a href="/projetEniEncheres/supprimer-article/${ requestedArticle.noVente }" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de bien vouloir supprimer cet article ? Toutes les enchères associées seront supprimées.');">Supprimer la vente</a>
+							<a href="/projetEniEncheres/supprimer-article/${ requestedArticle.noArticle }" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de bien vouloir supprimer cet article ? Toutes les enchères associées seront supprimées.');">Supprimer la vente</a>
 						</div>
 					</div>
 				</form>
