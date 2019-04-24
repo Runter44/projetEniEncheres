@@ -201,6 +201,13 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 						rqt.append(" and A.date_fin_encheres <= "+today);
 					}
 				}
+				if(critEnchere.getOrderBy() != null){
+					if(critEnchere.getSensTri() != null){
+						rqt.append(" ORDER BY "+critEnchere.getOrderBy()+" "+critEnchere.getSensTri());
+					}else{
+						rqt.append(" ORDER BY "+critEnchere.getOrderBy());
+					}				
+				}
 			
 				PreparedStatement stmt = connexion.prepareStatement(rqt.toString());
 			
@@ -214,6 +221,7 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 					enchere.setUser(utilisateur);
 					enchere.setValeur(result.getInt("montant_enchere"));
 					enchere.setDateEnchere(new Date(result.getString("date_enchere")));
+					LesEncheres.add(enchere);	
 				}
 			}
 		} catch (SQLException e) {
@@ -221,8 +229,6 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 		}
 		return LesEncheres;
 	}
-
-	
 
 
 }

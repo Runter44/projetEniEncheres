@@ -51,8 +51,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				articleVendu.setNoArticle(result.getInt("no_article"));
 				articleVendu.setNomArticle(result.getString("nom_article"));
 				articleVendu.setDescription(result.getString("description"));
-				articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_debut_encheres")));
-				articleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_fin_encheres")));
+				articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_debut_encheres")));
+				articleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_fin_encheres")));
 				articleVendu.setMiseAPrix(Integer.parseInt(result.getString("prix_initial")));
 				articleVendu.setPrixVente(Integer.parseInt(result.getString("prix_vente")));
 				articleVendu.setRue(result.getString("rue"));
@@ -88,8 +88,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				articleVendu.setNoArticle(result.getInt("no_utilisateur"));
 				articleVendu.setNomArticle(result.getString("nom_article"));
 				articleVendu.setDescription(result.getString("description"));
-				articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_debut_encheres")));
-				articleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_fin_encheres")));
+				articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_debut_encheres")));
+				articleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_fin_encheres")));
 				articleVendu.setMiseAPrix(Integer.parseInt(result.getString("prix_initial")));
 				articleVendu.setPrixVente(Integer.parseInt(result.getString("prix_vente")));
 				articleVendu.setRue(result.getString("rue"));
@@ -128,8 +128,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				unArticleVendu.setNoArticle(result.getInt("no_utilisateur"));
 				unArticleVendu.setNomArticle(result.getString("nom_article"));
 				unArticleVendu.setDescription(result.getString("description"));
-				unArticleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_debut_encheres")));
-				unArticleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_fin_encheres")));
+				unArticleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_debut_encheres")));
+				unArticleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_fin_encheres")));
 				unArticleVendu.setMiseAPrix(Integer.parseInt(result.getString("prix_initial")));
 				unArticleVendu.setPrixVente(Integer.parseInt(result.getString("prix_vente")));
 				unArticleVendu.setRue(result.getString("rue"));
@@ -258,8 +258,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 					articleVendu.setNoArticle(result.getInt("no_utilisateur"));
 					articleVendu.setNomArticle(result.getString("nom_article"));
 					articleVendu.setDescription(result.getString("description"));
-					articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_debut_encheres")));
-					articleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_fin_encheres")));
+					articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_debut_encheres")));
+					articleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_fin_encheres")));
 					articleVendu.setMiseAPrix(Integer.parseInt(result.getString("prix_initial")));
 					articleVendu.setPrixVente(Integer.parseInt(result.getString("prix_vente")));
 					articleVendu.setRue(result.getString("rue"));
