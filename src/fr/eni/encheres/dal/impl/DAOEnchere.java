@@ -66,7 +66,7 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 				Article article = daoArticle.find(id);
 				Utilisateur utilisateur = daoUtilisateur.find(result.getInt("no_utilisateur"));
 				enchere = new Enchere();
-				enchere.setVente(article);
+				enchere.setArticle(article);
 				enchere.setUser(utilisateur);
 				enchere.setValeur(result.getInt("montant_enchere"));
 				enchere.setDateEnchere(new Date(result.getString("date_enchere")));
@@ -88,10 +88,12 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 				Article article = daoArticle.find(result.getInt("no_article"));
 				Utilisateur utilisateur = daoUtilisateur.find(result.getInt("no_utilisateur"));
 				uneEnchere = new Enchere();
-				uneEnchere.setVente(article);
+				uneEnchere.setArticle(article);
 				uneEnchere.setUser(utilisateur);
 				uneEnchere.setValeur(result.getInt("montant_enchere"));
 				uneEnchere.setDateEnchere(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_enchere")));
+				
+				lesEncheres.add(uneEnchere);
 			}
 		} catch (SQLException | ParseException e) {
 			e.printStackTrace();
@@ -104,7 +106,7 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = connexion.prepareStatement(INSERT_ENCHERE);
 			stmt.setInt(1, enchere.getUser().getId());
-			stmt.setInt(1, enchere.getVente().getNoVente());
+			stmt.setInt(1, enchere.getArticle().getNoArticle());
 			java.sql.Date sqlDate = new java.sql.Date(enchere.getDateEnchere().getTime());
 			stmt.setDate(1, sqlDate);
 			stmt.setInt(1, enchere.getValeur());
@@ -127,7 +129,7 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 			stmt.setDate(1, sqlDate);
 			stmt.setInt(1, enchere.getValeur());
 			stmt.setInt(1, enchere.getUser().getId());
-			stmt.setInt(1, enchere.getVente().getNoVente());
+			stmt.setInt(1, enchere.getArticle().getNoArticle());
 			stmt.executeUpdate();
 			updateRealiser = true;
 		} catch (SQLException e) {
@@ -142,7 +144,7 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 		boolean deletRealiser = false;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = connexion.prepareStatement(DELETE_ENCHERE);
-			stmt.setInt(1, enchere.getVente().getNoVente());
+			stmt.setInt(1, enchere.getArticle().getNoArticle());
 			stmt.setInt(2, enchere.getUser().getId());
 			
 			stmt.executeUpdate();
@@ -163,8 +165,8 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 			
 			if(critEnchere != null) {
 				if(critEnchere.getVente() != null) {
-					if(critEnchere.getVente().getNoVente() != null) {
-						rqt.append(" and A.no_article = "+critEnchere.getVente().getNoVente());
+					if(critEnchere.getVente().getNoArticle() != null) {
+						rqt.append(" and A.no_article = "+critEnchere.getVente().getNoArticle());
 					}
 					if(StringUtils.isNotBlank(critEnchere.getVente().getNomArticle())) {
 						rqt.append(" and A.nom_article like %"+critEnchere.getVente().getNomArticle()+"%");
@@ -208,7 +210,7 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 					Article article = daoArticle.find(result.getInt("no_article"));
 					Utilisateur utilisateur = daoUtilisateur.find(result.getInt("no_utilisateur"));
 					enchere = new Enchere();
-					enchere.setVente(article);
+					enchere.setArticle(article);
 					enchere.setUser(utilisateur);
 					enchere.setValeur(result.getInt("montant_enchere"));
 					enchere.setDateEnchere(new Date(result.getString("date_enchere")));
