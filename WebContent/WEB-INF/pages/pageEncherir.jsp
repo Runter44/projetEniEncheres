@@ -14,12 +14,14 @@
 			<h1 class="text-center">Détail vente</h1>
 			<br>
 			<form method="post" action="Creation">
-			<div class="row">
-				<div class="col-md-6">
+			<div class="row border rounded">
+				<div class="col-md-4">
 					<img class="img-fluid" alt="img de l'objet" src="http://experia-agency.com/wp-content/uploads/2016/06/ench-pict-2.jpg">
 				</div>
-				<div class="col-md-6">
-				<h3><%=article.getNomArticle()%></h3>
+				<div class="col-md-8">
+				<h5><%=article.getNomArticle()%></h5>
+				
+				
 				</div>				
 			</div>
 			
