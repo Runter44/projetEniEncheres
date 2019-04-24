@@ -40,10 +40,10 @@ public class ServletListeEncheres extends HttpServlet {
 		toutes.setNoCategorie(0);
 		LesCats.add(0, toutes);
 		request.getSession().setAttribute("listeCat", LesCats);
-		if(((List<Categorie>) request.getSession().getAttribute("lesEncheres")).size() == 0) {
-			System.out.println("test");
+		if( request.getSession().getAttribute("lesEncheres") != null || ((List<Categorie>) request.getSession().getAttribute("lesEncheres")).size() == 0) {
 			List<Enchere> lesEncheres = enchereManager.getAllEncheres();
 			request.getSession().setAttribute("lesEncheres", lesEncheres);
+			
 		}
 		
 		
