@@ -3,6 +3,7 @@ package fr.eni.encheres.bll;
 import java.util.List;
 
 import fr.eni.encheres.bo.Article;
+import fr.eni.encheres.criteres.CritArticle;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.impl.DAOArticle;
 
@@ -38,7 +39,7 @@ public class ArticleManager {
 		return daoArticle.remove(article);
 	}
 	
-	public List<Article> getListArticleByCrit(Article article){
+	public List<Article> getListArticleByCrit(CritArticle article){
 		return daoArticle.findListCrit(article);
 	}
 	

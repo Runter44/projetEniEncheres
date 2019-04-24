@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Utilisateur;
+import fr.eni.encheres.criteres.CritArticle;
 import fr.eni.encheres.dal.ConnectionProvider;
 import fr.eni.encheres.dal.InterfaceDAO;
 
@@ -229,27 +231,54 @@ public class DAOArticle implements InterfaceDAO<Article>{
 	}
 	
 	
-	public List<Article> findListCrit(Article critArticle) {
+	public List<Article> findListCrit(CritArticle critArticle) {
 		List<Article> LesArticlesVendus = new ArrayList<Article>();
 		Article articleVendu = null;
+		
+		List listValues = new ArrayList<>();
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			
 			StringBuffer rqt = new StringBuffer(SELECT_LIST_ARTICLE_CRIT);
 			
 			if(critArticle != null) {
 				if(StringUtils.isNotBlank(critArticle.getNomArticle())) {
-					rqt.append(" and nom_article like %"+critArticle.getNomArticle()+"%");
-				}
-				if(critArticle.getCat().getNoCategorie() != null) {
-					rqt.append(" and no_categorie = "+critArticle.getCat().getNoCategorie());
+					rqt.append(" and nom_article like %?%");
+					listValues.add(critArticle.getNomArticle());
 				}
 				if(critArticle.getCat() != null) {
-					rqt.append(" and no_categorie = "+critArticle.getCat().getNoCategorie());
+					if(critArticle.getCat().getNoCategorie() != null) {
+						rqt.append(" and no_categorie = ?");
+						listValues.add(critArticle.getCat().getNoCategorie());
+					}
+				}
+				if(critArticle.getDatesDebutEncheres() != null) {
+					rqt.append(" and date_debut_encheres <= ?");
+					listValues.add(critArticle.getDatesDebutEncheres());
+				}
+				if(critArticle.getDatesFinEncheres() != null) { 
+					rqt.append(" and date_fin_encheres > ?");
+					listValues.add(critArticle.getDatesFinEncheres());
 				}
 				
 			
 				PreparedStatement stmt = connexion.prepareStatement(rqt.toString());
-			
+				
+				int compteur = 0;
+				for (Iterator iterator = listValues.iterator(); iterator.hasNext();) {
+					Object object = iterator.next();
+					compteur++;
+					if(object.getClass() == Integer.class ) {
+						stmt.setInt(compteur, (Integer) object);
+					}
+					if(object.getClass() == String.class ) {
+						stmt.setString(compteur, (String) object);
+					}
+					if(object.getClass() == java.util.Date.class ) {
+						java.sql.Date sqlDate = new Date(((java.util.Date) object).getTime());
+						stmt.setDate(compteur, sqlDate);
+					}
+				}
+				
 				ResultSet result = stmt.executeQuery();
 				
 				while(result != null && result.next()) {
@@ -271,7 +300,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 					articleVendu.setVendeur(user);
 					
 					DAOCategorie daoCat = new DAOCategorie();
-					Categorie cat = daoCat.find(Integer.parseInt(result.getString("no_catgorie")));
+					Categorie cat = daoCat.find(Integer.parseInt(result.getString("no_categorie")));
 					articleVendu.setCat(cat);
 					
 					LesArticlesVendus.add(articleVendu);

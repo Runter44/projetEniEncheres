@@ -59,7 +59,7 @@
 				</div>
 				<hr>
 				<div class="row d-flex justify-content-center">
-					<c:forEach items="${ lesEncheres }" var="enchere"
+					<c:forEach items="${ lesArticles }" var="article"
 						varStatus="status">
 						<div class="col-md-5 h-20 m-3 cardEnchere">
 
@@ -69,22 +69,22 @@
 										src="http://experia-agency.com/wp-content/uploads/2016/06/ench-pict-2.jpg">
 								</div>
 								<div class="col-md-6 col-sm-6">
-									<a href="/projetEniEncheres/detail-vente/${enchere.article.noArticle}">
-										${enchere.article.nomArticle}
+									<a href="/projetEniEncheres/detail-vente/${ article.noArticle }">
+										${ article.nomArticle }
 									</a>
 									<br>
 									<label>
-										Prix : ${ enchere.article.prixVente }
+										Prix : ${ article.prixVente }
 									</label> 
 									<br>
 									<label>
-										Fin de l'enchères : ${ enchere.article.datesFinEncheres }
+										Fin de l'enchères : ${ article.datesFinEncheres }
 									</label>
 									<br> 
 									<label>
 										Vendeur : 
-										<a href="/projetEniEncheres/detail-vente/${ enchere.article.vendeur.id }">
-											${ enchere.article.vendeur.pseudo }
+										<a href="/projetEniEncheres/detail-vente/${ article.vendeur.id }">
+											${ article.vendeur.pseudo }
 										</a>
 									</label>
 								</div>

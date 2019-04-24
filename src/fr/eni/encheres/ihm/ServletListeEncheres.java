@@ -1,6 +1,7 @@
 package fr.eni.encheres.ihm;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,12 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.encheres.bll.ArticleManager;
 import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bll.EnchereManager;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.bo.Utilisateur;
+import fr.eni.encheres.criteres.CritArticle;
 import fr.eni.encheres.criteres.CritEnchere;
 
 @WebServlet("/liste-encheres")
@@ -22,11 +25,14 @@ public class ServletListeEncheres extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	private CategorieManager categorieManager;
+	private ArticleManager articleManager;
 	private EnchereManager enchereManager;
+	
 	
     public ServletListeEncheres() {
         super();
         categorieManager = new CategorieManager();
+        articleManager = new ArticleManager();
         enchereManager = new EnchereManager();
     }
 
@@ -40,9 +46,11 @@ public class ServletListeEncheres extends HttpServlet {
 		toutes.setNoCategorie(0);
 		LesCats.add(0, toutes);
 		request.getSession().setAttribute("listeCat", LesCats);
-		if( request.getSession().getAttribute("lesEncheres") == null || ((List<Categorie>) request.getSession().getAttribute("lesEncheres")).size() == 0) {
-			List<Enchere> lesEncheres = enchereManager.getAllEncheres();
-			request.getSession().setAttribute("lesEncheres", lesEncheres);
+		if( null ==  request.getSession().getAttribute("lesArticles") || ((List<Categorie>) request.getSession().getAttribute("lesArticles")).size() == 0) {
+			CritArticle critArticle = new CritArticle();
+			critArticle.setDatesDebutEncheres(new Date());
+			List<Article> lesArticles = articleManager.getListArticleByCrit(critArticle);
+			request.getSession().setAttribute("lesArticles", lesArticles);
 			
 		}
 		
