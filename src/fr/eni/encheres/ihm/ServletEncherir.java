@@ -33,7 +33,7 @@ public class ServletEncherir extends HttpServlet {
 			CritEnchere critEnchere = new CritEnchere();
 			Article critArticle = new Article();
 
-			critArticle.setNoVente(Integer.parseInt(request.getPathInfo().substring(1)));
+			critArticle.setNoArticle(Integer.parseInt(request.getPathInfo().substring(1)));
 			critEnchere.setVente(critArticle);
 			critEnchere.setOrderBy("montant_enchere");
 			critEnchere.setSensTri("ASC");		
