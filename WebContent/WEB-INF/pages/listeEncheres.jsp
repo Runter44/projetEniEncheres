@@ -17,7 +17,7 @@
 				<label for="filtreNomArticle">Filtres :</label> <input
 					id="filtreNomArticle" type="text" name="filtreNomArticle"
 					class="form-control" placeholder="Le nom de l'article contient"><br>
-				<label for="">Categorie :</label> <select name="categorieValue"
+				<label for="">Categorie :</label> <select id="categorieValue" name="categorieValue"
 					class="custom-select">
 					<c:forEach var="cat" items="${listeCat}">
 						<option value="${cat.getNoCategorie()}">${cat.getLibelle()}</option>
@@ -61,19 +61,6 @@
 				<div class="row d-flex justify-content-center">
 					<c:forEach items="${ lesEncheres }" var="enchere"
 						varStatus="status">
-						<div class="col-md-6">
-							<div class="row">
-								<div class="col-md-6">
-									<img alt="img de l'objet" src="">
-								</div>
-								<div class="col-md-6">
-									<a href="/projetEniEncheres/detail-vente/${enchere.article.noVente}">Lien vers l'objet</a> <label>Prix :</label> <label>Fin
-										de l'enchères :</label> <label>Vendeur :</label>
-								</div>
-							</div>
-						</div>
-					</c:forEach>
-					<!--<c:forEach var="i" begin="0" end="10" step="2">
 						<div class="col-md-5 h-20 m-3 cardEnchere">
 
 							<div class="row">
@@ -82,15 +69,28 @@
 										src="http://experia-agency.com/wp-content/uploads/2016/06/ench-pict-2.jpg">
 								</div>
 								<div class="col-md-6 col-sm-6">
-									<a
-										href="/projetEniEncheres/detail-vente/4">Lien
-										vers l'objet<label>Prix :</label> <label>Fin de
-											l'enchères :</label> <label>Vendeur :</label>
+									<a href="/projetEniEncheres/detail-vente/${enchere.article.noArticle}">
+										${enchere.article.nomArticle}
 									</a>
+									<br>
+									<label>
+										Prix : ${ enchere.article.prixVente }
+									</label> 
+									<br>
+									<label>
+										Fin de l'enchères : ${ enchere.article.datesFinEncheres }
+									</label>
+									<br> 
+									<label>
+										Vendeur : 
+										<a href="/projetEniEncheres/detail-vente/${ enchere.article.vendeur.id }">
+											${ enchere.article.vendeur.pseudo }
+										</a>
+									</label>
 								</div>
 							</div>
 						</div>
-					</c:forEach>-->
+					</c:forEach>
 				</div>
 			</form>
 		</div>

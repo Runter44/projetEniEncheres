@@ -26,12 +26,12 @@ public class Enchere implements Comparable{
 		this.user = user;
 	}
 
-	public Article getVente() {
+	public Article getArticle() {
 		return article;
 	}
 
-	public void setVente(Article vente) {
-		this.article = vente;
+	public void setArticle(Article article) {
+		this.article = article;
 	}
 
 	public Date getDateEnchere() {

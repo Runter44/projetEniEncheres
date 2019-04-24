@@ -11,8 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bll.EnchereManager;
+import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Enchere;
+import fr.eni.encheres.bo.Utilisateur;
+import fr.eni.encheres.criteres.CritEnchere;
 
 @WebServlet("/liste-encheres")
 public class ServletListeEncheres extends HttpServlet {
@@ -36,16 +39,44 @@ public class ServletListeEncheres extends HttpServlet {
 		toutes.setLibelle("Toutes");
 		toutes.setNoCategorie(0);
 		LesCats.add(0, toutes);
-		
-		List<Enchere> lesEncheres = enchereManager.getAllEncheres();
 		request.getSession().setAttribute("listeCat", LesCats);
-		System.out.println(lesEncheres.size());
-		request.getSession().setAttribute("lesEncheres", lesEncheres);
+		if(((List<Categorie>) request.getSession().getAttribute("lesEncheres")).size() == 0) {
+			System.out.println("test");
+			List<Enchere> lesEncheres = enchereManager.getAllEncheres();
+			request.getSession().setAttribute("lesEncheres", lesEncheres);
+		}
+		
+		
 		request.getRequestDispatcher("/WEB-INF/pages/listeEncheres.jsp").forward(request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		CritEnchere critEnchere = new CritEnchere();
+		Article critArticle = new Article();
+		Utilisateur critUtilisateur = new Utilisateur();
+		
+		if(request.getParameter("filtreNomArticle") != null) {
+			critArticle.setNomArticle(request.getParameter("filtreNomArticle"));
+		}
+		if(request.getParameter("categorieValue") != null) {
+			request.getParameter("categorieValue");
+			//critArticle.setCat();
+		}
+		if(request.getParameter("categorieValue") != null) {
+			request.getParameter("categorieValue");
+			//critArticle.setCat();
+		}
+	
+		
+			
+		critEnchere.setVente(critArticle);
+		critEnchere.setUser(critUtilisateur);
+		
+		List<Enchere> lesEncheres = enchereManager.getListEnchereByCrit(critEnchere);
+		request.getSession().setAttribute("lesEncheres", lesEncheres);
+		
+		request.getRequestDispatcher("/WEB-INF/pages/listeEncheres.jsp").forward(request, response);
 	}
 }

@@ -1,11 +1,8 @@
 package fr.eni.encheres.ihm;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,6 +33,7 @@ public class ServletCreerVente extends HttpServlet {
 		articleManager = new ArticleManager();
 	}
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getSession().getAttribute("currentUser") == null) {
 			if (!userManager.connectWithCookies(request.getCookies(), request)) {
@@ -46,6 +44,7 @@ public class ServletCreerVente extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/pages/nouvelleVente.jsp").forward(request, response);
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getSession().getAttribute("currentUser") == null) {
 			if (!userManager.connectWithCookies(request.getCookies(), request)) {
@@ -106,16 +105,15 @@ public class ServletCreerVente extends HttpServlet {
 			if (!hasErrors) {
 				Article nouvelArticle = new Article();
 
-				nouvelArticle
-				.setCat(DAOFactory.getDAOCategorie().find(Integer.parseInt(categorieArticle)))
-				.setDatesDebutEncheres(sdf.parse(debutEnchereArticle))
-				.setDatesFinEncheres(sdf.parse(finEnchereArticle))
-				.setDescription(descriptionArticle)
-				.setMiseAPrix(Integer.parseInt(prixArticle))
-				.setPrixVente(Integer.parseInt(prixArticle))
-				.setNomArticle(nomArticle)
-				.setRetrait(new Retrait(rueRetrait, cpRetrait, villeRetrait, nouvelArticle))
-				.setVendeur((Utilisateur) request.getSession().getAttribute("currentUser"));
+				nouvelArticle.setCat(DAOFactory.getDAOCategorie().find(Integer.parseInt(categorieArticle)));
+				nouvelArticle.setDatesDebutEncheres(sdf.parse(debutEnchereArticle));
+				nouvelArticle.setDatesFinEncheres(sdf.parse(finEnchereArticle));
+				nouvelArticle.setDescription(descriptionArticle);
+				nouvelArticle.setMiseAPrix(Integer.parseInt(prixArticle));
+				nouvelArticle.setPrixVente(Integer.parseInt(prixArticle));
+				nouvelArticle.setNomArticle(nomArticle);
+				nouvelArticle.setRetrait(new Retrait(rueRetrait, cpRetrait, villeRetrait, nouvelArticle));
+				nouvelArticle.setVendeur((Utilisateur) request.getSession().getAttribute("currentUser"));
 
 				articleManager.addArticle(nouvelArticle);
 				response.sendRedirect("/projetEniEncheres");
