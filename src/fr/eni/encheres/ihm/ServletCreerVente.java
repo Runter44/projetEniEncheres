@@ -19,7 +19,7 @@ import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 
-@WebServlet("/vente-article")
+@WebServlet("/nouvelle-vente")
 public class ServletCreerVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -115,8 +115,8 @@ public class ServletCreerVente extends HttpServlet {
 				nouvelArticle.setCodePostal(cpRetrait);
 				nouvelArticle.setVille(villeRetrait);
 
-				articleManager.addArticle(nouvelArticle);
-				response.sendRedirect("/projetEniEncheres");
+				nouvelArticle = articleManager.addArticle(nouvelArticle);
+				response.sendRedirect("/projetEniEncheres/detail-vente/" + nouvelArticle.getNoArticle());
 			} else {
 				request.setAttribute("error", errorMessage);
 				request.getRequestDispatcher("/WEB-INF/pages/nouvelleVente.jsp").forward(request, response);

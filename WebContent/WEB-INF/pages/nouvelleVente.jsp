@@ -11,7 +11,9 @@
 			<%@include file="/WEB-INF/pages/Include/navbarButtons.jsp"%>
 		</nav>
 		<div class="paddingX10">
-			<h1>Nouvelle vente</h1>
+			<div class="text-center">
+				<h1>Nouvelle vente</h1>
+			</div>
 			<c:if test="${error != null}">
 				<div class="alert alert-danger alert-dismissible fade show"
 					role="alert">

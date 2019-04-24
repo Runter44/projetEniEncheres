@@ -12,7 +12,9 @@
 			<%@include file="/WEB-INF/pages/Include/navbarButtons.jsp"%>
 		</nav>
 		<div class="paddingX10">
-			<h1>Modifier l'article</h1>
+			<div class="text-center">
+				<h1>Modifier la vente</h1>
+			</div>
 			<c:if test="${ requestedArticle != null }">
 				<c:if test="${error != null}">
 					<div class="alert alert-danger alert-dismissible fade show"
@@ -106,13 +108,15 @@
 						</fieldset>
 						<div class="col-md-12 text-center">
 							<input type="submit" value="Sauvegarder" class="btn btn-success">
-							<a href="/projetEniEncheres/supprimer-article/${ requestedArticle.noArticle }" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de bien vouloir supprimer cet article ? Toutes les enchères associées seront supprimées.');">Supprimer la vente</a>
+							<a href="/projetEniEncheres/supprimer-vente/${ requestedArticle.noArticle }" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de bien vouloir supprimer cet article ? Toutes les enchères associées seront supprimées.');">Supprimer la vente</a>
 						</div>
 					</div>
 				</form>
 			</c:if>
 			<c:if test="${ requestedArticle == null }">
-				<p class="text-danger">L'article demandé n'existe pas ou ne vous appartient pas.</p>
+				<div class="text-center">
+					<p class="text-danger">L'article demandé n'existe pas ou ne vous appartient pas.</p>
+				</div>
 			</c:if>
 		</div>
 	</div>

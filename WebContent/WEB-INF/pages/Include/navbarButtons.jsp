@@ -12,7 +12,7 @@
 			<a href="/projetEniEncheres/creation-compte" class="btn btn-outline-warning mx-2 mb-2 mb-md-0 d-block d-md-inline-block">Inscription</a>
 		<% } else { %>
 			<a href="/projetEniEncheres/liste-encheres" class="btn btn-outline-info mx-2 mb-2 mb-md-0 d-block d-md-inline-block">Enchères</a>
-			<a href="/projetEniEncheres/vente-article" class="btn btn-outline-warning mx-2 mb-2 mb-md-0 d-block d-md-inline-block">Vendre un article</a>
+			<a href="/projetEniEncheres/nouvelle-vente" class="btn btn-outline-warning mx-2 mb-2 mb-md-0 d-block d-md-inline-block">Vendre un article</a>
 			<a href="/projetEniEncheres/profil/<%= connectedUser.getId() %>" class="btn btn-outline-success mx-2 mb-2 mb-md-0 d-block d-md-inline-block">Mon compte</a>
 			<a href="/projetEniEncheres/deconnexion" class="btn btn-outline-danger mx-2 mb-2 mb-md-0 d-block d-md-inline-block">Déconnexion</a>
 		<% } %>

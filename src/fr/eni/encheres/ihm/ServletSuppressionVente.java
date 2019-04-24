@@ -14,14 +14,14 @@ import fr.eni.encheres.bll.UserManager;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Enchere;
 
-@WebServlet("/supprimer-article/*")
-public class ServletSuppressionArticle extends HttpServlet {
+@WebServlet("/supprimer-vente/*")
+public class ServletSuppressionVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserManager userManager;
 	private ArticleManager articleManager;
 	private EnchereManager enchereManager;
 	
-    public ServletSuppressionArticle() {
+    public ServletSuppressionVente() {
 		this.userManager = new UserManager();
 		this.articleManager = new ArticleManager();
 		this.enchereManager = new EnchereManager();

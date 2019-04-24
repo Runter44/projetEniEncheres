@@ -19,14 +19,14 @@ import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 
-@WebServlet("/modifier-article/*")
-public class ServletModifierArticle extends HttpServlet {
+@WebServlet("/modifier-vente/*")
+public class ServletModifierVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private ArticleManager articleManager;
 	private UserManager userManager;
 
-    public ServletModifierArticle() {
+    public ServletModifierVente() {
     	articleManager = new ArticleManager();
     	userManager = new UserManager();
     }
