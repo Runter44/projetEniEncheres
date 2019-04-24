@@ -21,7 +21,7 @@ public class DAOCategorie implements InterfaceDAO<Categorie> {
 	private static final String SELECT_ONE_CAT_ID = "SELECT * FROM categories WHERE no_categorie = ?;";
 	private static final String SELECT_ALL_CAT = "SELECT * FROM categories;";
 	private static final String INSERT_CAT = "INSERT INTO categories (libelle) VALUES (?);";
-	private static final String UPDATE_CAT = "UPDATE categories SET libelle = ?;";
+	private static final String UPDATE_CAT = "UPDATE categories SET libelle = ? where no_categorie=?;";
 	private static final String DELETE_CAT = "DELETE FROM categories WHERE no_categorie = ?;";
 
 	
@@ -91,6 +91,7 @@ public class DAOCategorie implements InterfaceDAO<Categorie> {
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = connexion.prepareStatement(UPDATE_CAT);
 			stmt.setString(1, categorie.getLibelle());
+			stmt.setInt(1, categorie.getNoCategorie());
 			stmt.executeUpdate();
 			updateRealiser = true;
 		} catch (SQLException e) {

@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +20,7 @@ import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.criteres.CritEnchere;
 import fr.eni.encheres.dal.ConnectionProvider;
+import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.InterfaceDAO;
 
 
@@ -28,10 +30,10 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 	private static final String SELECT_ONE_ENCHERE_ARTICLE_ID = "SELECT * FROM encheres where no_article = ?;";
 	
 	private static final String INSERT_ENCHERE = "INSERT INTO encheres (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?, ?, ?, ?);";
-	private static final String UPDATE_ENCHERE = "UPDATE categories SET no_utilisateur=?, no_article=?, date_enchere=?, montant_enchere=?;";
-	private static final String DELETE_ENCHERE = "DELETE FROM categories WHERE no_article = ? AND no_utilisateur = ?;";
+	private static final String UPDATE_ENCHERE = "UPDATE encheres SET date_enchere=?, montant_enchere=? where no_utilisateur=?, no_article=?;";
+	private static final String DELETE_ENCHERE = "DELETE FROM encheres WHERE no_article = ? AND no_utilisateur = ?;";
 	
-	private static final String SELECT_LIST_ARTICLE_CRIT = "SELECT *"
+	private static final String SELECT_LIST_ENCHERE_CRIT = "SELECT *"
 														+ " FROM encheres E"
 														+ " JOIN articles_vendus A ON E.no_article=A.no_article"
 														+ " JOIN utilisateurs U ON E.no_utilisateur=U.no_utilisateur"
@@ -42,8 +44,8 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 	
 	
 	public DAOEnchere() {
-		DAOArticle daoArticle = new DAOArticle();
-		DAOUtilisateur daoUtilisateur = new DAOUtilisateur();
+		daoArticle = DAOFactory.getDAOArticle();
+		daoUtilisateur = DAOFactory.getDAOUtilisateur();
 	}
 	
 	@Override
@@ -81,8 +83,6 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 		Enchere uneEnchere = null;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = connexion.prepareStatement(SELECT_ALL_ENCHERES);
-			
-
 			ResultSet result = stmt.executeQuery();
 			while(result != null && result.next()) {
 				Article article = daoArticle.find(result.getInt("no_article"));
@@ -91,9 +91,9 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 				uneEnchere.setVente(article);
 				uneEnchere.setUser(utilisateur);
 				uneEnchere.setValeur(result.getInt("montant_enchere"));
-				uneEnchere.setDateEnchere(new Date(result.getString("date_enchere")));
+				uneEnchere.setDateEnchere(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_enchere")));
 			}
-		} catch (SQLException e) {
+		} catch (SQLException | ParseException e) {
 			e.printStackTrace();
 		}
 		return lesEncheres;
@@ -123,11 +123,11 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 		boolean updateRealiser = false;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = connexion.prepareStatement(UPDATE_ENCHERE);
-			stmt.setInt(1, enchere.getUser().getId());
-			stmt.setInt(1, enchere.getVente().getNoVente());
 			java.sql.Date sqlDate = new java.sql.Date(enchere.getDateEnchere().getTime());
 			stmt.setDate(1, sqlDate);
 			stmt.setInt(1, enchere.getValeur());
+			stmt.setInt(1, enchere.getUser().getId());
+			stmt.setInt(1, enchere.getVente().getNoVente());
 			stmt.executeUpdate();
 			updateRealiser = true;
 		} catch (SQLException e) {
@@ -154,12 +154,12 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 		return deletRealiser;
 	}
 	
-	public List<Enchere> findListCrit(CritEnchere critEnchere) {
+	public List<Enchere> findListEnchereCrit(CritEnchere critEnchere) {
 		List<Enchere> LesEncheres = new ArrayList<Enchere>();
 		Enchere enchere = null;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			
-			StringBuffer rqt = new StringBuffer(SELECT_LIST_ARTICLE_CRIT);
+			StringBuffer rqt = new StringBuffer(SELECT_LIST_ENCHERE_CRIT);
 			
 			if(critEnchere != null) {
 				if(critEnchere.getVente() != null) {
