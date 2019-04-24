@@ -18,7 +18,11 @@ public class CritEnchere implements Comparable{
 	private boolean enCours;
 
 	private boolean nonDebute;
-
+	
+	private String orderBy;
+	
+	private String sensTri;
+	
 	public CritEnchere () {
 		
 		
@@ -94,5 +98,18 @@ public class CritEnchere implements Comparable{
 		return this.getValeur() - enchereCompar.getValeur();
 	}
 	
-	
+	public String getOrderBy() {
+		return orderBy;
+	}
+
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
+	public String getSensTri() {
+		return sensTri;
+	}
+
+	public void setSensTri(String sensTri) {
+		this.sensTri = sensTri;
+	}
 }

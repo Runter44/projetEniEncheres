@@ -1,8 +1,5 @@
 <%@include file="/WEB-INF/pages/Include/header.jsp"%> 
 <%@ page import="fr.eni.encheres.bo.Article"%>
-<%
-	Article article = (Article) request.getAttribute("requestedArticle");
-%>
 <body class="bg-light">
 	<div class="container-fluid p-0 h-100">
 		<nav class="navbarColor navbar navbar-expand-lg navbar-dark w-100">
@@ -19,9 +16,26 @@
 					<img class="img-fluid" alt="img de l'objet" src="http://experia-agency.com/wp-content/uploads/2016/06/ench-pict-2.jpg">
 				</div>
 				<div class="col-md-8">
-				<h5><%=article.getNomArticle()%></h5>
-				
-				
+				<table class="table">
+					<tbody>
+						<tr>
+							<th scope="row" class="text-right w-50">Nom de l'article : </th>
+							<td class="w-50">${Enchere.article.nom_article}</td>
+						</tr>
+						<tr>
+							<th scope="row" class="text-right">Description :</th>
+							<td>${Enchere.article.desciption}</td>
+						</tr>
+						<tr>
+							<th scope="row" class="text-right">Mise prix :</th>
+							<td>${Enchere.article.miseAPrix}</td>
+						</tr>
+						<tr>
+							<th scope="row" class="text-right">Meilleure offre :</th>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
 				</div>				
 			</div>
 			
