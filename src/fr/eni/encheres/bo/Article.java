@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Article {
 	
-	private Integer noVente;
+	private Integer noArticle;
 	private String nomArticle;
 	private String description;
 	private Date datesDebutEncheres;
@@ -22,57 +22,51 @@ public class Article {
 	public Article() {
 	}
 	
-	public Integer getNoVente() {
-		return noVente;
+	public Integer getNoArticle() {
+		return noArticle;
 	}
-	public Article setNoVente(Integer noVente) {
-		this.noVente = noVente;
-		return this;
+	public void setNoArticle(Integer noArticle) {
+		this.noArticle = noArticle;
 	}
 
 	public String getNomArticle() {
 		return nomArticle;
 	}
 
-	public Article setNomArticle(String nomArticle) {
+	public void setNomArticle(String nomArticle) {
 		this.nomArticle = nomArticle;
-		return this;
 	}
 
 	public String getDescription() {
 		return description;
 	}
 
-	public Article setDescription(String description) {
+	public void setDescription(String description) {
 		this.description = description;
-		return this;
 	}
 
 	public Date getDatesDebutEncheres() {
 		return datesDebutEncheres;
 	}
 
-	public Article setDatesDebutEncheres(Date datesDebutEncheres) {
+	public void setDatesDebutEncheres(Date datesDebutEncheres) {
 		this.datesDebutEncheres = datesDebutEncheres;
-		return this;
 	}
 
 	public Date getDatesFinEncheres() {
 		return datesFinEncheres;
 	}
 
-	public Article setDatesFinEncheres(Date datesFinEncheres) {
+	public void setDatesFinEncheres(Date datesFinEncheres) {
 		this.datesFinEncheres = datesFinEncheres;
-		return this;
 	}
 
 	public int getMiseAPrix() {
 		return miseAPrix;
 	}
 
-	public Article setMiseAPrix(int miseAPrix) {
+	public void setMiseAPrix(int miseAPrix) {
 		this.miseAPrix = miseAPrix;
-		return this;
 	}
 
 	public int getPrixVente() {

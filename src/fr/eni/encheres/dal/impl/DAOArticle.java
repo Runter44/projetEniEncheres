@@ -48,7 +48,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 			if (result != null && result.next()) {
 				articleVendu = new Article();
 			
-				articleVendu.setNoVente(result.getInt("no_utilisateur"));
+				articleVendu.setNoArticle(result.getInt("no_article"));
 				articleVendu.setNomArticle(result.getString("nom_article"));
 				articleVendu.setDescription(result.getString("description"));
 				articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_debut_encheres")));
@@ -85,7 +85,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 			if (result != null && result.next()) {
 				articleVendu = new Article();
 				
-				articleVendu.setNoVente(result.getInt("no_utilisateur"));
+				articleVendu.setNoArticle(result.getInt("no_utilisateur"));
 				articleVendu.setNomArticle(result.getString("nom_article"));
 				articleVendu.setDescription(result.getString("description"));
 				articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_debut_encheres")));
@@ -125,7 +125,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 			while(result != null && result.next()) {
 				unArticleVendu = new Article();
 				
-				unArticleVendu.setNoVente(result.getInt("no_utilisateur"));
+				unArticleVendu.setNoArticle(result.getInt("no_utilisateur"));
 				unArticleVendu.setNomArticle(result.getString("nom_article"));
 				unArticleVendu.setDescription(result.getString("description"));
 				unArticleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_debut_encheres")));
@@ -176,7 +176,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 			stmt.executeUpdate();
 			ResultSet res = stmt.getGeneratedKeys();
 			if (res.next()) {
-				articleVendu.setNoVente(res.getInt(1));
+				articleVendu.setNoArticle(res.getInt(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -218,7 +218,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 		boolean deletRealiser = false;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = connexion.prepareStatement(DELETE_ARTICLE);
-			stmt.setInt(1, articleVendu.getNoVente());
+			stmt.setInt(1, articleVendu.getNoArticle());
 			stmt.executeUpdate();
 			deletRealiser = true;
 		} catch (SQLException e) {
@@ -255,7 +255,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				while(result != null && result.next()) {
 					articleVendu = new Article();
 					
-					articleVendu.setNoVente(result.getInt("no_utilisateur"));
+					articleVendu.setNoArticle(result.getInt("no_utilisateur"));
 					articleVendu.setNomArticle(result.getString("nom_article"));
 					articleVendu.setDescription(result.getString("description"));
 					articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_debut_encheres")));
