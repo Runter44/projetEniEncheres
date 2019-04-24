@@ -11,10 +11,12 @@ public class Article {
 	private Date datesFinEncheres;
 	private int miseAPrix;
 	private int prixVente;
+	private String rue;
+	private String codePostal;
+	private String ville;
 
 	private Categorie cat;
 	private Utilisateur vendeur;
-	private Retrait retrait;
 	
 	
 	public Article() {
@@ -100,12 +102,30 @@ public class Article {
 		return this;
 	}
 
-	public Retrait getRetrait() {
-		return retrait;
+	public String getRue() {
+		return rue;
 	}
 
-	public Article setRetrait(Retrait retrait) {
-		this.retrait = retrait;
+	public Article setRue(String rue) {
+		this.rue = rue;
+		return this;
+	}
+
+	public String getCodePostal() {
+		return codePostal;
+	}
+
+	public Article setCodePostal(String codePostal) {
+		this.codePostal = codePostal;
+		return this;
+	}
+
+	public String getVille() {
+		return ville;
+	}
+
+	public Article setVille(String ville) {
+		this.ville = ville;
 		return this;
 	}
 }

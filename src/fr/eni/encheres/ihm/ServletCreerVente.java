@@ -20,7 +20,6 @@ import fr.eni.encheres.bll.ArticleManager;
 import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bll.UserManager;
 import fr.eni.encheres.bo.Article;
-import fr.eni.encheres.bo.Retrait;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 
@@ -114,7 +113,9 @@ public class ServletCreerVente extends HttpServlet {
 				.setMiseAPrix(Integer.parseInt(prixArticle))
 				.setPrixVente(Integer.parseInt(prixArticle))
 				.setNomArticle(nomArticle)
-				.setRetrait(new Retrait(rueRetrait, cpRetrait, villeRetrait, nouvelArticle))
+				.setRue(rueRetrait)
+				.setCodePostal(cpRetrait)
+				.setVille(villeRetrait)
 				.setVendeur((Utilisateur) request.getSession().getAttribute("currentUser"));
 
 				articleManager.addArticle(nouvelArticle);
