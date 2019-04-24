@@ -31,8 +31,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 	private static final String SELECT_ONE_ARTICLE_ID = "SELECT * FROM articles_vendus WHERE no_article = ?;";
 	private static final String SELECT_ONE_ARTICLE_NAME = "SELECT * FROM articles_vendus WHERE nom_article = ?;";
 	private static final String SELECT_ALL_ARTICLE = "SELECT * FROM articles_vendus;";
-	private static final String INSERT_ARTICLE = "INSERT INTO articles_vendus (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) VALUES (?,?,?,?,?,?,?,?);";
-	private static final String UPDATE_ARTICLE = "UPDATE articles_vendus SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_categorie = ? WHERE no_article = ?;";
+	private static final String INSERT_ARTICLE = "INSERT INTO articles_vendus (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie, rue, code_postal, ville) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
+	private static final String UPDATE_ARTICLE = "UPDATE articles_vendus SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_categorie = ?, rue = ?, code_postal = ?, ville = ? WHERE no_article = ?;";
 	private static final String DELETE_ARTICLE = "DELETE FROM articles_vendus WHERE no_article = ?;";
 	private static final String SELECT_LIST_ARTICLE_CRIT = "SELECT * FROM articles_vendus WHERE 1=1";
 
@@ -51,10 +51,13 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				articleVendu.setNoArticle(result.getInt("no_article"));
 				articleVendu.setNomArticle(result.getString("nom_article"));
 				articleVendu.setDescription(result.getString("description"));
-				articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_debut_encheres")));
-				articleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_fin_encheres")));
+				articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_debut_encheres")));
+				articleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_fin_encheres")));
 				articleVendu.setMiseAPrix(Integer.parseInt(result.getString("prix_initial")));
 				articleVendu.setPrixVente(Integer.parseInt(result.getString("prix_vente")));
+				articleVendu.setRue(result.getString("rue"));
+				articleVendu.setCodePostal(result.getString("code_postal"));
+				articleVendu.setVille(result.getString("ville"));
 				
 				DAOUtilisateur daoUser = new DAOUtilisateur();
 				Utilisateur user = daoUser.find(Integer.parseInt(result.getString("no_utilisateur")));
@@ -85,10 +88,13 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				articleVendu.setNoArticle(result.getInt("no_utilisateur"));
 				articleVendu.setNomArticle(result.getString("nom_article"));
 				articleVendu.setDescription(result.getString("description"));
-				articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_debut_encheres")));
-				articleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_fin_encheres")));
+				articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_debut_encheres")));
+				articleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_fin_encheres")));
 				articleVendu.setMiseAPrix(Integer.parseInt(result.getString("prix_initial")));
 				articleVendu.setPrixVente(Integer.parseInt(result.getString("prix_vente")));
+				articleVendu.setRue(result.getString("rue"));
+				articleVendu.setCodePostal(result.getString("code_postal"));
+				articleVendu.setVille(result.getString("ville"));
 				
 				DAOUtilisateur daoUser = new DAOUtilisateur();
 				Utilisateur user = daoUser.find(Integer.parseInt(result.getString("no_utilisateur")));
@@ -122,10 +128,13 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				unArticleVendu.setNoArticle(result.getInt("no_utilisateur"));
 				unArticleVendu.setNomArticle(result.getString("nom_article"));
 				unArticleVendu.setDescription(result.getString("description"));
-				unArticleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_debut_encheres")));
-				unArticleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_fin_encheres")));
+				unArticleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_debut_encheres")));
+				unArticleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_fin_encheres")));
 				unArticleVendu.setMiseAPrix(Integer.parseInt(result.getString("prix_initial")));
 				unArticleVendu.setPrixVente(Integer.parseInt(result.getString("prix_vente")));
+				unArticleVendu.setRue(result.getString("rue"));
+				unArticleVendu.setCodePostal(result.getString("code_postal"));
+				unArticleVendu.setVille(result.getString("ville"));
 				
 				DAOUtilisateur daoUser = new DAOUtilisateur();
 				Utilisateur user = daoUser.find(Integer.parseInt(result.getString("no_utilisateur")));
@@ -160,6 +169,9 @@ public class DAOArticle implements InterfaceDAO<Article>{
 			stmt.setInt(6, articleVendu.getPrixVente());
 			stmt.setInt(7, articleVendu.getVendeur().getId());
 			stmt.setInt(8, articleVendu.getCat().getNoCategorie());
+			stmt.setString(9, articleVendu.getRue());
+			stmt.setString(10, articleVendu.getCodePostal());
+			stmt.setString(11, articleVendu.getVille());
 
 			stmt.executeUpdate();
 			ResultSet res = stmt.getGeneratedKeys();
@@ -188,6 +200,9 @@ public class DAOArticle implements InterfaceDAO<Article>{
 			stmt.setInt(6, articleVendu.getPrixVente());
 			stmt.setInt(7, articleVendu.getVendeur().getId());
 			stmt.setInt(8, articleVendu.getCat().getNoCategorie());
+			stmt.setString(9, articleVendu.getRue());
+			stmt.setString(10, articleVendu.getCodePostal());
+			stmt.setString(11, articleVendu.getVille());
 
 			stmt.executeUpdate();
 			updateRealiser = true;
@@ -243,10 +258,13 @@ public class DAOArticle implements InterfaceDAO<Article>{
 					articleVendu.setNoArticle(result.getInt("no_utilisateur"));
 					articleVendu.setNomArticle(result.getString("nom_article"));
 					articleVendu.setDescription(result.getString("description"));
-					articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_debut_encheres")));
-					articleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_fin_encheres")));
+					articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_debut_encheres")));
+					articleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_fin_encheres")));
 					articleVendu.setMiseAPrix(Integer.parseInt(result.getString("prix_initial")));
 					articleVendu.setPrixVente(Integer.parseInt(result.getString("prix_vente")));
+					articleVendu.setRue(result.getString("rue"));
+					articleVendu.setCodePostal(result.getString("code_postal"));
+					articleVendu.setVille(result.getString("ville"));
 					
 					DAOUtilisateur daoUser = new DAOUtilisateur();
 					Utilisateur user = daoUser.find(Integer.parseInt(result.getString("no_utilisateur")));
