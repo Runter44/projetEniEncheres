@@ -67,7 +67,7 @@
 							<div class="row">
 								<div class="col-md-6 col-sm-6">
 									<img class="img-fluid" alt="img de l'objet"
-										src="${ article.nomArticle }">
+										src="${ article.imagePath }">
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<a
