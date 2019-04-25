@@ -75,7 +75,7 @@
 										${ article.nomArticle } </a> <br> <label> Prix : ${ article.prixVente }
 									</label> <br> <label> Fin de l'enchères : ${ article.datesFinEncheres }
 									</label> <br> <label> Vendeur : <a
-										href="/projetEniEncheres/detail-vente/${ article.vendeur.id }">
+										href="/projetEniEncheres/profil/${article.vendeur.id }">
 											${ article.vendeur.pseudo } </a>
 									</label>
 								</div>

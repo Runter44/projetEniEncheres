@@ -42,10 +42,12 @@ public class ServletEncherir extends HttpServlet {
 			CritEnchere critEnchere;
 			Article critArticle ;
 			Enchere uneEnchere;
+		    Date maDate;
 			int idArticle;
 
 			critEnchere = new CritEnchere();
 			critArticle = new Article();
+			maDate = new Date();
 			idArticle = Integer.parseInt(request.getPathInfo().substring(1));
 
 			critArticle.setNoArticle(idArticle);
@@ -55,6 +57,7 @@ public class ServletEncherir extends HttpServlet {
 			critEnchere.setSensTri("DESC");		
 			if (enchereManager.getListEnchereByCrit(critEnchere).size()>0){
 				request.setAttribute("Enchere",enchereManager.getListEnchereByCrit(critEnchere).get(0));
+				request.setAttribute("Date", maDate);
 			}else{
 				uneEnchere = new Enchere ();
 				uneEnchere.setArticle(articleManager.getArticleById(idArticle));
