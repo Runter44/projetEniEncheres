@@ -35,13 +35,16 @@ public class ServletEncherir extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (request.getSession().getAttribute("currentUser") == null) {
+			userManager.connectWithCookies(request.getCookies(), request);
+		}
 		try {
-
 			CritEnchere critEnchere = new CritEnchere();
 			Article critArticle = new Article();
 
 			critArticle.setNoArticle(Integer.parseInt(request.getPathInfo().substring(1)));
 			critEnchere.setVente(critArticle);
+
 			critEnchere.setOrderBy("montant_enchere");
 			critEnchere.setSensTri("DESC");		
 

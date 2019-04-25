@@ -6,7 +6,7 @@
 		</nav>
 		<div class="divMainContent">
 			<div id="connexionContent">
-				<form method="post" action="connexion" class="formConnexion">
+				<form method="post" action="connexion">
 					<div class="form-group">
 						<label for="login"  class="lblTitre">Pseudonyme :</label> <input
 							id="login" type="text" name="login" class="form-control"

@@ -1,14 +1,23 @@
 package fr.eni.encheres.ihm;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -20,6 +29,7 @@ import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 
 @WebServlet("/nouvelle-vente")
+@MultipartConfig
 public class ServletCreerVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -60,7 +70,8 @@ public class ServletCreerVente extends HttpServlet {
 				cpRetrait = request.getParameter("articleRetraitCodePostal"),
 				villeRetrait = request.getParameter("articleRetraitVille");
 
-		//Part part = request.getPart("articlePhoto");
+		Part filePart = request.getPart("articlePhoto");
+		String fileName = filePart != null ? getFileName(filePart) : "";
 
 		boolean hasErrors = false;
 		String errorMessage = "";
@@ -100,6 +111,32 @@ public class ServletCreerVente extends HttpServlet {
 				errorMessage += "Le nom de la ville est obligatoire et doit faire au plus 150 caractères.<br>";
 			}
 			
+			try (
+					OutputStream out = new FileOutputStream(new File(Paths.get("").toAbsolutePath().toString() + "/" + fileName));
+					InputStream filecontent = filePart.getInputStream();
+					PrintWriter writer = response.getWriter();
+				) {
+				
+				System.out.println(getServletContext().getRealPath("") + "WebContent" + File.separator + "uploads" + File.separator + fileName);
+				
+				if (!(fileName.endsWith("png") || fileName.endsWith("jpg") || fileName.endsWith("jpeg"))) {
+					hasErrors = true;
+					errorMessage += "Le format du fichier n'est pas valide. Il doit être au format PNG ou JPG.<br>";
+				}
+				
+				if (!hasErrors) {
+					int read = 0;
+			        final byte[] bytes = new byte[1024];
+
+			        while ((read = filecontent.read(bytes)) != -1) {
+			            out.write(bytes, 0, read);
+			        }
+				}
+			} catch (FileNotFoundException|NullPointerException e) {
+				hasErrors = true;
+				errorMessage += e.getMessage() + "<br>";
+			}
+			
 			if (!hasErrors) {
 				Article nouvelArticle = new Article();
 
@@ -125,5 +162,14 @@ public class ServletCreerVente extends HttpServlet {
 			request.setAttribute("error", e.getMessage());
 			request.getRequestDispatcher("/WEB-INF/pages/nouvelleVente.jsp").forward(request, response);
 		}
+	}
+	
+	private String getFileName(final Part part) {
+	    for (String content : part.getHeader("content-disposition").split(";")) {
+	        if (content.trim().startsWith("filename")) {
+	            return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
+	        }
+	    }
+	    return null;
 	}
 }

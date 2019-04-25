@@ -27,6 +27,7 @@ public class ServletSuppressionVente extends HttpServlet {
 		this.enchereManager = new EnchereManager();
     }
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getSession().getAttribute("currentUser") == null) {
 			userManager.connectWithCookies(request.getCookies(), request);
@@ -44,6 +45,7 @@ public class ServletSuppressionVente extends HttpServlet {
 		response.sendRedirect("/projetEniEncheres");
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}

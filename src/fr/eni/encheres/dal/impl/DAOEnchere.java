@@ -25,35 +25,35 @@ import fr.eni.encheres.dal.InterfaceDAO;
 
 
 public class DAOEnchere implements InterfaceDAO<Enchere> {
-	
+
 	private static final String SELECT_ALL_ENCHERES = "SELECT * FROM encheres;";
 	private static final String SELECT_ONE_ENCHERE_ARTICLE_ID = "SELECT * FROM encheres where no_article = ?;";
-	
+
 	private static final String INSERT_ENCHERE = "INSERT INTO encheres (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?, ?, ?, ?);";
 	private static final String UPDATE_ENCHERE = "UPDATE encheres SET date_enchere=?, montant_enchere=? where no_utilisateur=?, no_article=?;";
 	private static final String DELETE_ENCHERE = "DELETE FROM encheres WHERE no_article = ? AND no_utilisateur = ?;";
-	
+
 	private static final String SELECT_LIST_ENCHERE_CRIT = "SELECT *"
-														+ " FROM encheres E"
-														+ " JOIN articles_vendus A ON E.no_article=A.no_article"
-														+ " JOIN utilisateurs U ON E.no_utilisateur=U.no_utilisateur"
-														+ " WHERE 1=1";
-	
+			+ " FROM encheres E"
+			+ " JOIN articles_vendus A ON E.no_article=A.no_article"
+			+ " JOIN utilisateurs U ON E.no_utilisateur=U.no_utilisateur"
+			+ " WHERE 1=1";
+
 	private DAOArticle daoArticle;
 	private DAOUtilisateur daoUtilisateur;
-	
-	
+
+
 	public DAOEnchere() {
 		daoArticle = DAOFactory.getDAOArticle();
 		daoUtilisateur = DAOFactory.getDAOUtilisateur();
 	}
-	
+
 	@Override
 	public Enchere find(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public Enchere findByNoArticle(int id) {
 		Enchere enchere = null;
@@ -92,7 +92,7 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 				uneEnchere.setUser(utilisateur);
 				uneEnchere.setValeur(result.getInt("montant_enchere"));
 				uneEnchere.setDateEnchere(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_enchere")));
-				
+
 				lesEncheres.add(uneEnchere);
 			}
 		} catch (SQLException | ParseException e) {
@@ -112,7 +112,7 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 			stmt.setInt(4, enchere.getValeur());
 
 			stmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -146,7 +146,7 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 			PreparedStatement stmt = connexion.prepareStatement(DELETE_ENCHERE);
 			stmt.setInt(1, enchere.getArticle().getNoArticle());
 			stmt.setInt(2, enchere.getUser().getId());
-			
+
 			stmt.executeUpdate();
 			deletRealiser = true;
 		} catch (SQLException e) {
@@ -155,14 +155,14 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 		}
 		return deletRealiser;
 	}
-	
+
 	public List<Enchere> findListEnchereCrit(CritEnchere critEnchere) {
 		List<Enchere> LesEncheres = new ArrayList<Enchere>();
 		Enchere enchere = null;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
-			
+
 			StringBuffer rqt = new StringBuffer(SELECT_LIST_ENCHERE_CRIT);
-			
+
 			if(critEnchere != null) {
 				if(critEnchere.getVente() != null) {
 					if(critEnchere.getVente().getNoArticle() != null) {
@@ -203,39 +203,41 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 						rqt.append(" and A.date_fin_encheres <= '"+today+"'");
 					}
 				}
+
 				if(critEnchere.getValeur() != 0){
-						rqt.append(" and E.montant_enchere = "+critEnchere.getValeur());		
+					rqt.append(" and E.montant_enchere = "+critEnchere.getValeur());		
 				}
 				if(critEnchere.getOrderBy() != null){
-					if(critEnchere.getSensTri() != null){
-						rqt.append(" ORDER BY "+critEnchere.getOrderBy()+" "+critEnchere.getSensTri());
-					}else{
-						rqt.append(" ORDER BY "+critEnchere.getOrderBy());
-					}				
-				}
-			
-				PreparedStatement stmt = connexion.prepareStatement(rqt.toString());
-			
-				ResultSet result = stmt.executeQuery();
-				
-				while(result != null && result.next()) {
-					Article article = daoArticle.find(result.getInt("no_article"));
-					Utilisateur utilisateur = daoUtilisateur.find(result.getInt("no_utilisateur"));
-					enchere = new Enchere();
-					enchere.setArticle(article);
-					enchere.setUser(utilisateur);
-					enchere.setValeur(result.getInt("montant_enchere"));
-					enchere.setDateEnchere(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_enchere")));
-					LesEncheres.add(enchere);	
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return LesEncheres;
-	}
 
+						if(critEnchere.getSensTri() != null){
+							rqt.append(" ORDER BY "+critEnchere.getOrderBy()+" "+critEnchere.getSensTri());
+						}else{
+							rqt.append(" ORDER BY "+critEnchere.getOrderBy());
+						}				
+					}
+			
+					PreparedStatement stmt = connexion.prepareStatement(rqt.toString());
+
+					ResultSet result = stmt.executeQuery();
+
+					while(result != null && result.next()) {
+						Article article = daoArticle.find(result.getInt("no_article"));
+						Utilisateur utilisateur = daoUtilisateur.find(result.getInt("no_utilisateur"));
+						enchere = new Enchere();
+						enchere.setArticle(article);
+						enchere.setUser(utilisateur);
+						enchere.setValeur(result.getInt("montant_enchere"));
+						enchere.setDateEnchere(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_enchere")));
+						LesEncheres.add(enchere);	
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			return LesEncheres;
+		}
 
 }
+	
