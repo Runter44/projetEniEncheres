@@ -11,7 +11,9 @@
 			<%@include file="/WEB-INF/pages/Include/navbarButtons.jsp"%>
 		</nav>
 		<div class="paddingX10">
-			<h1>Nouvelle vente</h1>
+			<div class="text-center">
+				<h1>Nouvelle vente</h1>
+			</div>
 			<c:if test="${error != null}">
 				<div class="alert alert-danger alert-dismissible fade show"
 					role="alert">
@@ -23,7 +25,7 @@
 					</button>
 				</div>
 			</c:if>
-			<form method="post" action="">
+			<form method="post" action="" enctype="multipart/form-data">
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="articleName">Nom de l'article</label>

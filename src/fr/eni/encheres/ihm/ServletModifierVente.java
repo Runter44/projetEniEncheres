@@ -1,23 +1,14 @@
 package fr.eni.encheres.ihm;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -28,31 +19,36 @@ import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 
-@WebServlet("/nouvelle-vente")
-@MultipartConfig
-public class ServletCreerVente extends HttpServlet {
+@WebServlet("/modifier-vente/*")
+public class ServletModifierVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	private UserManager userManager;
+	
 	private ArticleManager articleManager;
+	private UserManager userManager;
 
-	public ServletCreerVente() {
-		userManager = new UserManager();
-		articleManager = new ArticleManager();
-	}
+    public ServletModifierVente() {
+    	articleManager = new ArticleManager();
+    	userManager = new UserManager();
+    }
 
-	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getSession().getAttribute("currentUser") == null) {
-			if (!userManager.connectWithCookies(request.getCookies(), request)) {
-				response.sendRedirect("/projetEniEncheres");
-				return;
-			}
+			userManager.connectWithCookies(request.getCookies(), request);
 		}
-		request.getRequestDispatcher("/WEB-INF/pages/nouvelleVente.jsp").forward(request, response);
+		if (request.getSession().getAttribute("currentUser") == null) {
+			response.sendRedirect("/projetEniEncheres");
+		} else {
+			try {
+				int idArticle = Integer.parseInt(request.getPathInfo().substring(1));
+				Article requestedArticle = articleManager.getArticleById(idArticle);
+				if (requestedArticle != null && requestedArticle.getVendeur().getId() == ((Utilisateur) request.getSession().getAttribute("currentUser")).getId()) {
+					request.setAttribute("requestedArticle", requestedArticle);
+				}
+			} catch (NumberFormatException e) {}
+			request.getRequestDispatcher("/WEB-INF/pages/modifierVente.jsp").forward(request, response);
+		}
 	}
 
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getSession().getAttribute("currentUser") == null) {
 			if (!userManager.connectWithCookies(request.getCookies(), request)) {
@@ -70,12 +66,13 @@ public class ServletCreerVente extends HttpServlet {
 				cpRetrait = request.getParameter("articleRetraitCodePostal"),
 				villeRetrait = request.getParameter("articleRetraitVille");
 
-		Part filePart = request.getPart("articlePhoto");
-		String fileName = filePart != null ? getFileName(filePart) : "";
-
 		boolean hasErrors = false;
 		String errorMessage = "";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		int idArticle = Integer.parseInt(request.getPathInfo().substring(1));
+		Article articleModif = articleManager.getArticleById(idArticle);
+		request.setAttribute("requestedArticle", articleModif);
 
 		try {
 			if (StringUtils.isBlank(nomArticle) || (StringUtils.isNotBlank(nomArticle) && nomArticle.length() > 30)) {
@@ -111,65 +108,30 @@ public class ServletCreerVente extends HttpServlet {
 				errorMessage += "Le nom de la ville est obligatoire et doit faire au plus 150 caractères.<br>";
 			}
 			
-			try (
-					OutputStream out = new FileOutputStream(new File(Paths.get("").toAbsolutePath().toString() + "/" + fileName));
-					InputStream filecontent = filePart.getInputStream();
-					PrintWriter writer = response.getWriter();
-				) {
-				
-				System.out.println(getServletContext().getRealPath("") + "WebContent" + File.separator + "uploads" + File.separator + fileName);
-				
-				if (!(fileName.endsWith("png") || fileName.endsWith("jpg") || fileName.endsWith("jpeg"))) {
-					hasErrors = true;
-					errorMessage += "Le format du fichier n'est pas valide. Il doit être au format PNG ou JPG.<br>";
-				}
-				
-				if (!hasErrors) {
-					int read = 0;
-			        final byte[] bytes = new byte[1024];
-
-			        while ((read = filecontent.read(bytes)) != -1) {
-			            out.write(bytes, 0, read);
-			        }
-				}
-			} catch (FileNotFoundException|NullPointerException e) {
-				hasErrors = true;
-				errorMessage += e.getMessage() + "<br>";
-			}
-			
 			if (!hasErrors) {
-				Article nouvelArticle = new Article();
+				articleModif.setCat(DAOFactory.getDAOCategorie().find(Integer.parseInt(categorieArticle)));
+				articleModif.setDatesDebutEncheres(sdf.parse(debutEnchereArticle));
+				articleModif.setDatesFinEncheres(sdf.parse(finEnchereArticle));
+				articleModif.setDescription(descriptionArticle);
+				articleModif.setMiseAPrix(Integer.parseInt(prixArticle));
+				articleModif.setPrixVente(Integer.parseInt(prixArticle));
+				articleModif.setNomArticle(nomArticle);
+				articleModif.setVendeur((Utilisateur) request.getSession().getAttribute("currentUser"));
+				articleModif.setRue(rueRetrait);
+				articleModif.setCodePostal(cpRetrait);
+				articleModif.setVille(villeRetrait);
 
-				nouvelArticle.setCat(DAOFactory.getDAOCategorie().find(Integer.parseInt(categorieArticle)));
-				nouvelArticle.setDatesDebutEncheres(sdf.parse(debutEnchereArticle));
-				nouvelArticle.setDatesFinEncheres(sdf.parse(finEnchereArticle));
-				nouvelArticle.setDescription(descriptionArticle);
-				nouvelArticle.setMiseAPrix(Integer.parseInt(prixArticle));
-				nouvelArticle.setPrixVente(Integer.parseInt(prixArticle));
-				nouvelArticle.setNomArticle(nomArticle);
-				nouvelArticle.setVendeur((Utilisateur) request.getSession().getAttribute("currentUser"));
-				nouvelArticle.setRue(rueRetrait);
-				nouvelArticle.setCodePostal(cpRetrait);
-				nouvelArticle.setVille(villeRetrait);
-
-				nouvelArticle = articleManager.addArticle(nouvelArticle);
-				response.sendRedirect("/projetEniEncheres/detail-vente/" + nouvelArticle.getNoArticle());
+				articleManager.updateArticle(articleModif);
+				request.setAttribute("requestedArticle", articleModif);
+				request.setAttribute("success", "La vente a bien été modifiée");
+				response.sendRedirect("/projetEniEncheres");
 			} else {
 				request.setAttribute("error", errorMessage);
-				request.getRequestDispatcher("/WEB-INF/pages/nouvelleVente.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/pages/modifierVente.jsp").forward(request, response);
 			}
 		} catch (NumberFormatException | ParseException e) {
 			request.setAttribute("error", e.getMessage());
-			request.getRequestDispatcher("/WEB-INF/pages/nouvelleVente.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/pages/modifierVente.jsp").forward(request, response);
 		}
-	}
-	
-	private String getFileName(final Part part) {
-	    for (String content : part.getHeader("content-disposition").split(";")) {
-	        if (content.trim().startsWith("filename")) {
-	            return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
-	        }
-	    }
-	    return null;
 	}
 }

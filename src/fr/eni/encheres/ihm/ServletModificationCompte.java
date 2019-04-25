@@ -28,10 +28,12 @@ public class ServletModificationCompte extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (request.getSession().getAttribute("currentUser") == null) {
-			response.sendRedirect("/projetEniEncheres");
-		} else {
-			request.getRequestDispatcher("/WEB-INF/pages/modificationCompte.jsp").forward(request, response);
+			if (!userManager.connectWithCookies(request.getCookies(), request)) {
+				response.sendRedirect("/projetEniEncheres");
+				return;
+			}
 		}
+		request.getRequestDispatcher("/WEB-INF/pages/modificationCompte.jsp").forward(request, response);
 	}
 
 
