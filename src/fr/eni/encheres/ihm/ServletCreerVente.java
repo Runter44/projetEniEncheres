@@ -7,10 +7,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +29,7 @@ import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 
 @WebServlet("/nouvelle-vente")
+@MultipartConfig
 public class ServletCreerVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -109,10 +112,12 @@ public class ServletCreerVente extends HttpServlet {
 			}
 			
 			try (
-					OutputStream out = new FileOutputStream(new File("uploads" + File.separator + fileName));
+					OutputStream out = new FileOutputStream(new File(Paths.get("").toAbsolutePath().toString() + "/" + fileName));
 					InputStream filecontent = filePart.getInputStream();
 					PrintWriter writer = response.getWriter();
 				) {
+				
+				System.out.println(getServletContext().getRealPath("") + "WebContent" + File.separator + "uploads" + File.separator + fileName);
 				
 				if (!(fileName.endsWith("png") || fileName.endsWith("jpg") || fileName.endsWith("jpeg"))) {
 					hasErrors = true;
@@ -129,7 +134,7 @@ public class ServletCreerVente extends HttpServlet {
 				}
 			} catch (FileNotFoundException|NullPointerException e) {
 				hasErrors = true;
-				errorMessage += "L'image sélectionnée n'est pas valide.<br>";
+				errorMessage += e.getMessage() + "<br>";
 			}
 			
 			if (!hasErrors) {
