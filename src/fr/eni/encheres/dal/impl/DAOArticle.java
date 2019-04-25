@@ -86,7 +86,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 			if (result != null && result.next()) {
 				articleVendu = new Article();
 				
-				articleVendu.setNoArticle(result.getInt("no_utilisateur"));
+				articleVendu.setNoArticle(result.getInt("no_article"));
 				articleVendu.setNomArticle(result.getString("nom_article"));
 				articleVendu.setDescription(result.getString("description"));
 				articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_debut_encheres")));
@@ -126,7 +126,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 			while(result != null && result.next()) {
 				unArticleVendu = new Article();
 				
-				unArticleVendu.setNoArticle(result.getInt("no_utilisateur"));
+				unArticleVendu.setNoArticle(result.getInt("no_article"));
 				unArticleVendu.setNomArticle(result.getString("nom_article"));
 				unArticleVendu.setDescription(result.getString("description"));
 				unArticleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_debut_encheres")));
@@ -232,7 +232,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 	
 	
 	public List<Article> findListCrit(Article critArticle) {
-		List<Article> LesArticlesVendus = new ArrayList<Article>();
+		List<Article> lesArticlesVendus = new ArrayList<Article>();
 		Article articleVendu = null;
 		
 		List<Object> listValues = new ArrayList<>();
@@ -284,7 +284,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				while(result != null && result.next()) {
 					articleVendu = new Article();
 					
-					articleVendu.setNoArticle(result.getInt("no_utilisateur"));
+					articleVendu.setNoArticle(result.getInt("no_article"));
 					articleVendu.setNomArticle(result.getString("nom_article"));
 					articleVendu.setDescription(result.getString("description"));
 					articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_debut_encheres")));
@@ -303,7 +303,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 					Categorie cat = daoCat.find(Integer.parseInt(result.getString("no_categorie")));
 					articleVendu.setCat(cat);
 					
-					LesArticlesVendus.add(articleVendu);
+					lesArticlesVendus.add(articleVendu);
 				}
 				
 				result.close();
@@ -313,7 +313,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return LesArticlesVendus;
+		return lesArticlesVendus;
 	}
 
 }
