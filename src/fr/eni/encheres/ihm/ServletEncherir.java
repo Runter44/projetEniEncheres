@@ -39,17 +39,27 @@ public class ServletEncherir extends HttpServlet {
 			userManager.connectWithCookies(request.getCookies(), request);
 		}
 		try {
-			CritEnchere critEnchere = new CritEnchere();
-			Article critArticle = new Article();
+			CritEnchere critEnchere;
+			Article critArticle ;
+			Enchere uneEnchere;
+			int idArticle;
 
-			critArticle.setNoArticle(Integer.parseInt(request.getPathInfo().substring(1)));
+			critEnchere = new CritEnchere();
+			critArticle = new Article();
+			idArticle = Integer.parseInt(request.getPathInfo().substring(1));
+
+			critArticle.setNoArticle(idArticle);
 			critEnchere.setVente(critArticle);
 
 			critEnchere.setOrderBy("montant_enchere");
 			critEnchere.setSensTri("DESC");		
-
-			request.setAttribute("Enchere",enchereManager.getListEnchereByCrit(critEnchere).get(0));
-
+			if (enchereManager.getListEnchereByCrit(critEnchere).size()>0){
+				request.setAttribute("Enchere",enchereManager.getListEnchereByCrit(critEnchere).get(0));
+			}else{
+				uneEnchere = new Enchere ();
+				uneEnchere.setArticle(articleManager.getArticleById(idArticle));
+				request.setAttribute("Enchere",uneEnchere);
+			}
 		} catch (NumberFormatException e) {}
 
 		request.getRequestDispatcher("/WEB-INF/pages/pageEncherir.jsp").forward(request, response);
@@ -59,7 +69,7 @@ public class ServletEncherir extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Enchere enchere;
-		Utilisateur DernierEncherrisseur;
+		Utilisateur DernierEnchere;
 		Article articleEnCour;
 		CritEnchere critEnchere;
 		Article critArticle;
@@ -77,10 +87,10 @@ public class ServletEncherir extends HttpServlet {
 		critEnchere.setVente(critArticle);
 		critEnchere.setOrderBy("montant_enchere");
 		critEnchere.setSensTri("DESC");		
-		DernierEncherrisseur = null;
+		DernierEnchere = null;
 
 		if (enchereManager.getListEnchereByCrit(critEnchere).size()>0){
-			DernierEncherrisseur = enchereManager.getListEnchereByCrit(critEnchere).get(0).getUser();
+			DernierEnchere = enchereManager.getListEnchereByCrit(critEnchere).get(0).getUser();
 		}
 
 		messageError = "";
@@ -104,8 +114,8 @@ public class ServletEncherir extends HttpServlet {
 			enchereOk = false;
 			messageError += "Votre enchère n'est pas assez haute. ";
 		}		
-		if(DernierEncherrisseur != null ){
-			if (enchere.getUser().getId() == DernierEncherrisseur.getId()){
+		if(DernierEnchere != null ){
+			if (enchere.getUser().getId() == DernierEnchere.getId()){
 				enchereOk = false;
 				messageError += "Vous ne pouvez pas enchérir sur votre propre enchère. ";
 			}
@@ -121,30 +131,38 @@ public class ServletEncherir extends HttpServlet {
 
 		if(enchereOk){
 
+			Utilisateur vendeur;
+
+			vendeur = new Utilisateur();
+			vendeur = enchere.getArticle().getVendeur();
+
 			//Ajout de la nouvelle enchère
 			enchereManager.addEnchere(enchere);	
 
 			//Créditaion de l'ancien enchérisseur
-			if (DernierEncherrisseur != null){		
-				DernierEncherrisseur.setCredit(DernierEncherrisseur.getCredit() + articleEnCour.getNoArticle());
-				userManager.updateUser(DernierEncherrisseur);
+			if (DernierEnchere != null){		
+				DernierEnchere.setCredit(DernierEnchere.getCredit() + articleEnCour.getNoArticle());
+				userManager.updateUser(DernierEnchere);
+				vendeur.setCredit(vendeur.getCredit() - articleEnCour.getNoArticle());
 			}
 
 			//débit du nouvel utilisateur
 			enchere.getUser().setCredit(enchere.getUser().getCredit() - enchere.getValeur());
 			userManager.updateUser(enchere.getUser());
-
+			vendeur.setCredit(vendeur.getCredit() + enchere.getValeur());
 
 			articleEnCour.setPrixVente(enchere.getValeur());
-
 			articleManager.updateArticle(articleEnCour);
+			
+			userManager.updateUser(vendeur);
+			
 			messageError += "Votre enchère a bien été prise en compte.";
 
 			request.setAttribute("succes", messageError);
 		}else{
 			request.setAttribute("error", messageError);
 		}
-		
+
 		//Init Atribut Enchere pour JSP
 		critEnchere = new CritEnchere();
 		critArticle = new Article();
@@ -153,7 +171,7 @@ public class ServletEncherir extends HttpServlet {
 		critEnchere.setOrderBy("montant_enchere");
 		critEnchere.setSensTri("DESC");		
 		request.setAttribute("Enchere",enchereManager.getListEnchereByCrit(critEnchere).get(0));
-		
+
 		request.getRequestDispatcher("/WEB-INF/pages/pageEncherir.jsp").forward(request, response);
 	}
 }
