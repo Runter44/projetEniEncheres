@@ -7,13 +7,28 @@
 			<%@include file="/WEB-INF/pages/Include/navbarButtons.jsp"%>
 		</nav>
 		<div class="paddingX10 text-left">
+			<!--<c:if test="${Date.time > Enchere.article.datesDebutEncheres}">
+				<c:if test="${Date.time < Enchere.article.datesFinEncheres}">
+					<h1 class="text-center">Détail vente</h1>
+				</c:if>
+			</c:if>
+			<c:if test="${Date.time < Enchere.article.datesDebutEncheres}">
+				<c:if test="${Date.time > Enchere.article.datesFinEncheres}">
+					<c:if test="${currentUser.id == Enchere.user.id}">
+						<h3 class="text-center">Vous avez remporté la vente</h3>
+					</c:if>
+					<c:if test="${currentUser.id == Enchere.article.vendeur.id}">
+						<h3 class="text-center">${Enchere.user.pseudo} a remporté l'enchère !</h3>
+					</c:if>
+				</c:if>
+			</c:if>-->
 			<h1 class="text-center">Détail vente</h1>
 			<br>
 			<form method="post" action="">
 				<div class="row border rounded">
 					<div class="col-md-4">
 						<img class="img-fluid" alt="img de l'objet"
-							src="http://experia-agency.com/wp-content/uploads/2016/06/ench-pict-2.jpg">
+							src="${Enchere.article.imagePath}">
 					</div>
 					<div class="col-md-8 text-center">
 						<table class="table">
@@ -29,11 +44,11 @@
 								</tr>
 								<tr>
 									<th scope="row" class="text-right">Mise prix :</th>
-									<td>${Enchere.article.miseAPrix} pts</td>
+									<td>${Enchere.article.miseAPrix}pts</td>
 								</tr>
 								<tr>
 									<th scope="row" class="text-right">Meilleure offre :</th>
-									<td>${Enchere.valeur} pts par ${Enchere.user.pseudo}</td>
+									<td>${Enchere.valeur}ptspar${Enchere.user.pseudo}</td>
 								</tr>
 								<tr>
 									<th scope="row" class="text-right">Fin de l'enchère :</th>
@@ -68,12 +83,14 @@
 								</div>
 							</div>
 						</c:if>
-						
-						<c:if test="${currentUser != null && currentUser.id == Enchere.article.vendeur.id}">
-							<a href="/projetEniEncheres/modifier-vente/${Enchere.article.noArticle}"
+
+						<c:if
+							test="${currentUser != null && currentUser.id == Enchere.article.vendeur.id}">
+							<a
+								href="/projetEniEncheres/modifier-vente/${Enchere.article.noArticle}"
 								class="btn btn-link">Modifier la vente</a>
 						</c:if>
-						
+
 						<c:if test="${error != null}">
 							<div class="alert alert-danger alert-dismissible fade show"
 								role="alert">
@@ -85,7 +102,7 @@
 								</button>
 							</div>
 						</c:if>
-						
+
 						<c:if test="${succes != null}">
 							<div class="alert alert-success alert-dismissible fade show"
 								role="alert">

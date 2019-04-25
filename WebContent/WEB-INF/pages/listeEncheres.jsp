@@ -67,15 +67,15 @@
 							<div class="row">
 								<div class="col-md-6 col-sm-6">
 									<img class="img-fluid" alt="img de l'objet"
-										src="http://experia-agency.com/wp-content/uploads/2016/06/ench-pict-2.jpg">
+										src="${ article.imagePath }">
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<a
 										href="/projetEniEncheres/detail-vente/${ article.noArticle }">
 										${ article.nomArticle } </a> <br> <label> Prix : ${ article.prixVente }
 									</label> <br> <label> Fin de l'enchères : ${ article.datesFinEncheres }
-									</label> <br> <label> Vendeur : <a
-										href="/projetEniEncheres/detail-vente/${ article.vendeur.id }">
+									</label> <br> <label> Vendeur : <br><a
+										href="/projetEniEncheres/profil/${article.vendeur.id }">
 											${ article.vendeur.pseudo } </a>
 									</label>
 								</div>

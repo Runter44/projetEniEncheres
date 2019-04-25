@@ -33,7 +33,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 	private static final String SELECT_ONE_ARTICLE_ID = "SELECT * FROM articles_vendus WHERE no_article = ?;";
 	private static final String SELECT_ONE_ARTICLE_NAME = "SELECT * FROM articles_vendus WHERE nom_article = ?;";
 	private static final String SELECT_ALL_ARTICLE = "SELECT * FROM articles_vendus;";
-	private static final String INSERT_ARTICLE = "INSERT INTO articles_vendus (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie, rue, code_postal, ville) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
+	private static final String INSERT_ARTICLE = "INSERT INTO articles_vendus (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie, rue, code_postal, ville, image_path) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
 	private static final String UPDATE_ARTICLE = "UPDATE articles_vendus SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_categorie = ?, rue = ?, code_postal = ?, ville = ? WHERE no_article = ?;";
 	private static final String DELETE_ARTICLE = "DELETE FROM articles_vendus WHERE no_article = ?;";
 	private static final String SELECT_LIST_ARTICLE_CRIT = "SELECT * FROM articles_vendus WHERE 1=1";
@@ -60,6 +60,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				articleVendu.setRue(result.getString("rue"));
 				articleVendu.setCodePostal(result.getString("code_postal"));
 				articleVendu.setVille(result.getString("ville"));
+				articleVendu.setImagePath(result.getString("image_path"));
 				
 				DAOUtilisateur daoUser = new DAOUtilisateur();
 				Utilisateur user = daoUser.find(Integer.parseInt(result.getString("no_utilisateur")));
@@ -97,6 +98,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				articleVendu.setRue(result.getString("rue"));
 				articleVendu.setCodePostal(result.getString("code_postal"));
 				articleVendu.setVille(result.getString("ville"));
+				articleVendu.setImagePath(result.getString("image_path"));
 				
 				DAOUtilisateur daoUser = new DAOUtilisateur();
 				Utilisateur user = daoUser.find(Integer.parseInt(result.getString("no_utilisateur")));
@@ -137,6 +139,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				unArticleVendu.setRue(result.getString("rue"));
 				unArticleVendu.setCodePostal(result.getString("code_postal"));
 				unArticleVendu.setVille(result.getString("ville"));
+				unArticleVendu.setImagePath(result.getString("image_path"));
 				
 				DAOUtilisateur daoUser = new DAOUtilisateur();
 				Utilisateur user = daoUser.find(Integer.parseInt(result.getString("no_utilisateur")));
@@ -174,6 +177,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 			stmt.setString(9, articleVendu.getRue());
 			stmt.setString(10, articleVendu.getCodePostal());
 			stmt.setString(11, articleVendu.getVille());
+			stmt.setString(12, articleVendu.getImagePath());
 
 			stmt.executeUpdate();
 			ResultSet res = stmt.getGeneratedKeys();
@@ -299,6 +303,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 					articleVendu.setRue(result.getString("rue"));
 					articleVendu.setCodePostal(result.getString("code_postal"));
 					articleVendu.setVille(result.getString("ville"));
+					articleVendu.setImagePath(result.getString("image_path"));
 					
 					DAOUtilisateur daoUser = new DAOUtilisateur();
 					Utilisateur user = daoUser.find(Integer.parseInt(result.getString("no_utilisateur")));
