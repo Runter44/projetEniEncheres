@@ -201,13 +201,13 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 						rqt.append(" and A.date_fin_encheres <= "+today);
 					}
 				}
-				if(critEnchere.getOrderBy() != null){
+				/*if(critEnchere.getOrderBy() != null){
 					if(critEnchere.getSensTri() != null){
 						rqt.append(" ORDER BY "+critEnchere.getOrderBy()+" "+critEnchere.getSensTri());
 					}else{
 						rqt.append(" ORDER BY "+critEnchere.getOrderBy());
 					}				
-				}
+				}*/
 			
 				PreparedStatement stmt = connexion.prepareStatement(rqt.toString());
 			

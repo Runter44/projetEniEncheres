@@ -1,7 +1,6 @@
 package fr.eni.encheres.ihm;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.EnchereManager;
-import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.criteres.CritEnchere;
 
@@ -35,8 +33,8 @@ public class ServletEncherir extends HttpServlet {
 
 			critArticle.setNoArticle(Integer.parseInt(request.getPathInfo().substring(1)));
 			critEnchere.setVente(critArticle);
-			critEnchere.setOrderBy("montant_enchere");
-			critEnchere.setSensTri("ASC");		
+			//critEnchere.setOrderBy("montant_enchere");
+			//critEnchere.setSensTri("ASC");		
 
 			request.setAttribute("Enchere",enchereManager.getListEnchereByCrit(critEnchere).get(0));
 

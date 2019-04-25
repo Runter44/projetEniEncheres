@@ -20,7 +20,6 @@ import org.apache.commons.lang3.StringUtils;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Utilisateur;
-import fr.eni.encheres.criteres.CritArticle;
 import fr.eni.encheres.dal.ConnectionProvider;
 import fr.eni.encheres.dal.InterfaceDAO;
 
@@ -231,7 +230,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 	}
 	
 	
-	public List<Article> findListCrit(CritArticle critArticle) {
+	public List<Article> findListCrit(Article critArticle) {
 		List<Article> LesArticlesVendus = new ArrayList<Article>();
 		Article articleVendu = null;
 		
@@ -242,7 +241,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 			
 			if(critArticle != null) {
 				if(StringUtils.isNotBlank(critArticle.getNomArticle())) {
-					rqt.append(" and nom_article like %?%");
+					rqt.append(" and nom_article like ?");
 					listValues.add(critArticle.getNomArticle());
 				}
 				if(critArticle.getCat() != null) {
@@ -271,7 +270,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 						stmt.setInt(compteur, (Integer) object);
 					}
 					if(object.getClass() == String.class ) {
-						stmt.setString(compteur, (String) object);
+						stmt.setString(compteur, "%"+object.toString()+"%");
 					}
 					if(object.getClass() == java.util.Date.class ) {
 						java.sql.Date sqlDate = new Date(((java.util.Date) object).getTime());

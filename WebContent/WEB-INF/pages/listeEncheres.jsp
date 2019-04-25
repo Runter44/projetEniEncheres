@@ -13,10 +13,10 @@
 		<div class="paddingX10 text-left">
 			<h1 class="text-center">Listes des encheres</h1>
 			<br>
-			<form method="post" action="Creation">
+			<form method="post" action="liste-encheres">
 				<label for="filtreNomArticle">Filtres :</label> <input
 					id="filtreNomArticle" type="text" name="filtreNomArticle"
-					class="form-control" placeholder="Le nom de l'article contient"><br>
+					class="form-control" placeholder="Le nom de l'article contient" value="${filtreNomArticle}"><br>
 				<label for="">Categorie :</label> <select id="categorieValue" name="categorieValue"
 					class="custom-select">
 					<c:forEach var="cat" items="${listeCat}">

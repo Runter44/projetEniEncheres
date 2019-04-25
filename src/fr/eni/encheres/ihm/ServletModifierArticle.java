@@ -1,6 +1,7 @@
 package fr.eni.encheres.ihm;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +25,7 @@ public class ServletModifierArticle extends HttpServlet {
     	userManager = new UserManager();
     }
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getSession().getAttribute("currentUser") == null) {
 			userManager.connectWithCookies(request.getCookies(), request);
@@ -42,6 +44,7 @@ public class ServletModifierArticle extends HttpServlet {
 		}
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
