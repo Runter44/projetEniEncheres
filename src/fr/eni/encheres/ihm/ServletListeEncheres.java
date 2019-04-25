@@ -34,6 +34,7 @@ public class ServletListeEncheres extends HttpServlet {
         categorieManager = new CategorieManager();
         articleManager = new ArticleManager();
         enchereManager = new EnchereManager();
+        userManager = new UserManager();
     }
 
 	@Override
