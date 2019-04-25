@@ -157,7 +157,7 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 	}
 
 	public List<Enchere> findListEnchereCrit(CritEnchere critEnchere) {
-		List<Enchere> LesEncheres = new ArrayList<Enchere>();
+		List<Enchere> lesEncheres = new ArrayList<Enchere>();
 		Enchere enchere = null;
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 
@@ -228,7 +228,7 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 						enchere.setUser(utilisateur);
 						enchere.setValeur(result.getInt("montant_enchere"));
 						enchere.setDateEnchere(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_enchere")));
-						LesEncheres.add(enchere);	
+						lesEncheres.add(enchere);	
 					}
 					
 					result.close();
@@ -238,7 +238,7 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			return LesEncheres;
+			return lesEncheres;
 		}
 
 }
