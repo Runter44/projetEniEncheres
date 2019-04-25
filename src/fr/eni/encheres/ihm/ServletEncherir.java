@@ -66,16 +66,6 @@ public class ServletEncherir extends HttpServlet {
 		boolean enchereOk;
 		String messageError;
 
-		//Init Atribut Enchere pour JSP
-		critEnchere = new CritEnchere();
-		critArticle = new Article();
-		critArticle.setNoArticle(Integer.parseInt(request.getPathInfo().substring(1)));
-		critEnchere.setVente(critArticle);
-		critEnchere.setOrderBy("montant_enchere");
-		critEnchere.setSensTri("DESC");		
-
-		request.setAttribute("Enchere",enchereManager.getListEnchereByCrit(critEnchere).get(0));
-
 		//Debut traitement
 		articleEnCour = articleManager.getArticleById(Integer.parseInt(request.getPathInfo().substring(1)));
 		critArticle = new Article();
@@ -151,10 +141,19 @@ public class ServletEncherir extends HttpServlet {
 			messageError += "Votre enchère a bien été prise en compte.";
 
 			request.setAttribute("succes", messageError);
-			request.getRequestDispatcher("/WEB-INF/pages/pageEncherir.jsp").forward(request, response);
 		}else{
 			request.setAttribute("error", messageError);
-			request.getRequestDispatcher("/WEB-INF/pages/pageEncherir.jsp").forward(request, response);
 		}
+		
+		//Init Atribut Enchere pour JSP
+		critEnchere = new CritEnchere();
+		critArticle = new Article();
+		critArticle.setNoArticle(Integer.parseInt(request.getPathInfo().substring(1)));
+		critEnchere.setVente(critArticle);
+		critEnchere.setOrderBy("montant_enchere");
+		critEnchere.setSensTri("DESC");		
+		request.setAttribute("Enchere",enchereManager.getListEnchereByCrit(critEnchere).get(0));
+		
+		request.getRequestDispatcher("/WEB-INF/pages/pageEncherir.jsp").forward(request, response);
 	}
 }
