@@ -106,10 +106,10 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = connexion.prepareStatement(INSERT_ENCHERE);
 			stmt.setInt(1, enchere.getUser().getId());
-			stmt.setInt(1, enchere.getArticle().getNoArticle());
+			stmt.setInt(2, enchere.getArticle().getNoArticle());
 			java.sql.Date sqlDate = new java.sql.Date(enchere.getDateEnchere().getTime());
-			stmt.setDate(1, sqlDate);
-			stmt.setInt(1, enchere.getValeur());
+			stmt.setDate(3, sqlDate);
+			stmt.setInt(4, enchere.getValeur());
 
 			stmt.executeUpdate();
 			
@@ -127,9 +127,9 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 			PreparedStatement stmt = connexion.prepareStatement(UPDATE_ENCHERE);
 			java.sql.Date sqlDate = new java.sql.Date(enchere.getDateEnchere().getTime());
 			stmt.setDate(1, sqlDate);
-			stmt.setInt(1, enchere.getValeur());
-			stmt.setInt(1, enchere.getUser().getId());
-			stmt.setInt(1, enchere.getArticle().getNoArticle());
+			stmt.setInt(2, enchere.getValeur());
+			stmt.setInt(3, enchere.getUser().getId());
+			stmt.setInt(4, enchere.getArticle().getNoArticle());
 			stmt.executeUpdate();
 			updateRealiser = true;
 		} catch (SQLException e) {
@@ -169,20 +169,22 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 						rqt.append(" and A.no_article = "+critEnchere.getVente().getNoArticle());
 					}
 					if(StringUtils.isNotBlank(critEnchere.getVente().getNomArticle())) {
-						rqt.append(" and A.nom_article like %"+critEnchere.getVente().getNomArticle()+"%");
+						rqt.append(" and A.nom_article like '%"+critEnchere.getVente().getNomArticle()+"%'");
 					}
 					if(critEnchere.getVente().getCat() != null) {
-						rqt.append(" and A.no_categorie = "+critEnchere.getVente().getNomArticle());
+						rqt.append(" and A.no_categorie = "+critEnchere.getVente().getCat().getNoCategorie());
 					}
 					if(critEnchere.getVente().getDatesDebutEncheres() != null) {
 						if(critEnchere.isNonDebute()) {
-							rqt.append(" and A.date_debut_encheres < "+critEnchere.getVente().getDatesDebutEncheres());
+							rqt.append(" and A.date_debut_encheres < '"+critEnchere.getVente().getDatesDebutEncheres()+"'");
 						}else {
-							rqt.append(" and A.date_debut_encheres >= "+critEnchere.getVente().getDatesDebutEncheres());
+							rqt.append(" and A.date_debut_encheres >= '"+critEnchere.getVente().getDatesDebutEncheres()+"'");
 						}
 					}
 					if(critEnchere.getVente().getDatesFinEncheres() != null) {
-						rqt.append(" and A.date_fin_encheres < "+critEnchere.getVente().getDatesFinEncheres());
+						SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+						String today =  df.format(new Date(critEnchere.getVente().getDatesFinEncheres().getTime()));
+						rqt.append(" and A.date_fin_encheres < '"+today+"'");
 					}
 				}
 				if(critEnchere.getUser() != null) {
@@ -198,8 +200,11 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 					if(critEnchere.getDateEnchere() != null) {
 						SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 						String today =  df.format(new Date());
-						rqt.append(" and A.date_fin_encheres <= "+today);
+						rqt.append(" and A.date_fin_encheres <= '"+today+"'");
 					}
+				}
+				if(critEnchere.getValeur() != 0){
+						rqt.append(" and E.montant_enchere = "+critEnchere.getValeur());		
 				}
 				if(critEnchere.getOrderBy() != null){
 					if(critEnchere.getSensTri() != null){
@@ -220,11 +225,13 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 					enchere.setArticle(article);
 					enchere.setUser(utilisateur);
 					enchere.setValeur(result.getInt("montant_enchere"));
-					enchere.setDateEnchere(new Date(result.getString("date_enchere")));
+					enchere.setDateEnchere(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_enchere")));
 					LesEncheres.add(enchere);	
 				}
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return LesEncheres;
