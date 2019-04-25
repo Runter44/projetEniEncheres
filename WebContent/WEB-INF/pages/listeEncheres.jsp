@@ -67,7 +67,7 @@
 							<div class="row">
 								<div class="col-md-6 col-sm-6">
 									<img class="img-fluid" alt="img de l'objet"
-										src="http://experia-agency.com/wp-content/uploads/2016/06/ench-pict-2.jpg">
+										src="${ article.imagePath }">
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<a
