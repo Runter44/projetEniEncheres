@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -26,7 +25,6 @@ import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bll.UserManager;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Utilisateur;
-import fr.eni.encheres.dal.DAOFactory;
 
 @WebServlet("/nouvelle-vente")
 @MultipartConfig
@@ -71,7 +69,7 @@ public class ServletCreerVente extends HttpServlet {
 				villeRetrait = request.getParameter("articleRetraitVille");
 
 		Part filePart = request.getPart("articlePhoto");
-		String fileName = filePart != null ? getFileName(filePart) : "";
+		String fileName = filePart != null ? filePart.getSubmittedFileName() : "";
 
 		boolean hasErrors = false;
 		String errorMessage = "";
@@ -112,14 +110,10 @@ public class ServletCreerVente extends HttpServlet {
 			}
 			
 			try (
-					OutputStream out = new FileOutputStream(new File(Paths.get("").toAbsolutePath().toString() + "/" + fileName));
+					OutputStream out = new FileOutputStream(new File(getServletContext().getRealPath("/uploads") + File.separator + fileName));
 					InputStream filecontent = filePart.getInputStream();
-					PrintWriter writer = response.getWriter();
 				) {
-				
-				System.out.println(getServletContext().getRealPath("") + "WebContent" + File.separator + "uploads" + File.separator + fileName);
-				
-				if (!(fileName.endsWith("png") || fileName.endsWith("jpg") || fileName.endsWith("jpeg"))) {
+				if (!(fileName.endsWith("png") || fileName.endsWith("jpg") || fileName.endsWith("jpeg "))) {
 					hasErrors = true;
 					errorMessage += "Le format du fichier n'est pas valide. Il doit être au format PNG ou JPG.<br>";
 				}
@@ -140,7 +134,7 @@ public class ServletCreerVente extends HttpServlet {
 			if (!hasErrors) {
 				Article nouvelArticle = new Article();
 
-				nouvelArticle.setCat(DAOFactory.getDAOCategorie().find(Integer.parseInt(categorieArticle)));
+				nouvelArticle.setCat((new CategorieManager()).getCatById(Integer.parseInt(categorieArticle)));
 				nouvelArticle.setDatesDebutEncheres(sdf.parse(debutEnchereArticle));
 				nouvelArticle.setDatesFinEncheres(sdf.parse(finEnchereArticle));
 				nouvelArticle.setDescription(descriptionArticle);
@@ -151,6 +145,7 @@ public class ServletCreerVente extends HttpServlet {
 				nouvelArticle.setRue(rueRetrait);
 				nouvelArticle.setCodePostal(cpRetrait);
 				nouvelArticle.setVille(villeRetrait);
+				nouvelArticle.setImagePath("/projetEniEncheres/uploads/" + fileName);
 
 				nouvelArticle = articleManager.addArticle(nouvelArticle);
 				response.sendRedirect("/projetEniEncheres/detail-vente/" + nouvelArticle.getNoArticle());
@@ -162,14 +157,5 @@ public class ServletCreerVente extends HttpServlet {
 			request.setAttribute("error", e.getMessage());
 			request.getRequestDispatcher("/WEB-INF/pages/nouvelleVente.jsp").forward(request, response);
 		}
-	}
-	
-	private String getFileName(final Part part) {
-	    for (String content : part.getHeader("content-disposition").split(";")) {
-	        if (content.trim().startsWith("filename")) {
-	            return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
-	        }
-	    }
-	    return null;
 	}
 }

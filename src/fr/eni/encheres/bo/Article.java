@@ -11,6 +11,7 @@ public class Article {
 	private Date datesFinEncheres;
 	private int miseAPrix;
 	private int prixVente;
+	private String imagePath;
 	private String rue;
 	private String codePostal;
 	private String ville;
@@ -94,6 +95,14 @@ public class Article {
 	public Article setVendeur(Utilisateur vendeur) {
 		this.vendeur = vendeur;
 		return this;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 	public String getRue() {
