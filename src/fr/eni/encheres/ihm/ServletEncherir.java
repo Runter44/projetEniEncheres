@@ -15,6 +15,7 @@ import fr.eni.encheres.bll.UserManager;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.bo.Utilisateur;
+import fr.eni.encheres.criteres.CritArticle;
 import fr.eni.encheres.criteres.CritEnchere;
 
 
@@ -40,12 +41,12 @@ public class ServletEncherir extends HttpServlet {
 		}
 		try {
 			CritEnchere critEnchere;
-			Article critArticle ;
+			CritArticle critArticle ;
 			Enchere uneEnchere;
 			int idArticle;
 
 			critEnchere = new CritEnchere();
-			critArticle = new Article();
+			critArticle = new CritArticle();
 			idArticle = Integer.parseInt(request.getPathInfo().substring(1));
 
 			critArticle.setNoArticle(idArticle);
@@ -72,13 +73,13 @@ public class ServletEncherir extends HttpServlet {
 		Utilisateur DernierEnchere;
 		Article articleEnCour;
 		CritEnchere critEnchere;
-		Article critArticle;
+		CritArticle critArticle;
 		boolean enchereOk;
 		String messageError;
 
 		//Debut traitement
 		articleEnCour = articleManager.getArticleById(Integer.parseInt(request.getPathInfo().substring(1)));
-		critArticle = new Article();
+		critArticle = new CritArticle();
 
 		critArticle.setNoArticle(articleEnCour.getNoArticle());
 		critEnchere = new CritEnchere();
@@ -165,7 +166,7 @@ public class ServletEncherir extends HttpServlet {
 
 		//Init Atribut Enchere pour JSP
 		critEnchere = new CritEnchere();
-		critArticle = new Article();
+		critArticle = new CritArticle();
 		critArticle.setNoArticle(Integer.parseInt(request.getPathInfo().substring(1)));
 		critEnchere.setVente(critArticle);
 		critEnchere.setOrderBy("montant_enchere");

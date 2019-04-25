@@ -21,6 +21,9 @@ public class CritArticle {
 	private Categorie cat;
 	private Utilisateur vendeur;
 	
+	private boolean nonDebute;
+
+	
 	
 	public CritArticle() {
 	}
@@ -124,5 +127,19 @@ public class CritArticle {
 	public CritArticle setVille(String ville) {
 		this.ville = ville;
 		return this;
+	}
+
+	/**
+	 * @return the nonDebute
+	 */
+	public boolean isNonDebute() {
+		return nonDebute;
+	}
+
+	/**
+	 * @param nonDebute the nonDebute to set
+	 */
+	public void setNonDebute(boolean nonDebute) {
+		this.nonDebute = nonDebute;
 	}
 }

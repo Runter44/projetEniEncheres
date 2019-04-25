@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import fr.eni.encheres.bll.ArticleManager;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Categorie;
+import fr.eni.encheres.criteres.CritArticle;
 
 @WebServlet(name = "AutoCompleteNomArticle", urlPatterns = {"/AutoCompleteNomArticle"})
 public class ServletAutoCompleteArticle extends HttpServlet {
@@ -44,7 +45,7 @@ public class ServletAutoCompleteArticle extends HttpServlet {
         	catId = null;
         }
         
-        Article articleRechercher = new Article();
+        CritArticle articleRechercher = new CritArticle();
         articleRechercher.setNomArticle(nomArticle);
         Categorie catArticle = new Categorie();
         catArticle.setNoCategorie(catId);
