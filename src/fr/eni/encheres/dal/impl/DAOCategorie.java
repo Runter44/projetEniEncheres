@@ -28,8 +28,8 @@ public class DAOCategorie implements InterfaceDAO<Categorie> {
 	@Override
 	public Categorie find(int id) {
 		Categorie categorie = null;
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(SELECT_ONE_CAT_ID);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(SELECT_ONE_CAT_ID);) {
 			stmt.setInt(1, id);
 
 			ResultSet result = stmt.executeQuery();
@@ -48,10 +48,8 @@ public class DAOCategorie implements InterfaceDAO<Categorie> {
 	public List<Categorie> findAll() {
 		List<Categorie> lesCategorie = new ArrayList<Categorie>();
 		Categorie uneCategorie = null;
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(SELECT_ALL_CAT);
-			
-
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(SELECT_ALL_CAT);) {
 			ResultSet result = stmt.executeQuery();
 			while(result != null && result.next()) {
 				uneCategorie = new Categorie();
@@ -68,8 +66,8 @@ public class DAOCategorie implements InterfaceDAO<Categorie> {
 
 	@Override
 	public Categorie insert(Categorie categorie) {
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(INSERT_CAT, Statement.RETURN_GENERATED_KEYS);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(INSERT_CAT, Statement.RETURN_GENERATED_KEYS);) {
 			stmt.setString(1, categorie.getLibelle());
 			
 
@@ -88,8 +86,8 @@ public class DAOCategorie implements InterfaceDAO<Categorie> {
 	@Override
 	public boolean update(Categorie categorie) {
 		boolean updateRealiser = false;
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(UPDATE_CAT);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(UPDATE_CAT);) {
 			stmt.setString(1, categorie.getLibelle());
 			stmt.setInt(1, categorie.getNoCategorie());
 			stmt.executeUpdate();
@@ -104,8 +102,8 @@ public class DAOCategorie implements InterfaceDAO<Categorie> {
 	@Override
 	public boolean remove(Categorie categorie) {
 		boolean deletRealiser = false;
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(DELETE_CAT);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(DELETE_CAT);) {
 			stmt.setInt(1, categorie.getNoCategorie());
 			stmt.executeUpdate();
 			deletRealiser = true;

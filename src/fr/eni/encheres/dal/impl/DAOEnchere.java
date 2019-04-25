@@ -57,8 +57,8 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 	@SuppressWarnings("deprecation")
 	public Enchere findByNoArticle(int id) {
 		Enchere enchere = null;
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(SELECT_ONE_ENCHERE_ARTICLE_ID);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(SELECT_ONE_ENCHERE_ARTICLE_ID);) {
 			stmt.setInt(1, id);
 
 			ResultSet result = stmt.executeQuery();
@@ -81,8 +81,8 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 	public List<Enchere> findAll() {
 		List<Enchere> lesEncheres = new ArrayList<Enchere>();
 		Enchere uneEnchere = null;
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(SELECT_ALL_ENCHERES);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(SELECT_ALL_ENCHERES);) {
 			ResultSet result = stmt.executeQuery();
 			while(result != null && result.next()) {
 				Article article = daoArticle.find(result.getInt("no_article"));
@@ -103,8 +103,8 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 
 	@Override
 	public Enchere insert(Enchere enchere) {
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(INSERT_ENCHERE);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(INSERT_ENCHERE);) {
 			stmt.setInt(1, enchere.getUser().getId());
 			stmt.setInt(2, enchere.getArticle().getNoArticle());
 			java.sql.Date sqlDate = new java.sql.Date(enchere.getDateEnchere().getTime());
@@ -123,8 +123,8 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 	@Override
 	public boolean update(Enchere enchere) {
 		boolean updateRealiser = false;
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(UPDATE_ENCHERE);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(UPDATE_ENCHERE);) {
 			java.sql.Date sqlDate = new java.sql.Date(enchere.getDateEnchere().getTime());
 			stmt.setDate(1, sqlDate);
 			stmt.setInt(2, enchere.getValeur());
@@ -142,8 +142,8 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 	@Override
 	public boolean remove(Enchere enchere) {
 		boolean deletRealiser = false;
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(DELETE_ENCHERE);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(DELETE_ENCHERE);) {
 			stmt.setInt(1, enchere.getArticle().getNoArticle());
 			stmt.setInt(2, enchere.getUser().getId());
 
@@ -230,6 +230,8 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 						enchere.setDateEnchere(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_enchere")));
 						LesEncheres.add(enchere);	
 					}
+					
+					result.close();
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

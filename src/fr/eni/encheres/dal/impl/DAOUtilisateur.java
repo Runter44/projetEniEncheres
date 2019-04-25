@@ -24,8 +24,8 @@ public class DAOUtilisateur implements InterfaceDAO<Utilisateur> {
 	@Override
 	public Utilisateur find(int id) {
 		Utilisateur user = null;
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(SELECT_ONE_USER_ID);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(SELECT_ONE_USER_ID);) {
 			stmt.setInt(1, id);
 
 			ResultSet result = stmt.executeQuery();
@@ -53,8 +53,8 @@ public class DAOUtilisateur implements InterfaceDAO<Utilisateur> {
 
 	public Utilisateur findByPseudo(String pseudo) {
 		Utilisateur user = null;
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(SELECT_ONE_USER_PSEUDO);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(SELECT_ONE_USER_PSEUDO);) {
 			stmt.setString(1, pseudo);
 
 			ResultSet result = stmt.executeQuery();
@@ -84,8 +84,8 @@ public class DAOUtilisateur implements InterfaceDAO<Utilisateur> {
 	public List<Utilisateur> findAll() {
 		List<Utilisateur> users = new ArrayList<>();
 
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(SELECT_ALL_USER);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(SELECT_ALL_USER);) {
 
 			ResultSet result = stmt.executeQuery();
 			while (result != null && result.next()) {
@@ -115,8 +115,8 @@ public class DAOUtilisateur implements InterfaceDAO<Utilisateur> {
 
 	@Override
 	public Utilisateur insert(Utilisateur user) {
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);) {
 			stmt.setString(1, user.getPseudo());
 			stmt.setString(2, user.getNom());
 			stmt.setString(3, user.getPrenom());
@@ -143,8 +143,8 @@ public class DAOUtilisateur implements InterfaceDAO<Utilisateur> {
 
 	@Override
 	public boolean update(Utilisateur user) {
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(UPDATE_USER);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(UPDATE_USER);) {
 			stmt.setString(1, user.getPseudo());
 			stmt.setString(2, user.getNom());
 			stmt.setString(3, user.getPrenom());
@@ -168,8 +168,8 @@ public class DAOUtilisateur implements InterfaceDAO<Utilisateur> {
 
 	@Override
 	public boolean remove(Utilisateur user) {
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(DELETE_USER);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(DELETE_USER);) {
 			stmt.setInt(1, user.getId());
 			stmt.executeUpdate();
 			return true;

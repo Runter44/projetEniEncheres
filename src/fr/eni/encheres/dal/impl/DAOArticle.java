@@ -41,8 +41,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 	@Override
 	public Article find(int id) {
 		Article articleVendu = null;
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(SELECT_ONE_ARTICLE_ID);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(SELECT_ONE_ARTICLE_ID);) {
 			stmt.setInt(1, id);
 
 			ResultSet result = stmt.executeQuery();
@@ -78,8 +78,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 	
 	public Article findByName(String name) {
 		Article articleVendu = null;
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(SELECT_ONE_ARTICLE_NAME);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(SELECT_ONE_ARTICLE_NAME);) {
 			stmt.setString(1, name);
 
 			ResultSet result = stmt.executeQuery();
@@ -118,8 +118,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 	public List<Article> findAll() {
 		List<Article> LesArticlesVendus = new ArrayList<Article>();
 		Article unArticleVendu = null;
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(SELECT_ALL_ARTICLE);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(SELECT_ALL_ARTICLE);) {
 			
 
 			ResultSet result = stmt.executeQuery();
@@ -158,8 +158,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 
 	@Override
 	public Article insert(Article articleVendu) {
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(INSERT_ARTICLE, Statement.RETURN_GENERATED_KEYS);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(INSERT_ARTICLE, Statement.RETURN_GENERATED_KEYS);) {
 			stmt.setString(1, articleVendu.getNomArticle());
 			stmt.setString(2, articleVendu.getDescription());
 			Date debut = new Date(articleVendu.getDatesDebutEncheres().getTime());
@@ -189,8 +189,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 	@Override
 	public boolean update(Article articleVendu) {
 		boolean updateRealiser = false;
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(UPDATE_ARTICLE);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(UPDATE_ARTICLE);) {
 			stmt.setString(1, articleVendu.getNomArticle());
 			stmt.setString(2, articleVendu.getDescription());
 			Date debut = new Date(articleVendu.getDatesDebutEncheres().getTime());
@@ -218,8 +218,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 	@Override
 	public boolean remove(Article articleVendu) {
 		boolean deletRealiser = false;
-		try (Connection connexion = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = connexion.prepareStatement(DELETE_ARTICLE);
+		try (Connection connexion = ConnectionProvider.getConnection();
+				PreparedStatement stmt = connexion.prepareStatement(DELETE_ARTICLE);) {
 			stmt.setInt(1, articleVendu.getNoArticle());
 			stmt.executeUpdate();
 			deletRealiser = true;
@@ -235,7 +235,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 		List<Article> LesArticlesVendus = new ArrayList<Article>();
 		Article articleVendu = null;
 		
-		List listValues = new ArrayList<>();
+		List<Object> listValues = new ArrayList<>();
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 			
 			StringBuffer rqt = new StringBuffer(SELECT_LIST_ARTICLE_CRIT);
@@ -264,7 +264,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				PreparedStatement stmt = connexion.prepareStatement(rqt.toString());
 				
 				int compteur = 0;
-				for (Iterator iterator = listValues.iterator(); iterator.hasNext();) {
+				for (Iterator<Object> iterator = listValues.iterator(); iterator.hasNext();) {
 					Object object = iterator.next();
 					compteur++;
 					if(object.getClass() == Integer.class ) {
@@ -305,6 +305,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 					
 					LesArticlesVendus.add(articleVendu);
 				}
+				
+				result.close();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
