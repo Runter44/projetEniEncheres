@@ -98,7 +98,7 @@ public class ServletListeEncheres extends HttpServlet {
 		critEnchere.setVente(critArticle);
 		critEnchere.setUser(critUtilisateur);
 		
-		String btnRadio = request.getParameter("grpBtnRad");		
+		String btnRadio = request.getParameter("grpBtnRad");
 		if(StringUtils.isNotBlank(btnRadio)) {
 			if("achats".equals(btnRadio)) {
 				if(null != request.getParameter("checkOuvertes")){
@@ -138,6 +138,8 @@ public class ServletListeEncheres extends HttpServlet {
 					addListToList(lesArticles, articleManager.getListArticleByCrit(critArticle));
 				}
 			}
+		}else {
+			addListToList(lesArticles, articleManager.getListArticleByCrit(critArticle));
 		}
 	
 		

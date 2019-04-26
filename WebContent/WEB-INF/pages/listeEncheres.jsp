@@ -28,26 +28,26 @@
 					<div class="row">
 						<div class="col-md-6">
 							<input type="radio" id="radAchats" name="grpBtnRad"
-								value="achats" onclick="gestionCheckBox();">&nbsp;&nbsp;<label
+								value="achats" onclick="gestionBtnRadCheckBox();" checked>&nbsp;&nbsp;<label
 								for="radAchats">Achats</label><br>&nbsp;&nbsp;&nbsp;<input
-								type="checkBox" id="checkOuvertes" value="ouvertes">&nbsp;&nbsp;<label
+								type="checkBox" id="checkOuvertes" name="checkAchats" value="ouvertes" checked>&nbsp;&nbsp;<label
 								for="checkOuvertes">Enchères ouvertes</label><br>
-							&nbsp;&nbsp;&nbsp;<input type="checkBox" id="checkMesEncheres"
+							&nbsp;&nbsp;&nbsp;<input type="checkBox" id="checkMesEncheres" name="checkAchats"
 								value="mesEncheres">&nbsp;&nbsp;<label
 								for="checkMesEncheres">Mes enchères en cours</label><br>&nbsp;&nbsp;&nbsp;<input
-								type="checkBox" id="checkRemporter" value="remporter">&nbsp;&nbsp;<label
+								type="checkBox" id="checkRemporter" name="checkAchats" value="remporter">&nbsp;&nbsp;<label
 								for="checkRemporter">Mes Enchères remportées</label>
 						</div>
 						<div class="col-md-6">
 							<input type="radio" id="radMesVentes" name="grpBtnRad"
-								value="mesVentes" onclick="gestionCheckBox();">&nbsp;&nbsp;<label
+								value="mesVentes" onclick="gestionBtnRadCheckBox();">&nbsp;&nbsp;<label
 								for="radMesVentes">Mes ventes</label><br>
-							&nbsp;&nbsp;&nbsp;<input type="checkBox" id="checkEnCours"
+							&nbsp;&nbsp;&nbsp;<input type="checkBox" id="checkEnCours" name="checkMesVentes"
 								value="enCours">&nbsp;&nbsp;<label for="checkEnCours">Mes
 								ventes en cours</label><br>&nbsp;&nbsp;&nbsp;<input
-								type="checkBox" id="checkNonDebuter" value="nonDebuter">
+								type="checkBox" id="checkNonDebuter" name="checkMesVentes" value="nonDebuter">
 							&nbsp;&nbsp;<label for="checkNonDebuter">Mes ventes non débutées</label><br>
-							&nbsp;&nbsp;&nbsp;<input type="checkBox" id="checkTerminer"
+							&nbsp;&nbsp;&nbsp;<input type="checkBox" id="checkTerminer" name="checkMesVentes"
 								value="terminer">&nbsp;&nbsp;<label for="checkTerminer">Mes
 								ventes terminées</label>
 						</div>
