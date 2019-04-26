@@ -20,7 +20,7 @@
 						<h3 class="text-center">Vous avez remporté la vente</h3>
 					</c:if>
 					<c:if test="${currentUser.id == Enchere.article.vendeur.id}">
-						<h3 class="text-center">${Enchere.user.pseudo}aremporté
+						<h3 class="text-center">${Enchere.user.pseudo}a remporté
 							l'enchère !</h3>
 					</c:if>
 				</c:otherwise>
@@ -50,7 +50,7 @@
 								</tr>
 								<tr>
 									<th scope="row" class="text-right">Mise prix :</th>
-									<td>${Enchere.article.miseAPrix}pts</td>
+									<td>${Enchere.article.miseAPrix} pts</td>
 								</tr>
 								<tr>
 									<th scope="row" class="text-right">Meilleure offre :</th>
@@ -59,7 +59,7 @@
 											<td>Aucune enchère</td>
 										</c:when>
 										<c:otherwise>
-											<td>${Enchere.valeur}ptspar ${Enchere.user.pseudo}</td>
+											<td>${Enchere.valeur} pts par ${Enchere.user.pseudo}</td>
 										</c:otherwise>
 									</c:choose>
 								</tr>
