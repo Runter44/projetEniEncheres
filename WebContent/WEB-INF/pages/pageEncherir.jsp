@@ -14,14 +14,14 @@
 			</c:if>
 			<c:if test="${Date gt Enchere.article.datesDebutEncheres}">
 				<c:if test="${Date gt Enchere.article.datesFinEncheres}">
-					<c:if test="${empty currentUser.id}">
+					<c:if test="${empty currentUser.id || currentUser.id != Enchere.user.id || currentUser.id != Enchere.article.vendeur.id}">
 						<h1 class="text-center">L'enchère est terminée</h1>
 					</c:if>
 					<c:if test="${currentUser.id == Enchere.user.id}">
 						<h3 class="text-center">Vous avez remporté la vente</h3>
 					</c:if>
 					<c:if test="${currentUser.id == Enchere.article.vendeur.id}">
-						<h3 class="text-center">${Enchere.user.pseudo}aremporté
+						<h3 class="text-center">${Enchere.user.pseudo} a remporté
 							l'enchère !</h3>
 					</c:if>
 				</c:if>
@@ -109,7 +109,7 @@
 						</c:if>
 						<c:if test="${Date gt Enchere.article.datesDebutEncheres}">
 							<c:if test="${Date gt Enchere.article.datesFinEncheres}">
-								<c:if test="${empty currentUser.id}">
+								<c:if test="${empty currentUser.id || currentUser.id != Enchere.user.id || currentUser.id != Enchere.article.vendeur.id}">
 									<a href="/projetEniEncheres" class="btn btn-link">Retour</a>
 								</c:if>
 								<c:if test="${currentUser.id == Enchere.user.id}">
