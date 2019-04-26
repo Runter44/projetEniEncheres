@@ -46,12 +46,23 @@
 									<td>${Enchere.article.description}</td>
 								</tr>
 								<tr>
+									<th scope="row" class="text-right">Description :</th>
+									<td>${Enchere.article.cat.libelle}</td>
+								</tr>
+								<tr>
 									<th scope="row" class="text-right">Mise prix :</th>
 									<td>${Enchere.article.miseAPrix} pts</td>
 								</tr>
 								<tr>
-									<th scope="row" class="text-right">Meilleure offre :</th>
-									<td>${Enchere.valeur} pts par ${Enchere.user.pseudo}</td>
+									<th scope="row" class="text-right">Meilleure offre :</th>									
+									<c:choose>
+										<c:when test="${Enchere.valeur == 0}">
+											<td>Aucune enchère</td>
+										</c:when>
+										<c:otherwise>
+											<td>${Enchere.valeur} pts par ${Enchere.user.pseudo}</td>
+										</c:otherwise>
+									</c:choose>
 								</tr>
 								<tr>
 									<th scope="row" class="text-right">Fin de l'enchère :</th>
@@ -72,15 +83,20 @@
 										<c:if test="${currentUser.id == Enchere.user.id}">
 											<tr>
 												<th scope="row" class="text-right">Tél :</th>
-												<td>${Enchere.article.vendeur.telephone}</td>
+												<c:choose>
+													<c:when test="${empty Enchere.article.vendeur.telephone}">
+														<td>Non renseigné</td>
+													</c:when>
+													<c:otherwise>
+														<td>${Enchere.article.vendeur.telephone}</td>
+													</c:otherwise>
+												</c:choose>
 											</tr>
 										</c:if>
 									</c:if>
 								</c:if>
 							</tbody>
 						</table>
-
-
 						<c:if test="${Date gt Enchere.article.datesDebutEncheres}">
 							<c:if test="${Date lt Enchere.article.datesFinEncheres}">
 								<c:if
@@ -101,7 +117,6 @@
 								</c:if>
 								<c:if
 									test="${currentUser != null && currentUser.id == Enchere.article.vendeur.id}">
-									</a>
 									<a
 										href="/projetEniEncheres/modifier-vente/${Enchere.article.noArticle}"
 										class="btn btn-dark"> Modifier la vente </a>

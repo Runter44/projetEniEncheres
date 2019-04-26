@@ -1,10 +1,11 @@
 <%@include file="/WEB-INF/pages/Include/header.jsp"%>
 
-<body>
-	<div class="container-fluid fill-height">
-		<nav
-			class="navbarBasic navbarColor navbar navbar-expand-lg navbar-light">
-			<a class="navbar-brand navbarColorTitre" href="/projetEniEncheres" style="color: white;">ENI-Enchères</a>
+<body class="bg-light">
+	<div class="container-fluid p-0 h-100">
+		<nav class="navbarColor navbar navbar-expand-lg navbar-dark w-100">
+			<a class="navbar-brand text-light navbarColorTitre"
+				href="/projetEniEncheres">ENI-Enchères</a>
+			<%@include file="/WEB-INF/pages/Include/navbarButtons.jsp"%>
 		</nav>
 		<div class="divMainContent">
 			<div class="divContent">
@@ -66,20 +67,16 @@
 						</div>
 					</div>
 				</form>
-				<%
-					if (request.getAttribute("error") != null) {
-				%>
-				<div class="alert alert-danger alert-dismissible fade show"
-					role="alert">
-					<strong>Des erreurs ont été détectées :</strong><br>
-					<%=request.getAttribute("error")%>
-					<button type="button" class="close" data-dismiss="alert"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<% } %>
-
+				<c:if test="${error != null}">
+					<div class="alert alert-danger alert-dismissible fade show"
+						role="alert">
+						<strong>Des erreurs ont été détectées :</strong><br> ${error}
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</c:if>
 			</div>
 		</div>
 	</div>
