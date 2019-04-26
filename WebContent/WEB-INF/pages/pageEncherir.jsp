@@ -7,25 +7,24 @@
 			<%@include file="/WEB-INF/pages/Include/navbarButtons.jsp"%>
 		</nav>
 		<div class="paddingX10 text-left">
-			<c:if test="${Date gt Enchere.article.datesDebutEncheres}">
-				<c:if test="${Date lt Enchere.article.datesFinEncheres}">
+			<c:choose>
+				<c:when test="${Date lt Enchere.article.datesFinEncheres}">
 					<h1 class="text-center">Détail vente</h1>
-				</c:if>
-			</c:if>
-			<c:if test="${Date gt Enchere.article.datesDebutEncheres}">
-				<c:if test="${Date gt Enchere.article.datesFinEncheres}">
-					<c:if test="${empty currentUser.id || currentUser.id != Enchere.user.id || currentUser.id != Enchere.article.vendeur.id}">
+				</c:when>
+				<c:otherwise>
+					<c:if
+						test="${empty currentUser.id || currentUser.id != Enchere.user.id || currentUser.id != Enchere.article.vendeur.id}">
 						<h1 class="text-center">L'enchère est terminée</h1>
 					</c:if>
 					<c:if test="${currentUser.id == Enchere.user.id}">
 						<h3 class="text-center">Vous avez remporté la vente</h3>
 					</c:if>
 					<c:if test="${currentUser.id == Enchere.article.vendeur.id}">
-						<h3 class="text-center">${Enchere.user.pseudo} a remporté
+						<h3 class="text-center">${Enchere.user.pseudo}aremporté
 							l'enchère !</h3>
 					</c:if>
-				</c:if>
-			</c:if>
+				</c:otherwise>
+			</c:choose>
 			<br>
 			<form method="post" action="">
 				<div class="row border rounded">
@@ -51,16 +50,16 @@
 								</tr>
 								<tr>
 									<th scope="row" class="text-right">Mise prix :</th>
-									<td>${Enchere.article.miseAPrix} pts</td>
+									<td>${Enchere.article.miseAPrix}pts</td>
 								</tr>
 								<tr>
-									<th scope="row" class="text-right">Meilleure offre :</th>									
+									<th scope="row" class="text-right">Meilleure offre :</th>
 									<c:choose>
 										<c:when test="${Enchere.valeur == 0}">
 											<td>Aucune enchère</td>
 										</c:when>
 										<c:otherwise>
-											<td>${Enchere.valeur} pts par ${Enchere.user.pseudo}</td>
+											<td>${Enchere.valeur}ptspar ${Enchere.user.pseudo}</td>
 										</c:otherwise>
 									</c:choose>
 								</tr>
