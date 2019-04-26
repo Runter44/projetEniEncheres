@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Utilisateur;
+import fr.eni.encheres.criteres.CritArticle;
 import fr.eni.encheres.dal.ConnectionProvider;
 import fr.eni.encheres.dal.InterfaceDAO;
 
@@ -235,7 +236,7 @@ public class DAOArticle implements InterfaceDAO<Article>{
 	}
 	
 	
-	public List<Article> findListCrit(Article critArticle) {
+	public List<Article> findListCrit(CritArticle critArticle) {
 		List<Article> lesArticlesVendus = new ArrayList<Article>();
 		Article articleVendu = null;
 		
@@ -256,7 +257,11 @@ public class DAOArticle implements InterfaceDAO<Article>{
 					}
 				}
 				if(critArticle.getDatesDebutEncheres() != null) {
-					rqt.append(" and date_debut_encheres <= ?");
+					if(critArticle.isNonDebute()) {
+						rqt.append(" and date_debut_encheres > ?");
+					}else {
+						rqt.append(" and date_debut_encheres <= ?");
+					}
 					listValues.add(critArticle.getDatesDebutEncheres());
 				}
 				if(critArticle.getDatesFinEncheres() != null) { 
@@ -291,8 +296,8 @@ public class DAOArticle implements InterfaceDAO<Article>{
 					articleVendu.setNoArticle(result.getInt("no_article"));
 					articleVendu.setNomArticle(result.getString("nom_article"));
 					articleVendu.setDescription(result.getString("description"));
-					articleVendu.setDatesDebutEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_debut_encheres")));
-					articleVendu.setDatesFinEncheres(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result.getString("date_fin_encheres")));
+					articleVendu.setDatesDebutEncheres(result.getDate("date_debut_encheres"));
+					articleVendu.setDatesFinEncheres(result.getDate("date_fin_encheres"));
 					articleVendu.setMiseAPrix(Integer.parseInt(result.getString("prix_initial")));
 					articleVendu.setPrixVente(Integer.parseInt(result.getString("prix_vente")));
 					articleVendu.setRue(result.getString("rue"));
@@ -314,8 +319,6 @@ public class DAOArticle implements InterfaceDAO<Article>{
 				result.close();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return lesArticlesVendus;

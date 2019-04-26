@@ -2,14 +2,13 @@ package fr.eni.encheres.criteres;
 
 import java.util.Date;
 
-import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Utilisateur;
 
 public class CritEnchere implements Comparable{
 	
 	private Utilisateur user;
 	
-	private Article vente;
+	private CritArticle vente;
 	
 	private Date dateEnchere;
 	
@@ -37,12 +36,12 @@ public class CritEnchere implements Comparable{
 		this.user = user;
 	}
 
-	public Article getVente() {
+	public CritArticle getVente() {
 		return vente;
 	}
 
-	public void setVente(Article vente) {
-		this.vente = vente;
+	public void setVente(CritArticle critArticle) {
+		this.vente = critArticle;
 	}
 
 	public Date getDateEnchere() {
