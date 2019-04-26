@@ -7,22 +7,25 @@
 			<%@include file="/WEB-INF/pages/Include/navbarButtons.jsp"%>
 		</nav>
 		<div class="paddingX10 text-left">
-			<!--<c:if test="${Date.time > Enchere.article.datesDebutEncheres}">
-				<c:if test="${Date.time < Enchere.article.datesFinEncheres}">
+			<c:if test="${Date gt Enchere.article.datesDebutEncheres}">
+				<c:if test="${Date lt Enchere.article.datesFinEncheres}">
 					<h1 class="text-center">Détail vente</h1>
 				</c:if>
 			</c:if>
-			<c:if test="${Date.time < Enchere.article.datesDebutEncheres}">
-				<c:if test="${Date.time > Enchere.article.datesFinEncheres}">
+			<c:if test="${Date gt Enchere.article.datesDebutEncheres}">
+				<c:if test="${Date gt Enchere.article.datesFinEncheres}">
+					<c:if test="${empty currentUser.id}">
+						<h1 class="text-center">L'enchère est terminée</h1>
+					</c:if>
 					<c:if test="${currentUser.id == Enchere.user.id}">
 						<h3 class="text-center">Vous avez remporté la vente</h3>
 					</c:if>
 					<c:if test="${currentUser.id == Enchere.article.vendeur.id}">
-						<h3 class="text-center">${Enchere.user.pseudo} a remporté l'enchère !</h3>
+						<h3 class="text-center">${Enchere.user.pseudo}aremporté
+							l'enchère !</h3>
 					</c:if>
 				</c:if>
-			</c:if>-->
-			<h1 class="text-center">Détail vente</h1>
+			</c:if>
 			<br>
 			<form method="post" action="">
 				<div class="row border rounded">
@@ -44,11 +47,11 @@
 								</tr>
 								<tr>
 									<th scope="row" class="text-right">Mise prix :</th>
-									<td>${Enchere.article.miseAPrix}pts</td>
+									<td>${Enchere.article.miseAPrix} pts</td>
 								</tr>
 								<tr>
 									<th scope="row" class="text-right">Meilleure offre :</th>
-									<td>${Enchere.valeur}ptspar${Enchere.user.pseudo}</td>
+									<td>${Enchere.valeur} pts par ${Enchere.user.pseudo}</td>
 								</tr>
 								<tr>
 									<th scope="row" class="text-right">Fin de l'enchère :</th>
@@ -64,10 +67,23 @@
 									<th scope="row" class="text-right">Vendeur :</th>
 									<td>${Enchere.article.vendeur.pseudo}</td>
 								</tr>
+								<c:if test="${Date gt Enchere.article.datesDebutEncheres}">
+									<c:if test="${Date gt Enchere.article.datesFinEncheres}">
+										<c:if test="${currentUser.id == Enchere.user.id}">
+											<tr>
+												<th scope="row" class="text-right">Tél :</th>
+												<td>${Enchere.article.vendeur.telephone}</td>
+											</tr>
+										</c:if>
+									</c:if>
+								</c:if>
 							</tbody>
 						</table>
 
-						<c:if
+						
+						<c:if test="${Date gt Enchere.article.datesDebutEncheres}">
+							<c:if test="${Date lt Enchere.article.datesFinEncheres}">
+							<c:if
 							test="${currentUser != null && currentUser.id != Enchere.article.vendeur.id}">
 							<div class="row">
 								<div class="col-md-4 mt-2">
@@ -83,14 +99,27 @@
 								</div>
 							</div>
 						</c:if>
-
-						<c:if
-							test="${currentUser != null && currentUser.id == Enchere.article.vendeur.id}">
-							<a
-								href="/projetEniEncheres/modifier-vente/${Enchere.article.noArticle}"
-								class="btn btn-link">Modifier la vente</a>
+								<c:if
+									test="${currentUser != null && currentUser.id == Enchere.article.vendeur.id}">
+									<a
+										href="/projetEniEncheres/modifier-vente/${Enchere.article.noArticle}"
+										class="btn btn-link">Modifier la vente</a>
+								</c:if>
+							</c:if>
 						</c:if>
-
+						<c:if test="${Date gt Enchere.article.datesDebutEncheres}">
+							<c:if test="${Date gt Enchere.article.datesFinEncheres}">
+								<c:if test="${empty currentUser.id}">
+									<a href="/projetEniEncheres" class="btn btn-link">Retour</a>
+								</c:if>
+								<c:if test="${currentUser.id == Enchere.user.id}">
+									<a href="/projetEniEncheres" class="btn btn-link">Retour</a>
+								</c:if>
+								<c:if test="${currentUser.id == Enchere.article.vendeur.id}">
+									<a href="/projetEniEncheres" class="btn btn-link">Retrait effectué</a>
+								</c:if>
+							</c:if>
+						</c:if>
 						<c:if test="${error != null}">
 							<div class="alert alert-danger alert-dismissible fade show"
 								role="alert">
