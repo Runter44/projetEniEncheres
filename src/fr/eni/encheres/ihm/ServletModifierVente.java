@@ -3,6 +3,8 @@ package fr.eni.encheres.ihm;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,20 +18,22 @@ import fr.eni.encheres.bll.ArticleManager;
 import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bll.UserManager;
 import fr.eni.encheres.bo.Article;
+import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Utilisateur;
+import fr.eni.encheres.criteres.CritArticle;
 import fr.eni.encheres.dal.DAOFactory;
 
 @WebServlet("/modifier-vente/*")
 public class ServletModifierVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private ArticleManager articleManager;
 	private UserManager userManager;
 
-    public ServletModifierVente() {
-    	articleManager = new ArticleManager();
-    	userManager = new UserManager();
-    }
+	public ServletModifierVente() {
+		articleManager = new ArticleManager();
+		userManager = new UserManager();
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getSession().getAttribute("currentUser") == null) {
@@ -69,7 +73,7 @@ public class ServletModifierVente extends HttpServlet {
 		boolean hasErrors = false;
 		String errorMessage = "";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
+
 		int idArticle = Integer.parseInt(request.getPathInfo().substring(1));
 		Article articleModif = articleManager.getArticleById(idArticle);
 		request.setAttribute("requestedArticle", articleModif);
@@ -107,7 +111,7 @@ public class ServletModifierVente extends HttpServlet {
 				hasErrors = true;
 				errorMessage += "Le nom de la ville est obligatoire et doit faire au plus 150 caractères.<br>";
 			}
-			
+
 			if (!hasErrors) {
 				articleModif.setCat(DAOFactory.getDAOCategorie().find(Integer.parseInt(categorieArticle)));
 				articleModif.setDatesDebutEncheres(sdf.parse(debutEnchereArticle));
@@ -133,5 +137,9 @@ public class ServletModifierVente extends HttpServlet {
 			request.setAttribute("error", e.getMessage());
 			request.getRequestDispatcher("/WEB-INF/pages/modifierVente.jsp").forward(request, response);
 		}
+		CritArticle critArticle = new CritArticle();
+		critArticle.setDatesDebutEncheres(new Date());
+		List<Article> lesArticles = articleManager.getListArticleByCrit(critArticle);
+		request.getSession().setAttribute("lesArticles", lesArticles);	
 	}
 }

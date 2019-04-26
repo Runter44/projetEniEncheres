@@ -4,13 +4,14 @@
 package fr.eni.encheres.dal.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -69,7 +70,7 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 				enchere.setArticle(article);
 				enchere.setUser(utilisateur);
 				enchere.setValeur(result.getInt("montant_enchere"));
-				enchere.setDateEnchere(new Date(result.getString("date_enchere")));
+				enchere.setDateEnchere(result.getDate("date_enchere"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -162,62 +163,89 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 		try (Connection connexion = ConnectionProvider.getConnection()) {
 
 			StringBuffer rqt = new StringBuffer(SELECT_LIST_ENCHERE_CRIT);
-
+			
+			List<Object> listValues = new ArrayList<>();
 			if(critEnchere != null) {
 				if(critEnchere.getVente() != null) {
 					if(critEnchere.getVente().getNoArticle() != null) {
-						rqt.append(" and A.no_article = "+critEnchere.getVente().getNoArticle());
+						rqt.append(" and A.no_article = ?");
+						listValues.add(critEnchere.getVente().getNoArticle());
 					}
 					if(StringUtils.isNotBlank(critEnchere.getVente().getNomArticle())) {
-						rqt.append(" and A.nom_article like '%"+critEnchere.getVente().getNomArticle()+"%'");
+						rqt.append(" and A.nom_article like ?");
+						listValues.add(critEnchere.getVente().getNomArticle());
 					}
 					if(critEnchere.getVente().getCat() != null) {
-						rqt.append(" and A.no_categorie = "+critEnchere.getVente().getCat().getNoCategorie());
+						rqt.append(" and A.no_categorie = ?");
+						listValues.add(critEnchere.getVente().getCat().getNoCategorie());
 					}
 					if(critEnchere.getVente().getDatesDebutEncheres() != null) {
 						if(critEnchere.isNonDebute()) {
-							rqt.append(" and A.date_debut_encheres < '"+critEnchere.getVente().getDatesDebutEncheres()+"'");
+							rqt.append(" and A.date_debut_encheres < ?");
 						}else {
-							rqt.append(" and A.date_debut_encheres >= '"+critEnchere.getVente().getDatesDebutEncheres()+"'");
+							rqt.append(" and A.date_debut_encheres >= ?");
 						}
+						listValues.add(critEnchere.getVente().getDatesDebutEncheres());
 					}
 					if(critEnchere.getVente().getDatesFinEncheres() != null) {
-						SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-						String today =  df.format(new Date(critEnchere.getVente().getDatesFinEncheres().getTime()));
-						rqt.append(" and A.date_fin_encheres < '"+today+"'");
+						rqt.append(" and A.date_fin_encheres < ?");
+						listValues.add(critEnchere.getVente().getDatesFinEncheres());
 					}
 				}
 				if(critEnchere.getUser() != null) {
 					if(critEnchere.getUser().getId() != null) {
-						rqt.append(" and U.no_utilisateur = "+critEnchere.getUser().getId());
+						rqt.append(" and U.no_utilisateur = ?");
+						listValues.add(critEnchere.getUser().getId());
 					}
 				}
 				if(critEnchere.isEnCours()) {
 					if(critEnchere.getDateEnchere() != null) {	
-						rqt.append(" and A.date_fin_encheres > "+critEnchere.getDateEnchere());
+						rqt.append(" and A.date_fin_encheres > ?");
+						listValues.add(critEnchere.getDateEnchere());
 					}
 				}else {
 					if(critEnchere.getDateEnchere() != null) {
-						SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-						String today =  df.format(new Date());
-						rqt.append(" and A.date_fin_encheres <= '"+today+"'");
+						rqt.append(" and A.date_fin_encheres <= ?");
+						listValues.add(new java.util.Date());
 					}
 				}
 
 				if(critEnchere.getValeur() != 0){
-					rqt.append(" and E.montant_enchere = "+critEnchere.getValeur());		
+					rqt.append(" and E.montant_enchere = ?");
+					listValues.add(critEnchere.getValeur());
 				}
 				if(critEnchere.getOrderBy() != null){
 
 						if(critEnchere.getSensTri() != null){
-							rqt.append(" ORDER BY "+critEnchere.getOrderBy()+" "+critEnchere.getSensTri());
+							rqt.append(" ORDER BY ? ? ");
+							listValues.add(critEnchere.getOrderBy());
+							listValues.add(critEnchere.getSensTri());
 						}else{
-							rqt.append(" ORDER BY "+critEnchere.getOrderBy());
-						}				
+							rqt.append(" ORDER BY ?");
+							listValues.add(critEnchere.getOrderBy());
+						}
+						
 					}
 			
 					PreparedStatement stmt = connexion.prepareStatement(rqt.toString());
-
+					
+					int compteur = 0;
+					for (Iterator<Object> iterator = listValues.iterator(); iterator.hasNext();) {
+						Object object = iterator.next();
+						compteur++;
+						if(object.getClass() == Integer.class ) {
+							stmt.setInt(compteur, (Integer) object);
+						}
+						if(object.getClass() == String.class ) {
+							stmt.setString(compteur, "%"+object.toString()+"%");
+						}
+						if(object.getClass() == java.util.Date.class ) {
+							java.sql.Date sqlDate = new Date(((java.util.Date) object).getTime());
+							stmt.setDate(compteur, sqlDate);
+						}
+					}
+					
+					
 					ResultSet result = stmt.executeQuery();
 
 					while(result != null && result.next()) {
@@ -227,15 +255,13 @@ public class DAOEnchere implements InterfaceDAO<Enchere> {
 						enchere.setArticle(article);
 						enchere.setUser(utilisateur);
 						enchere.setValeur(result.getInt("montant_enchere"));
-						enchere.setDateEnchere(new SimpleDateFormat("yyyy-MM-dd").parse(result.getString("date_enchere")));
+						enchere.setDateEnchere(result.getDate("date_enchere"));
 						lesEncheres.add(enchere);	
 					}
 					
 					result.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
-			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 			return lesEncheres;

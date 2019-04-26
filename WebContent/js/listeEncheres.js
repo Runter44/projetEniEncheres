@@ -1,8 +1,4 @@
 $(function() {
-    function log( message ) {
-      $( "<div>" ).text( message ).prependTo( "#log" );
-      $( "#log" ).scrollTop( 0 );
-    }
 
     $( "#filtreNomArticle" ).autocomplete({
       source: function( request, response ) {
@@ -18,11 +14,6 @@ $(function() {
         });
       },
       minLength: 3,
-      select: function( event, ui ) {
-        log( ui.item ?
-          "Selected: " + ui.item.label :
-          "Nothing selected, input was " + this.value);
-      },
       open: function() {
         $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
       },
@@ -34,12 +25,13 @@ $(function() {
     
  });
 
-function gestionCheckBox(){
+function gestionBtnRadCheckBox(){
 	var rad = document.getElementsByName("grpBtnRad");
 	for (var i = 0; i < rad.length; i++) {
 	    rad[i].addEventListener('change', function() {
 	    	if(this.value == "achats"){
 	    		$('#checkOuvertes').prop('disabled', false);
+	    		$('#checkOuvertes').prop('checked', true);
 	    		$('#checkMesEncheres').prop('disabled', false);
 	    		$('#checkRemporter').prop('disabled', false);
 	    		
@@ -58,9 +50,12 @@ function gestionCheckBox(){
 	    		$('#checkRemporter').prop('checked', false);
 	    		
 	    		$('#checkEnCours').prop('disabled', false);
+	    		$('#checkEnCours').prop('checked', true);
 	    		$('#checkNonDebuter').prop('disabled', false);
 	    		$('#checkTerminer').prop('disabled', false);
 	    	}
 	    });
-	 }
+	 }	
 }
+
+
