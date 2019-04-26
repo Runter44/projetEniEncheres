@@ -109,7 +109,9 @@ public class ServletListeEncheres extends HttpServlet {
 					critUtilisateur.setId(utilisateur.getId());
 					critArticle.setDatesDebutEncheres(null);
 					critArticle.setDatesFinEncheres(new Date());
+					critEnchere.setEnCours(false);
 					critEnchere.setVente(critArticle);
+					mesEncheres.addAll(enchereManager.getListEnchereByCrit(critEnchere));
 					
 				}
 				if(null != request.getParameter("checkMesEncheres")){
@@ -119,6 +121,11 @@ public class ServletListeEncheres extends HttpServlet {
 					critEnchere.setVente(critArticle);
 					critEnchere.setUser(critUtilisateur);
 					mesEncheres.addAll(enchereManager.getListEnchereByCrit(critEnchere));
+					List<Article> listeArticleEnchere = new ArrayList<Article>();
+					for(Enchere uneEnchere : mesEncheres) {
+						listeArticleEnchere.add(uneEnchere.getArticle());
+					}
+					addListToList(lesArticles,listeArticleEnchere);
 				}
 				
 			}else if("mesVentes".equals(btnRadio)){
