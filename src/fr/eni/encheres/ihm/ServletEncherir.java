@@ -65,7 +65,7 @@ public class ServletEncherir extends HttpServlet {
 				request.setAttribute("Enchere",uneEnchere);
 			}
 		} catch (NumberFormatException e) {}
-
+		request.setAttribute("Date",new Date());
 		request.getRequestDispatcher("/WEB-INF/pages/pageEncherir.jsp").forward(request, response);
 	}
 
@@ -175,7 +175,7 @@ public class ServletEncherir extends HttpServlet {
 		critEnchere.setOrderBy("montant_enchere");
 		critEnchere.setSensTri("DESC");		
 		request.setAttribute("Enchere",enchereManager.getListEnchereByCrit(critEnchere).get(0));
-
+		request.setAttribute("Date",new Date());
 		request.getRequestDispatcher("/WEB-INF/pages/pageEncherir.jsp").forward(request, response);
 	}
 }
