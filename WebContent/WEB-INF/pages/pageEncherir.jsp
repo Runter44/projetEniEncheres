@@ -80,30 +80,31 @@
 							</tbody>
 						</table>
 
-						
+
 						<c:if test="${Date gt Enchere.article.datesDebutEncheres}">
 							<c:if test="${Date lt Enchere.article.datesFinEncheres}">
-							<c:if
-							test="${currentUser != null && currentUser.id != Enchere.article.vendeur.id}">
-							<div class="row">
-								<div class="col-md-4 mt-2">
-									<label>Ma proposition :</label>
-								</div>
-								<div class="col-md-4 mt-2">
-									<input type="number" class="form-control" id="articlePrix"
-										name="prixPropose" required="required" min="0"
-										placeholder="Prix de départ">
-								</div>
-								<div class="col-md-4 mt-2">
-									<input type="submit" value="Enchérir" class="btn btn-success">
-								</div>
-							</div>
-						</c:if>
+								<c:if
+									test="${currentUser != null && currentUser.id != Enchere.article.vendeur.id}">
+									<div class="row">
+										<div class="col-md-4 mt-2">
+											<label>Ma proposition :</label>
+										</div>
+										<div class="col-md-4 mt-2">
+											<input type="number" class="form-control" id="articlePrix"
+												name="prixPropose" required="required" min="0"
+												placeholder="Prix de départ">
+										</div>
+										<div class="col-md-4 mt-2">
+											<input type="submit" value="Enchérir" class="btn btn-success">
+										</div>
+									</div>
+								</c:if>
 								<c:if
 									test="${currentUser != null && currentUser.id == Enchere.article.vendeur.id}">
+									</a>
 									<a
 										href="/projetEniEncheres/modifier-vente/${Enchere.article.noArticle}"
-										class="btn btn-link">Modifier la vente</a>
+										class="btn btn-dark"> Modifier la vente </a>
 								</c:if>
 							</c:if>
 						</c:if>
