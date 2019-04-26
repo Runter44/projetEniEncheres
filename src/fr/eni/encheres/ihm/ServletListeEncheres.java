@@ -101,6 +101,7 @@ public class ServletListeEncheres extends HttpServlet {
 		String btnRadio = request.getParameter("grpBtnRad");
 		if(StringUtils.isNotBlank(btnRadio)) {
 			if("achats".equals(btnRadio)) {
+				System.out.println(request.getParameter("checkOuvertes"));
 				if(null != request.getParameter("checkOuvertes")){
 					critArticle.setDatesDebutEncheres(new Date());
 					critArticle.setDatesFinEncheres(new Date());
