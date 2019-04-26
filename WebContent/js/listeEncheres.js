@@ -21,8 +21,6 @@ $(function() {
         $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
       }
     });
-    
-    
  });
 
 function gestionBtnRadCheckBox(){

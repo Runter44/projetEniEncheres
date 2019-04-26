@@ -3,7 +3,7 @@
 <script src="/projetEniEncheres/js/listeEncheres.js"
 	type="text/javascript"></script>
 </head>
-<body class="bg-light">
+<body class="bg-light" onload="gestionBtnRadCheckBox();">
 	<div class="container-fluid p-0 h-100">
 		<nav class="navbarColor navbar navbar-expand-lg navbar-dark w-100">
 			<a class="navbar-brand text-light navbarColorTitre"
@@ -46,9 +46,9 @@
 								value="enCours">&nbsp;&nbsp;<label for="checkEnCours">Mes
 								ventes en cours</label><br>&nbsp;&nbsp;&nbsp;<input
 								type="checkBox" id="checkNonDebuter" name="checkNonDebuter" value="nonDebuter">
-							&nbsp;&nbsp;<label for="checkNonDebuter">Mes ventes non débutées</label><br>
+							&nbsp;&nbsp;<label for="checkNonDebuter">ventes non débutées</label><br>
 							&nbsp;&nbsp;&nbsp;<input type="checkBox" id="checkTerminer" name="checkTerminer"
-								value="terminer">&nbsp;&nbsp;<label for="checkTerminer">Mes
+								value="terminer">&nbsp;&nbsp;<label for="checkTerminer">
 								ventes terminées</label>
 						</div>
 					</div>
