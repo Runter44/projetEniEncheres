@@ -1,6 +1,8 @@
 package fr.eni.encheres.ihm;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +14,9 @@ import fr.eni.encheres.bll.ArticleManager;
 import fr.eni.encheres.bll.EnchereManager;
 import fr.eni.encheres.bll.UserManager;
 import fr.eni.encheres.bo.Article;
+import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Enchere;
+import fr.eni.encheres.criteres.CritArticle;
 
 @WebServlet("/supprimer-vente/*")
 public class ServletSuppressionVente extends HttpServlet {
@@ -20,12 +24,12 @@ public class ServletSuppressionVente extends HttpServlet {
 	private UserManager userManager;
 	private ArticleManager articleManager;
 	private EnchereManager enchereManager;
-	
-    public ServletSuppressionVente() {
+
+	public ServletSuppressionVente() {
 		this.userManager = new UserManager();
 		this.articleManager = new ArticleManager();
 		this.enchereManager = new EnchereManager();
-    }
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,6 +46,10 @@ public class ServletSuppressionVente extends HttpServlet {
 			}
 			articleManager.deleteArticle(requestedArticle);
 		}
+		CritArticle critArticle = new CritArticle();
+		critArticle.setDatesDebutEncheres(new Date());
+		List<Article> lesArticles = articleManager.getListArticleByCrit(critArticle);
+		request.getSession().setAttribute("lesArticles", lesArticles);
 		response.sendRedirect("/projetEniEncheres");
 	}
 
