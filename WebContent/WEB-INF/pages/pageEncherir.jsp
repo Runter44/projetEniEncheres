@@ -109,14 +109,16 @@
 						</c:if>
 						<c:if test="${Date gt Enchere.article.datesDebutEncheres}">
 							<c:if test="${Date gt Enchere.article.datesFinEncheres}">
-								<c:if test="${empty currentUser.id || currentUser.id != Enchere.user.id || currentUser.id != Enchere.article.vendeur.id}">
-									<a href="/projetEniEncheres" class="btn btn-link">Retour</a>
+								<c:if
+									test="${empty currentUser.id || currentUser.id != Enchere.user.id && currentUser.id != Enchere.article.vendeur.id}">
+									<a href="/projetEniEncheres" class="btn btn-dark"> Retour </a>
 								</c:if>
 								<c:if test="${currentUser.id == Enchere.user.id}">
-									<a href="/projetEniEncheres" class="btn btn-link">Retour</a>
+									<a href="/projetEniEncheres" class="btn btn-dark"> Retour </a>
 								</c:if>
 								<c:if test="${currentUser.id == Enchere.article.vendeur.id}">
-									<a href="/projetEniEncheres" class="btn btn-link">Retrait effectué</a>
+									<a href="/projetEniEncheres" class="btn btn-dark"> Retrait
+										effectué </a>
 								</c:if>
 							</c:if>
 						</c:if>
@@ -124,7 +126,7 @@
 							<div class="alert alert-danger alert-dismissible fade show"
 								role="alert">
 								<strong>Des erreurs ont été détectées :</strong><br>
-								<%=request.getAttribute("error")%>
+								${error}
 								<button type="button" class="close" data-dismiss="alert"
 									aria-label="Close">
 									<span aria-hidden="true">&times;</span>
