@@ -8,7 +8,7 @@
 			<div id="connexionContent">
 				<form method="post" action="connexion">
 					<div class="form-group">
-						<label for="login"  class="lblTitre">Pseudonyme :</label> <input
+						<label for="login" class="lblTitre">Pseudonyme :</label> <input
 							id="login" type="text" name="login" class="form-control"
 							placeholder="Nom de compte"><br> <label
 							for="password" class="lblTitre">Mot de passe :</label> <input
@@ -26,23 +26,16 @@
 								href="creation-compte" class="btn btn-link">Créer un compte</a>
 						</div>
 					</div>
-					<%
-						if (request.getAttribute("errorConnexion") != null
-								&& (boolean) request.getAttribute("errorConnexion") == true) {
-					%>
-					<div class="alert alert-danger alert-dismissible fade show"
-						role="alert">
-						<strong>Erreur</strong> Pseudonyme ou mot de passe incorrect
-						<button type="button" class="close" data-dismiss="alert"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					
-					
-					<%
-						}
-					%>
+					<c:if test="${errorConnexion != null}">
+						<div class="alert alert-danger alert-dismissible fade show"
+							role="alert">
+							<strong>Erreur</strong> Pseudonyme ou mot de passe incorrect
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					</c:if>
 				</form>
 			</div>
 		</div>

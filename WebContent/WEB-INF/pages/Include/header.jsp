@@ -12,7 +12,7 @@
 	href="/projetEniEncheres/style/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css"
 	href="/projetEniEncheres/style/main.css">
-
+	<link rel="icon" type="image/png" href="img/logoEnchere.png" />
 	<script src="/projetEniEncheres/js/jquery.min.js" type="text/javascript"></script>
 	<script src="/projetEniEncheres/js/bootstrap.bundle.min.js"
 	type="text/javascript"></script>
