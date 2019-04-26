@@ -26,7 +26,7 @@ public class ServletEncherir extends HttpServlet {
 	private EnchereManager enchereManager; 
 	private ArticleManager articleManager;
 	private UserManager userManager;
-
+ 
 	public ServletEncherir() {
 		super();
 		enchereManager = new EnchereManager();
@@ -64,7 +64,9 @@ public class ServletEncherir extends HttpServlet {
 				uneEnchere.setArticle(articleManager.getArticleById(idArticle));
 				request.setAttribute("Enchere",uneEnchere);
 			}
-		} catch (NumberFormatException e) {}
+		} catch (NumberFormatException e) {
+			
+		}
 		request.setAttribute("Date",new Date());
 		request.getRequestDispatcher("/WEB-INF/pages/pageEncherir.jsp").forward(request, response);
 	}

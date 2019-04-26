@@ -22,6 +22,7 @@ public class CritArticle {
 	private Utilisateur vendeur;
 	
 	private boolean nonDebute;
+	private boolean terminer;
 
 	
 	
@@ -141,5 +142,19 @@ public class CritArticle {
 	 */
 	public void setNonDebute(boolean nonDebute) {
 		this.nonDebute = nonDebute;
+	}
+
+	/**
+	 * @return the terminer
+	 */
+	public boolean isTerminer() {
+		return terminer;
+	}
+
+	/**
+	 * @param terminer the terminer to set
+	 */
+	public void setTerminer(boolean terminer) {
+		this.terminer = terminer;
 	}
 }

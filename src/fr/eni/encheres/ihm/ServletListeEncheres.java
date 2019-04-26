@@ -56,7 +56,7 @@ public class ServletListeEncheres extends HttpServlet {
 		toutes.setNoCategorie(0);
 		LesCats.add(0, toutes);
 		request.getSession().setAttribute("listeCat", LesCats);
-		if( null ==  request.getSession().getAttribute("lesArticles") || ((List<Categorie>) request.getSession().getAttribute("lesArticles")).size() == 0) {
+		if(null ==  request.getSession().getAttribute("lesArticles")) {
 			CritArticle critArticle = new CritArticle();
 			critArticle.setDatesDebutEncheres(new Date());
 			List<Article> lesArticles = articleManager.getListArticleByCrit(critArticle);
@@ -95,17 +95,24 @@ public class ServletListeEncheres extends HttpServlet {
 			critCategorie = categorieManager.getCatById(Integer.parseInt(request.getParameter("categorieValue")));
 			critArticle.setCat(critCategorie);
 		}
-		critEnchere.setVente(critArticle);
-		critEnchere.setUser(critUtilisateur);
 		
 		String btnRadio = request.getParameter("grpBtnRad");
 		if(StringUtils.isNotBlank(btnRadio)) {
+			request.getSession().setAttribute("TabRad", btnRadio);
 			if("achats".equals(btnRadio)) {
-				System.out.println(request.getParameter("checkOuvertes"));
 				if(null != request.getParameter("checkOuvertes")){
 					critArticle.setDatesDebutEncheres(new Date());
 					critArticle.setDatesFinEncheres(new Date());
 					addListToList(lesArticles, articleManager.getListArticleByCrit(critArticle));
+				}
+				if(null != request.getParameter("checkRemporter")){
+					critUtilisateur.setId(utilisateur.getId());
+					critArticle.setDatesDebutEncheres(null);
+					critArticle.setDatesFinEncheres(new Date());
+					critEnchere.setEnCours(false);
+					critEnchere.setVente(critArticle);
+					mesEncheres.addAll(enchereManager.getListEnchereByCrit(critEnchere));
+					
 				}
 				if(null != request.getParameter("checkMesEncheres")){
 					critUtilisateur.setId(utilisateur.getId());
@@ -114,28 +121,31 @@ public class ServletListeEncheres extends HttpServlet {
 					critEnchere.setVente(critArticle);
 					critEnchere.setUser(critUtilisateur);
 					mesEncheres.addAll(enchereManager.getListEnchereByCrit(critEnchere));
+					List<Article> listeArticleEnchere = new ArrayList<Article>();
+					for(Enchere uneEnchere : mesEncheres) {
+						listeArticleEnchere.add(uneEnchere.getArticle());
+					}
+					addListToList(lesArticles,listeArticleEnchere);
 				}
-				if(null != request.getParameter("checkRemporter")){
-					critUtilisateur.setId(utilisateur.getId());
+				
+			}else if("mesVentes".equals(btnRadio)){
+				if(null != request.getParameter("checkTerminer")){
 					critArticle.setDatesDebutEncheres(null);
 					critArticle.setDatesFinEncheres(new Date());
-					critEnchere.setVente(critArticle);
-					
-				}
-			}else if("mesVentes".equals(btnRadio)){
-				if(null != request.getParameter("checkEnCours")){
-					critUtilisateur.setId(utilisateur.getId());
-					critArticle.setDatesDebutEncheres(new Date());
-					critArticle.setDatesFinEncheres(new Date());
+					critArticle.setTerminer(true);
 					addListToList(lesArticles, articleManager.getListArticleByCrit(critArticle));
 				}
 				if(null != request.getParameter("checkNonDebuter")){
 					critArticle.setDatesDebutEncheres(new Date());
+					critArticle.setDatesFinEncheres(null);
 					critArticle.setNonDebute(true);
 					addListToList(lesArticles, articleManager.getListArticleByCrit(critArticle));
 				}
-				if(null != request.getParameter("checkTerminer")){
+				if(null != request.getParameter("checkEnCours")){
+					critUtilisateur.setId(utilisateur.getId());
+					critArticle.setDatesDebutEncheres(new Date());
 					critArticle.setDatesFinEncheres(new Date());
+					critArticle.setVendeur(critUtilisateur);
 					addListToList(lesArticles, articleManager.getListArticleByCrit(critArticle));
 				}
 			}
@@ -151,10 +161,15 @@ public class ServletListeEncheres extends HttpServlet {
 	
 	//Permet d'eviter les doublons dans la liste d'affichage
 	private void addListToList(List<Article> laListRef, final List<Article> laListeAAdd){
-		for (Article article : laListeAAdd) {
-			if(!laListRef.contains(article)) {
-				laListRef.add(article);
+		List<Article> aSupp = new ArrayList<Article>();
+		for (Article article : laListRef) {
+			for(Article articleAAdd : laListeAAdd) {
+				if(article.getNoArticle() == articleAAdd.getNoArticle()) {
+					aSupp.add(articleAAdd);
+				}
 			}
 		}
+		laListeAAdd.removeAll(aSupp);
+		laListRef.addAll(laListeAAdd);
 	}
 }

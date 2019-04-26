@@ -256,6 +256,12 @@ public class DAOArticle implements InterfaceDAO<Article>{
 						listValues.add(critArticle.getCat().getNoCategorie());
 					}
 				}
+				if(critArticle.getVendeur() != null) {
+					if(critArticle.getVendeur().getId() != null) {
+						rqt.append(" and no_utilisateur = ?");
+						listValues.add(critArticle.getVendeur().getId());
+					}
+				}
 				if(critArticle.getDatesDebutEncheres() != null) {
 					if(critArticle.isNonDebute()) {
 						rqt.append(" and date_debut_encheres > ?");
@@ -265,7 +271,12 @@ public class DAOArticle implements InterfaceDAO<Article>{
 					listValues.add(critArticle.getDatesDebutEncheres());
 				}
 				if(critArticle.getDatesFinEncheres() != null) { 
-					rqt.append(" and date_fin_encheres > ?");
+					if(critArticle.isTerminer()) {
+						rqt.append(" and date_fin_encheres < ?");
+					}else {
+						rqt.append(" and date_fin_encheres > ?");
+					}
+					
 					listValues.add(critArticle.getDatesFinEncheres());
 				}
 				
